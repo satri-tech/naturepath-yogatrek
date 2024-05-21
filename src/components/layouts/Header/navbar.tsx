@@ -49,7 +49,7 @@ const Navbar = () => {
       <div className=" container h-16 w-full flex justify-between items-center">
         <Link href="/">
           <Image
-            src={`/Logo/landscape.png`}
+            src={`/Logo/logo.png`}
             alt="logo"
             width={750}
             height={750}
@@ -57,7 +57,7 @@ const Navbar = () => {
             className="h-16 w-auto dark:hidden"
           />
           <Image
-            src={`/Logo/landscapewhite.png`}
+            src={`/Logo/logo.png`}
             alt="logo"
             width={750}
             height={750}

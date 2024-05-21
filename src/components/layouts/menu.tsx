@@ -1,4 +1,4 @@
-import { AlignLeft, ClipboardList, Layers3, LayoutDashboard, NotebookPen } from 'lucide-react';
+import { AlignLeft, ClipboardList, Layers3, LayoutDashboard, LibraryBig, List, NotebookPen, Slack, Users } from 'lucide-react';
 import React, { ReactElement } from 'react'
 import MenuItem from './menuItem';
 import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet';
@@ -20,21 +20,45 @@ export const MenuList:MenulistType[]=[
     },
     {
         id:2,
-        href:"/admin/expense",
-        name:"Expenses",
+        href:"/admin/services",
+        name:"Services",
+        icons:<List />
+    },
+    {
+        id:2,
+        href:"/admin/packages",
+        name:"Packages",
         icons:<ClipboardList/>
     },
     {
         id:3,
-        href:"/admin/add-expense",
-        name:"Add Expenses",
+        href:"/admin/bookings",
+        name:"Bookings",
         icons:<NotebookPen/>
     },
     {
         id:4,
         href:"/admin/category",
-        name:"Category",
-        icons:<Layers3/>
+        name:"Site Pages",
+        icons:<Slack />
+    },
+    {
+        id:4,
+        href:"/admin/blog",
+        name:"Blog",
+        icons:<LibraryBig />
+    },
+    {
+        id:4,
+        href:"/admin/team",
+        name:"Team",
+        icons:<Users />
+    },
+    {
+        id:4,
+        href:"/admin/user",
+        name:"Users",
+        icons:<Users />
     },
 ]
 
