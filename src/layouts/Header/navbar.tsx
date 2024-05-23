@@ -11,7 +11,7 @@ import { LucideMenu, Moon, Sun, X } from "lucide-react";
 import MobileMenu from "./MobileMenu";
 
 const Navbar = () => {
-  const [mobileMenu, setMobileMenu] = useState(false);
+  // const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0 bg-transparent text-white");
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -24,7 +24,7 @@ const Navbar = () => {
     if(!window.scrollY){
       setShow("translate-y-0 bg-transparent text-white")
     }else if (window.scrollY > 200) {
-      if (window.scrollY > lastScrollY && !mobileMenu) {
+      if (window.scrollY > lastScrollY ) {
         setShow("-translate-y-[80px] bg-white ");
       } else {
         setShow("shadow-sm bg-white");

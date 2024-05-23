@@ -1,7 +1,5 @@
 import React from 'react'
-import Breadcrumbs from './breadcrumbs'
-import { AlignLeft, Bell, LogOut } from 'lucide-react'
-import Image from 'next/image'
+import Breadcrumbs from '../breadcrumbs'
 import Menu from './menu'
 import User from './User'
 

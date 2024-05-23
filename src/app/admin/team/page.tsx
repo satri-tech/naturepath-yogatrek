@@ -1,9 +1,10 @@
+import { Button } from '@/components/ui/button'
 import React from 'react'
 
 const TeamPage = () => {
   return (
     <div>
-      teams
+      <Button variant={"default"}>Add new Members</Button>
     </div>
   )
 }

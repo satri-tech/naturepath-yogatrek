@@ -1,5 +1,7 @@
-import Footer from "@/components/layouts/Footer/Footer";
-import Navbar from "@/components/layouts/Header/navbar";
+
+import Footer from "@/layouts/Footer/Footer";
+import Navbar from "@/layouts/Header/navbar";
+
 import type { Metadata } from "next";
 
 

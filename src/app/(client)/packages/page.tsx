@@ -1,4 +1,5 @@
-import Topbanner from '@/components/layouts/Topbanner'
+
+import Topbanner from '@/layouts/Topbanner'
 import React from 'react'
 
 const PackagePage = () => {
