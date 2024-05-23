@@ -1,10 +1,10 @@
 'use client'
-import {MenuItem as Menu } from '@/lib/types/menu'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { MenulistType } from '@/utils/types/MenuListTypes';
 
-const MenuItem = ({list}:{list:Menu}) => {
+const MenuItem = ({list}:{list:MenulistType}) => {
     const pathname = usePathname()
 
  function isActive( href: string){

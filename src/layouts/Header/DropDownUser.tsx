@@ -1,17 +1,11 @@
 'use client'
 import React from "react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import { User } from "lucide-react";
-import { Button } from "../ui/button";
-
-
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { DropdownMenu ,DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,} from "@/components/ui/dropdown-menu";
 
 const DropDownUser = () => {
 

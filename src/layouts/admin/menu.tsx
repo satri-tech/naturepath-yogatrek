@@ -1,15 +1,11 @@
 import { AlignLeft, ClipboardList, Layers3, LayoutDashboard, LibraryBig, List, NotebookPen, Slack, Users } from 'lucide-react';
 import React, { ReactElement } from 'react'
 import MenuItem from './menuItem';
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '../ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { MenulistType } from '@/utils/types/MenuListTypes';
 
 
-interface MenulistType{
-    id:number;
-    href:string;
-    icons:ReactElement;
-    name:string;
-}
+
 
 export const MenuList:MenulistType[]=[
     {
