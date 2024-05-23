@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import React from 'react'
 import Breadcrumbs from './breadcrumbs'
-import Headings from '../ui/Headings'
-import { Badge } from '../ui/badge'
+import Headings from '@/components/ui/Headings'
+import { Badge } from '@/components/ui/badge'
 
 const Topbanner = ({title}:{title:string}) => {
   return (

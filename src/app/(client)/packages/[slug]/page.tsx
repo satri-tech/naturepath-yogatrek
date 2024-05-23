@@ -1,11 +1,12 @@
-import RightSidebar from "@/components/layouts/PagesSidebar/RightSidebar";
-import Topbanner from "@/components/layouts/Topbanner";
+
 import {
   Card,
   CardContent,
   CardDescription,
   CardTitle,
 } from "@/components/ui/card";
+import RightSidebar from "@/layouts/PagesSidebar/RightSidebar";
+import Topbanner from "@/layouts/Topbanner";
 import { Calendar, Tag } from "lucide-react";
 import React from "react";
 
