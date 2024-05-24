@@ -15,8 +15,7 @@ const PackageDetail = () => {
     <div>
       <Topbanner title={"Packages detail page"} />
       <div className="flex flex-col lg:flex-row gap-6">
-    <div className="lg:w-3/4">
-
+    <div className="lg:w-4/6">
       <div className="container max-w-3xl grid justify-center">
         {/* top highlights  */}
         <div className="flex gap-3 mx-auto">
@@ -136,7 +135,7 @@ const PackageDetail = () => {
         </div>
       </div>
     </div>
-      <aside className="lg:w-1/4 container max-w-3xl">
+      <aside className="lg:w-2/6 container max-w-3xl">
         <RightSidebar/>
       </aside>
       </div>

@@ -7,7 +7,7 @@ const ServicesCard = ({name, id}:{name:string, id:number}) => {
       <Image
         src={`https://picsum.photos/200/300?random=${id} `}
         alt="Img by Meriç Dağlı https://unsplash.com/@meric"
-        className="w-full h-auto object-cover brightness-50 hover:scale-105 transition-all duration-500"
+        className="w-full h-auto object-cover brightness-50 hover:scale-105 hover:brightness-100 transition-all duration-500"
         width={250}
         height={800}
         quality={100}
