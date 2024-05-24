@@ -3,7 +3,7 @@ import React from 'react'
 
 const BookingComponent = () => {
   return (
-    <div>
+    <div className='bg-blue-700 p-2 w-full'>
       <Bookingform/>
     </div>
   )
