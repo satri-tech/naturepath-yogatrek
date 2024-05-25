@@ -34,14 +34,14 @@ const Hero = () => {
           </div>
         </div>
       </div>
-      {/* <video
-        src="/hero/video1.mp4"
+      <video
+        src="https://res.cloudinary.com/dqyzr8bp3/video/upload/v1716565094/video1_wpw0kr.mp4"
         autoPlay
         muted
         loop
         className="absolute top-0 w-full h-full object-cover brightness-50 -z-10"
-      /> */}
-      <Image
+      />
+      {/* <Image
         src="/hero/Image.jpeg"
         alt="hero image"
         width={1024}
@@ -52,7 +52,7 @@ const Hero = () => {
         // muted
         // loop
         className="absolute top-0 w-full h-full object-cover brightness-50 -z-10"
-      />
+      /> */}
       {/* <div className="absolute top-0 w-full h-full object-cover bg-red-500 brightness-50 -z-10"></div> */}
     </div>
   );
