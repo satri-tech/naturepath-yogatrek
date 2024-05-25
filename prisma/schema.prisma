@@ -66,3 +66,17 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+model Service {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  image       String
+}
+
+model Team {
+  id   String @id @default(cuid())
+  name String
+  bio String
+  position String
+  image String
+}

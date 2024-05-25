@@ -18,6 +18,7 @@ import { ServiceFormSchema } from "@/utils/validation/admin/ServicesFormValidati
 import RichTextEditor from "../../FormElements/RichTextEditor";
 import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
+import { Description } from "@radix-ui/react-dialog";
 
 const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
@@ -43,10 +44,41 @@ const CreateServicesForm = () => {
     if(images){
         const res = await UploadCloudinary(images)
         if(res.url){
-            console.log(res.url);
-            console.log(values);
-            form.reset();
-            setImages(null);
+            try{
+
+              // const formData = new FormData();
+              // formData.append("title", values.title);
+              // formData.append("description", values.Description);
+              // formData.append("image", res.url);
+              const formdata= {
+                "title": values.title,
+                "description": values.Description,
+                "image":res.url
+              }
+              const jsonData = JSON.stringify(formdata)
+  
+              const response = await fetch("/api/services/create", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: jsonData,
+              });
+              const data = await response.json();
+              console.log("data", data); form.reset();
+
+              if(data && data.success){
+                form.reset();
+                setImages(null);
+              }
+
+
+            }catch(err){
+                console.log(err);
+            }
+
+           
+            
         }
         if(res.error){
             setImageError(res.error);
