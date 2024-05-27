@@ -27,6 +27,7 @@ const LoginForm = (props: Props) => {
         throw new Error(result?.error as string);
       }
       if (result?.ok) {
+
         router.push(props.callbackUrl ? props.callbackUrl : "/admin");
       }
     } catch (error: any) {

@@ -19,12 +19,10 @@ export async function registerUser(user: Omit<User, "id" | "emailVerified" | "ro
       password: await bcrypt.hash(user.password, 15),
     },
   });
-  console.log("result form db", result)
   const jwtUserId = signJWt({
     id: result.id,
   });
   const activationUrl = `${process.env.NEXTAUTH_URL}/auth/activation/${jwtUserId}`;
-  console.log("activation",activationUrl)
   const body = compileActivationTemplete(user.firstName, activationUrl);
   await sendmail({ to: user.email, subject: "Activate Your Account", body });
   return result;
@@ -63,6 +61,7 @@ export async function authenticate(formData: FormData) {
       username: formData.get("email"),
       password: formData.get("password"),
     });
+    console.log("login",result)
     return result;
   } catch (error) {
     console.log(error);
@@ -114,7 +113,7 @@ export const forgetPassword = async (formData: FormData) => {
   const jwtUserId = signJWt({
     id: user.id,
   });
-  const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/resetPass/${jwtUserId}`;
+  const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/reset-Password/${jwtUserId}`;
   const body = compileResetPassTemplete(user.firstName, resetPassUrl);
   const sendResult = await sendmail({
     to: user.email,
