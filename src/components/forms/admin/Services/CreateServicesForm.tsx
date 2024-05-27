@@ -18,12 +18,20 @@ import { ServiceFormSchema } from "@/utils/validation/admin/ServicesFormValidati
 import RichTextEditor from "../../FormElements/RichTextEditor";
 import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
-import { Description } from "@radix-ui/react-dialog";
+import { useSession } from "next-auth/react";
 
-const CreateServicesForm = () => {
+
+
+
+
+ const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError]= useState<string>("")
   //   const [imageLinks, setImageLinks] = useState<{string}>();
+
+  const session = useSession();
+  console.log("session",session)
+
 
   const form = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
@@ -45,11 +53,6 @@ const CreateServicesForm = () => {
         const res = await UploadCloudinary(images)
         if(res.url){
             try{
-
-              // const formData = new FormData();
-              // formData.append("title", values.title);
-              // formData.append("description", values.Description);
-              // formData.append("image", res.url);
               const formdata= {
                 "title": values.title,
                 "description": values.Description,
@@ -61,7 +64,8 @@ const CreateServicesForm = () => {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
-                },
+                  Authorization :`bearer ${session.data?.user.accessToken}`
+                },  
                 body: jsonData,
               });
               const data = await response.json();
@@ -156,3 +160,4 @@ const CreateServicesForm = () => {
 };
 
 export default CreateServicesForm;
+

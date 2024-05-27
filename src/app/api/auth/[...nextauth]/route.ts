@@ -4,6 +4,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import * as bcrypt from "bcrypt";
 // import NextAuth from "next-auth/next";
 import { User } from "@prisma/client";
+import { signJWt } from "@/lib/jwt";
+import { UserWithAccessToken } from "@/lib/types";
+
 
 export const authOptions: AuthOptions = {
   pages:{
@@ -31,6 +34,7 @@ export const authOptions: AuthOptions = {
           placeholder: "Your Password",
         },
       },
+      
       async authorize(credentials) {
         const user = await prisma.user.findUnique({
           where: {
@@ -54,19 +58,23 @@ export const authOptions: AuthOptions = {
           throw new Error("Please verify your email first!");
 
         const { password, ...userWithoutPass } = user;
-        return userWithoutPass;
+        const payload = {
+            userId: user.id,
+            role: user.role,
+          };
+        const accessToken = signJWt(payload);
+        return {...userWithoutPass, accessToken};
       },
     }),
   ],
   callbacks:{
     async jwt({token, user}){
-        if(user) token.user = user as User
-        
+        if(user as UserWithAccessToken) token.user = user as UserWithAccessToken
         return token
     },
 
     async session({token, session}){
-        session.user = token.user as User
+        session.user = token.user as UserWithAccessToken
         return session;
     }
   },
