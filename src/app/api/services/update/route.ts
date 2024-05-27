@@ -3,8 +3,16 @@ import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
+    
   try {
     const extractData = await request.json();
+
+    if(!extractData.id){
+      return NextResponse.json({
+        success: false,
+        message: "id is required in the request body.",
+      });
+    }
 
     const updatedBlogPost = await prisma.service.update({
       where: {
@@ -14,9 +22,11 @@ export async function PUT(request: NextRequest) {
     });
 
     if (updatedBlogPost) {
+
       return NextResponse.json({
         success: true,
         message: "Blog post updated",
+       
       });
     } else {
       return NextResponse.json({

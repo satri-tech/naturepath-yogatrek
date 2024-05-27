@@ -5,51 +5,88 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") ?? "1");
   const limit = parseInt(url.searchParams.get("limit") ?? "10");
+  const postid = url.searchParams.get("id");
 
-  try {
-    const totalCount = await prisma.service.count();
-    const totalPages = Math.ceil(totalCount / limit);
-
-    if (page > totalPages) {
+  if(!postid){
+    try {
+      const totalCount = await prisma.service.count();
+      const totalPages = Math.ceil(totalCount / limit);
+  
+      if (page > totalPages) {
+        return NextResponse.json({
+          status: 404,
+          success: false,
+          message: "Page not found",
+        });
+      }
+  
+      const getService = await prisma.service.findMany({
+        skip: (page - 1) * limit,
+        take: limit,
+      });
+  
+      if (getService && getService.length) {
+        return NextResponse.json({
+          status: 200,
+          success: true,
+          data: getService,
+          meta: {
+            pagination: {
+              page,
+              limit,
+              total: totalCount,
+              lastPage: totalPages,
+            },
+          },
+        });
+      } else {
+        return NextResponse.json({
+          status: 404,
+          success: false,
+          message: "Failed to fetch blog posts. Please try again",
+        });
+      }
+    } catch (e) {
+      console.error(e);
       return NextResponse.json({
-        status: 404,
+        status: 500,
         success: false,
-        message: "Page not found",
+        message: "Something went wrong ! Please try again",
       });
     }
-
-    const getService = await prisma.service.findMany({
-      skip: (page - 1) * limit,
-      take: limit,
-    });
-
-    if (getService && getService.length) {
-      return NextResponse.json({
-        status: 200,
-        success: true,
-        data: getService,
-        meta: {
-          pagination: {
-            page,
-            limit,
-            total: totalCount,
-            lastPage: totalPages,
-          },
+  }
+   
+  if(postid){
+    try {
+      const getService = await prisma.service.findUnique({
+        where: {
+          id: postid,
         },
       });
-    } else {
+  
+      if (getService) {
+        return NextResponse.json({
+          status: 200,
+          success: true,
+          data: getService,
+        });
+      } else {
+        return NextResponse.json({
+          status: 404,
+          success: false,
+          message: "Service not found. Please try again",
+        });
+      }
+    } catch (e) {
+      console.error(e);
       return NextResponse.json({
-        status: 404,
+        status: 500,
         success: false,
-        message: "Failed to fetch blog posts. Please try again",
+        message: "Something went wrong ! Please try again",
       });
     }
-  } catch (e) {
-    console.error(e);
-    return NextResponse.json({
-      status: 500,
-      success: false,
-      message: "Something went wrong ! Please try again",
-    });
+
   }
+
+
 }
