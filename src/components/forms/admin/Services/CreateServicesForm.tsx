@@ -19,6 +19,7 @@ import RichTextEditor from "../../FormElements/RichTextEditor";
 import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
+import { revalidateTag } from "next/cache";
 
 
 
@@ -27,11 +28,10 @@ import { useSession } from "next-auth/react";
  const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError]= useState<string>("")
-  //   const [imageLinks, setImageLinks] = useState<{string}>();
+ 
 
   const session = useSession();
-  console.log("session",session)
-
+ 
 
   const form = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
@@ -40,7 +40,6 @@ import { useSession } from "next-auth/react";
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      //convert `FileList` to `File[]`
       setImageError('')
       const _files = Array.from(e.target.files);
       console.log("files from images", _files[0]);
@@ -69,7 +68,8 @@ import { useSession } from "next-auth/react";
                 body: jsonData,
               });
               const data = await response.json();
-              console.log("data", data); form.reset();
+              revalidateTag("ServiceCollection")
+              form.reset();
 
               if(data && data.success){
                 form.reset();
@@ -79,10 +79,7 @@ import { useSession } from "next-auth/react";
 
             }catch(err){
                 console.log(err);
-            }
-
-           
-            
+            } 
         }
         if(res.error){
             setImageError(res.error);

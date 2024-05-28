@@ -1,8 +1,24 @@
 
+import { authenticate } from "@/lib/authenticate";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(request: NextRequest) {
+
+  try {
+    const payload = await authenticate(request);
+
+    return await parseResult(request);
+  } catch (error:any) {
+    return NextResponse.json({
+      success: false,
+      message: error?.message,
+    });
+  }
+}
+
+
+const parseResult =async (request:NextRequest)=>{ 
     
   try {
     const extractData = await request.json();
