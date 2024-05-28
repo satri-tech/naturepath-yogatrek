@@ -8,7 +8,6 @@ const CreatePage = () => {
   return (
     <>
       <Pageheading title={"Create New Service"} />
-
       <div className="max-w-lg">
         <CreateServicesForm />
       </div>

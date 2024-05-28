@@ -11,13 +11,13 @@ function middleware(req){
   if(
     req.nextUrl.pathname.startsWith("/admin") && token?.user.role  !== "ADMIN"
   ){
-    return NextResponse.redirect("http://localhost:3000/profile");
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/profile`);
   }
 
   if(
     req.nextUrl.pathname.startsWith("/profile") && token?.user.role === "ADMIN"
   ){
-    return NextResponse.redirect("http://localhost:3000/admin");
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/admin`);
   }
 }
 

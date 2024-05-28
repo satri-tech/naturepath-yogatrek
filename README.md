@@ -5,7 +5,16 @@ This is Next Js Fullstack Website for Yoga and trek using nextjs postgres as the
 First, run the development server:
 
 ```bash
+
+
+
 npm install or npm i
+
+npx prisma migrate dev
+
+npx prisma generate
+
+
 npm run dev
 # or
 yarn
@@ -19,6 +28,8 @@ setup the following before running the application
 
 ```bash
 DATABASE_URL="postgresql://user:password@localhost:5432/dbname?schema=public"
+
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
 
 NEXTAUTH_SECRET=
 NEXTAUTH_URL= 
