@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
   if (!postid) {
     try {
-      const totalCount = await prisma.service.count();
+      const totalCount = await prisma.sitePage.count();
       const totalPages = Math.ceil(totalCount / limit);
 
       if (page > totalPages) {
@@ -20,15 +20,15 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getService = await prisma.service.findMany({
+      const getTeam = await prisma.sitePage.findMany({
         skip: (page - 1) * limit,
         take: limit,
       });
 
-      if (getService && getService.length) {
+      if (getTeam && getTeam.length) {
         return NextResponse.json({
           success: true,
-          data: getService,
+          data: getTeam,
           meta: {
             pagination: {
               page,
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({
           
           success: false,
-          message: "Failed to fetch service. Please try again",
+          message: "Failed to fetch page. Please try again",
       },{
         status: 404,
       });
@@ -65,23 +65,23 @@ export async function GET(request: NextRequest) {
 
   if (postid) {
     try {
-      const getService = await prisma.service.findUnique({
+      const getTeam = await prisma.team.findUnique({
         where: {
           id: postid,
         },
       });
 
-      if (getService) {
+      if (getTeam) {
         return NextResponse.json({
           status: 200,
           success: true,
-          data: getService,
+          data: getTeam,
         });
       } else {
         return NextResponse.json({
           status: 404,
           success: false,
-          message: "Service not found. Please try again",
+          message: "page not found. Please try again",
         });
       }
     } catch (e) {

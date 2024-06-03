@@ -3,7 +3,7 @@ import { authenticate } from "@/lib/authenticate";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(request: NextRequest) {
+export async function PUT(request: NextRequest) {
 
   try {
     const payload = await authenticate(request);
@@ -19,6 +19,7 @@ export async function DELETE(request: NextRequest) {
 
 
 const parseResult =async (request:NextRequest)=>{ 
+    
   try {
     const extractData = await request.json();
 
@@ -29,24 +30,24 @@ const parseResult =async (request:NextRequest)=>{
       });
     }
 
-    const deleteService = await prisma.service.delete({
+    const updatedBlogPost = await prisma.sitePage.update({
       where: {
         id: extractData.id,
       },
-     
-  });
+      data: extractData,
+    });
 
-    if (deleteService) {
+    if (updatedBlogPost) {
 
       return NextResponse.json({
         success: true,
-        message: "service deleted successfully",
+        message: "Page updated successfully",
        
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "failed to delete the service ! Please try again",
+        message: "failed to update! Please try again",
       });
     }
   } catch (e) {
