@@ -18,11 +18,20 @@ import { ServiceFormSchema } from "@/utils/validation/admin/ServicesFormValidati
 import RichTextEditor from "../../FormElements/RichTextEditor";
 import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
+import { useSession } from "next-auth/react";
+import { revalidateTag } from "next/cache";
 
-const CreateServicesForm = () => {
+
+
+
+
+ const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError]= useState<string>("")
-  //   const [imageLinks, setImageLinks] = useState<{string}>();
+ 
+
+  const session = useSession();
+ 
 
   const form = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
@@ -31,7 +40,6 @@ const CreateServicesForm = () => {
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      //convert `FileList` to `File[]`
       setImageError('')
       const _files = Array.from(e.target.files);
       console.log("files from images", _files[0]);
@@ -43,10 +51,35 @@ const CreateServicesForm = () => {
     if(images){
         const res = await UploadCloudinary(images)
         if(res.url){
-            console.log(res.url);
-            console.log(values);
-            form.reset();
-            setImages(null);
+            try{
+              const formdata= {
+                "title": values.title,
+                "description": values.Description,
+                "image":res.url
+              }
+              const jsonData = JSON.stringify(formdata)
+  
+              const response = await fetch("/api/services/create", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization :`bearer ${session.data?.user.accessToken}`
+                },  
+                body: jsonData,
+              });
+              const data = await response.json();
+              revalidateTag("ServiceCollection")
+              form.reset();
+
+              if(data && data.success){
+                form.reset();
+                setImages(null);
+              }
+
+
+            }catch(err){
+                console.log(err);
+            } 
         }
         if(res.error){
             setImageError(res.error);
@@ -124,3 +157,4 @@ const CreateServicesForm = () => {
 };
 
 export default CreateServicesForm;
+

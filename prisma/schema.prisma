@@ -55,6 +55,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  bookings      Booking[]
+  testimonial   Testimonial[]
+  reviews       Review[]
 }
 
 model VerificationToken {
@@ -65,4 +68,122 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model Service {
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  image       String
+  packages    Package[]
+}
+
+model Team {
+  id   String @id @default(cuid())
+  name String
+  bio String
+  position String
+  image String
+}
+
+model SitePage {
+  id        String    @id @default(cuid())
+  title     String
+  slug      String    @unique
+  sections  Section[]
+  image     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Section {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  pageId      String
+  page        SitePage @relation(fields: [pageId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+
+model Package {
+  id            String      @id @default(cuid())
+  title         String
+  slug          String      @unique
+  serviceId     String
+  service       Service     @relation(fields: [serviceId], references: [id])
+  image         String
+  highlights    String?
+  description   String
+  itinerary     String?
+  costInclusion String?
+  costExclusion String?
+  gallery       String[]
+  bookings      Booking[]
+  reviews       Review[]
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+
+model Review {
+  id          String      @id @default(cuid())
+  packageId   String
+  package     Package     @relation(fields: [packageId], references: [id])
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  rating      Int
+  comment     String?
+  images      String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model Testimonial {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  rating      Int
+  comment     String
+  images      String[]
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+enum RoomType {
+  PRIVATE
+  SHARED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+model Booking {
+  id              String      @id @default(cuid())
+  packageId       String
+  package         Package     @relation(fields: [packageId], references: [id])
+  userId          String?
+  fullname        String?
+  email           String?
+  phone           String
+  country         String
+  roomPreferences RoomType    @default(PRIVATE)
+  noofPerson      Int
+  message         String?
+  bookingDate     DateTime
+  status          BookingStatus @default(PENDING)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  userBooking  User?      @relation(fields: [userId], references: [id])
+}
+
+
+
+
+
+
 
