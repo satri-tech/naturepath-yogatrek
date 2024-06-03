@@ -40,6 +40,19 @@ export const authOptions: AuthOptions = {
           where: {
             email: credentials?.username,
           },
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            password: true,
+            email: true,
+            emailVerified: true,
+            role: true,
+            image: true,
+            accounts: true,
+            sessions: true,
+          },
+          
         });
 
         if (!user) throw new Error("User name or password is not correct");
