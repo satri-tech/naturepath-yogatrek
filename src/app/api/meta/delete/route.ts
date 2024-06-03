@@ -29,7 +29,7 @@ const parseResult =async (request:NextRequest)=>{
       });
     }
 
-    const deleteService = await prisma.service.delete({
+    const deleteService = await prisma.sitePage.delete({
       where: {
         id: extractData.id,
       },
@@ -40,13 +40,13 @@ const parseResult =async (request:NextRequest)=>{
 
       return NextResponse.json({
         success: true,
-        message: "service deleted successfully",
+        message: "Page removed successfully",
        
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "failed to delete the service ! Please try again",
+        message: "failed to delete the page ! Please try again",
       });
     }
   } catch (e) {

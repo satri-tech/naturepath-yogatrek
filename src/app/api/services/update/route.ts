@@ -41,13 +41,13 @@ const parseResult =async (request:NextRequest)=>{
 
       return NextResponse.json({
         success: true,
-        message: "Blog post updated",
+        message: "Service updated successfully",
        
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "failed to update the post ! Please try again",
+        message: "failed to update the service ! Please try again",
       });
     }
   } catch (e) {
