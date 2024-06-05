@@ -9,9 +9,9 @@ export async function GET(request: NextRequest) {
 
   if (!postid) {
     try {
-      const totalCount = await prisma.sitePage.count();
+      const totalCount = await prisma.user.count();
       const totalPages = Math.ceil(totalCount / limit);
-
+        console.log("count",totalCount)
       if (page > totalPages) {
         return NextResponse.json({
           status: 404,
@@ -20,10 +20,11 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getTeam = await prisma.sitePage.findMany({
+      const getTeam = await prisma.user.findMany({
         skip: (page - 1) * limit,
         take: limit,
       });
+      console.log("count",getTeam)
 
       if (getTeam && getTeam.length) {
         return NextResponse.json({
@@ -44,7 +45,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({
           
           success: false,
-          message: "Failed to fetch page. Please try again",
+          message: "Failed to fetch user list. Please try again",
       },{
         status: 404,
       });
@@ -63,34 +64,34 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  if (postid) {
-    try {
-      const getTeam = await prisma.team.findUnique({
-        where: {
-          id: postid,
-        },
-      });
+//   if (postid) {
+//     try {
+//       const getTeam = await prisma.team.findUnique({
+//         where: {
+//           id: postid,
+//         },
+//       });
 
-      if (getTeam) {
-        return NextResponse.json({
-          status: 200,
-          success: true,
-          data: getTeam,
-        });
-      } else {
-        return NextResponse.json({
-          status: 404,
-          success: false,
-          message: "page not found. Please try again",
-        });
-      }
-    } catch (e) {
-      console.error(e);
-      return NextResponse.json({
-        status: 500,
-        success: false,
-        message: "Something went wrong ! Please try again",
-      });
-    }
-  }
+//       if (getTeam) {
+//         return NextResponse.json({
+//           status: 200,
+//           success: true,
+//           data: getTeam,
+//         });
+//       } else {
+//         return NextResponse.json({
+//           status: 404,
+//           success: false,
+//           message: "Member not found. Please try again",
+//         });
+//       }
+//     } catch (e) {
+//       console.error(e);
+//       return NextResponse.json({
+//         status: 500,
+//         success: false,
+//         message: "Something went wrong ! Please try again",
+//       });
+//     }
+//   }
 }

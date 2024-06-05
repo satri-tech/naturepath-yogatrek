@@ -23,15 +23,11 @@ import React, { Suspense } from "react";
 
 
 
-
-
-
 const ServicesList = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,{  next: { tags: [`ServicesCollection`], revalidate: 600 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`, {next: { tags: [`ServicesCollection`], revalidate: 600 } }
     );
-    
     const data = await response.json();
     return (
       <Card>
