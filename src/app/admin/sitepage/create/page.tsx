@@ -9,7 +9,6 @@ const CreatePage = () => {
   return (
     <>
       <Pageheading title={"Create Site Page"} />
-
       <div className="max-w-lg">
         <CreatePageForm />
       </div>

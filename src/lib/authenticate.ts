@@ -14,7 +14,7 @@ const authHeader = request.headers.get("Authorization");
     const payload = verifyJwt(token);
 
     if (payload?.role !== "ADMIN") {
-      throw new Error("Unauthorized");
+      throw new Error("Forbidden");
     }
 
     return payload;
@@ -23,34 +23,3 @@ const authHeader = request.headers.get("Authorization");
   }
 }
 
-//   if(!token){
-//     return NextResponse.json({
-//       success: false,
-//       message: "Missing Authorization Token",
-//     })
-//   }
-
-//   if(token){
-//    let payload
-//     try {
-//       payload = verifyJwt(token);
-//     } catch (error) {
-//       return NextResponse.json({
-//         success: false,
-//         message: "Invalid Authorization Token",
-//       });
-//     }
-  
-//     if (payload?.role !== "ADMIN") {
-//       return NextResponse.json({
-//         success: false,
-//         message: "Unauthorized",
-//       });
-//     }else{
-//       return NextResponse.json({
-//         success: true,
-//         message: "Authorized",
-//       });
-//     }
-//   }
-// }
