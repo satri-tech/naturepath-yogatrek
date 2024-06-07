@@ -1,9 +1,10 @@
+import TestimonialForm from '@/components/forms/Client/testimonialForm'
 import React from 'react'
 
 const ProfilePage = () => {
   return (
     <div>
-      profile page
+     <TestimonialForm/>
     </div>
   )
 }
