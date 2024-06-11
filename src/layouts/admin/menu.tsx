@@ -34,7 +34,7 @@ export const MenuList:MenulistType[]=[
     },
     {
         id:4,
-        href:"/admin/category",
+        href:"/admin/sitepage",
         name:"Site Pages",
         icons:<Slack />
     },
