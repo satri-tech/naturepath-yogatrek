@@ -1,5 +1,6 @@
 
 import { authenticate } from "@/lib/authenticate";
+import { errorResponse } from "@/lib/errorResponse";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,10 +11,11 @@ export async function PUT(request: NextRequest) {
 
     return await parseResult(request);
   } catch (error:any) {
-    return NextResponse.json({
-      success: false,
-      message: error?.message,
-    });
+    return errorResponse(error);
+    // return NextResponse.json({
+    //   success: false,
+    //   message: error?.message,
+    // });
   }
 }
 
@@ -24,18 +26,26 @@ const parseResult =async (request:NextRequest)=>{
     const extractData = await request.json();
 
     if(!extractData.id){
-      return NextResponse.json({
-        success: false,
-        message: "id is required in the request body.",
-      });
+      return errorResponse(undefined, "id is required in the request body.", 400)
+      // return NextResponse.json({
+      //   success: false,
+      //   message: "id is required in the request body.",
+      // });
     }
-
+    const { id, title, slug, image, sections } = extractData;
     const updatedBlogPost = await prisma.sitePage.update({
       where: {
-        id: extractData.id,
+        id: id,
       },
-      data: extractData,
-    });
+      data: {
+        title,
+        slug,
+        image,
+        sections: {
+          deleteMany: {}, // Delete existing sections
+          create: sections.create, // Create new sections
+        },
+  }});
 
     if (updatedBlogPost) {
 
@@ -45,17 +55,17 @@ const parseResult =async (request:NextRequest)=>{
        
       });
     } else {
-      return NextResponse.json({
-        success: false,
-        message: "failed to update! Please try again",
-      });
+      return errorResponse(undefined, "failed to update! Please try again", 500)
+      // return NextResponse.json({
+      //   success: false,
+      //   message: "failed to update! Please try again",
+      // });
     }
-  } catch (e) {
-    console.log(e);
-
-    return NextResponse.json({
-      success: false,
-      message: "Something went wrong ! Please try again",
-    });
+  } catch (e:any) {
+    return errorResponse(e);
+    // return NextResponse.json({
+    //   success: false,
+    //   message: "Something went wrong ! Please try again",
+    // });
   }
 }

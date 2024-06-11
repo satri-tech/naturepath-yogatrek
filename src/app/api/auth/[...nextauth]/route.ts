@@ -2,7 +2,6 @@ import prisma from "@/lib/prisma";
 import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import * as bcrypt from "bcrypt";
-// import NextAuth from "next-auth/next";
 import { User } from "@prisma/client";
 import { signJWt } from "@/lib/jwt";
 import { UserWithAccessToken } from "@/lib/types";

@@ -37,7 +37,7 @@ const LoginForm = (props: Props) => {
       setIsloading(false);
     }
 
-    // ("Welcome To Sakura Dev Channel");
+    
   };
 
   return (

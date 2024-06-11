@@ -1,5 +1,6 @@
 
 import { authenticate } from "@/lib/authenticate";
+import { errorResponse } from "@/lib/errorResponse";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,10 +11,7 @@ export async function DELETE(request: NextRequest) {
 
     return await parseResult(request);
   } catch (error:any) {
-    return NextResponse.json({
-      success: false,
-      message: error?.message,
-    });
+    return errorResponse(error);
   }
 }
 
@@ -44,17 +42,19 @@ const parseResult =async (request:NextRequest)=>{
        
       });
     } else {
-      return NextResponse.json({
-        success: false,
-        message: "failed to delete the page ! Please try again",
-      });
+      return errorResponse(undefined, "failed to delete the page ! Please try again", 400)
+      // return NextResponse.json({
+      //   success: false,
+      //   message: "failed to delete the page ! Please try again",
+      // });
     }
-  } catch (e) {
+  } catch (e:any) {
     console.log(e);
-
-    return NextResponse.json({
-      success: false,
-      message: "Something went wrong ! Please try again",
-    });
+    return errorResponse(e);
+   
+    // return NextResponse.json({
+    //   success: false,
+    //   message: "Something went wrong ! Please try again",
+    // });
   }
 }
