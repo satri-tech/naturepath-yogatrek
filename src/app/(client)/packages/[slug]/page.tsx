@@ -1,6 +1,6 @@
-import Testimonials from "../Testimonials/Testimonials";
-import BookingBox from "../Testimonials/BookingBox";
-import { testimonialsData } from "../Testimonials/testimonialsData";
+import Testimonials from "../PackageDetailsPage/Testimonials";
+import BookingBox from "../PackageDetailsPage/BookingBox";
+import { testimonialsData } from "../PackageDetailsPage/testimonialsData";
 import {
   Card,
   CardContent,
