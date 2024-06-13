@@ -1,6 +1,11 @@
+<<<<<<< HEAD
+
+import PackageDetails from "@/components/Package/PackageDetails";
+=======
 import Testimonials from "../PackageDetailsPage/Testimonials";
 import BookingBox from "../PackageDetailsPage/BookingBox";
 import { testimonialsData } from "../PackageDetailsPage/testimonialsData";
+>>>>>>> main
 import {
   Card,
   CardContent,
@@ -19,8 +24,11 @@ const PackageDetail = () => {
       <div className="flex flex-col lg:flex-row gap-6">
     <div className="lg:w-4/6">
       <div className="container max-w-3xl grid justify-center">
+
+      
+
         {/* top highlights  */}
-        <div className="flex gap-3 mx-auto">
+        <div className="flex gap-3 mx-auto mb-4">
           <div className="bg-primary text-white p-3 flex items-center gap-2 max-w-fit rounded-tl-xl rounded-br-xl">
             <Calendar size={32} />
             <div className="text-lg font-medium flex flex-col">
@@ -47,6 +55,21 @@ const PackageDetail = () => {
             </div>
           </div>
         </div>
+
+        <PackageDetails
+      duration="14 Days"
+      destination="Nepal"
+      tripGrade="Moderate"
+      startsAt="Kathmandu"
+      endsAt="Kathmandu"
+      accommodation="Tea House or Lodge"
+      maxAltitude="Annapurna Base Camp (4130 Meters)"
+      activity="Trekking"
+      groupType="Any"
+      groupSize="1 to 10"
+      bestSeason="Spring and Autumn"
+      meals="Breakfast, Lunch, and Dinner During Trek"
+    />
 
         {/* Description  */}
         <Card className="bg-indigo-600 text-black my-4 p-4">

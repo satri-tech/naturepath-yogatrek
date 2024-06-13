@@ -1,19 +1,19 @@
 import React from 'react';
-import { FaCalendarAlt, FaStar, FaMinus, FaPlus } from 'react-icons/fa';
+// import { FaCalendarAlt, FaStar, FaMinus, FaPlus } from 'react-icons/fa';
 
 const BookingBox: React.FC = () => {
   return (
     <div className="p-6 bg-white border border-gray-300 rounded-lg shadow-md max-w-sm">
       <div className="border-b pb-4 mb-4">
         <div className="flex items-center space-x-2">
-          <FaStar className="text-yellow-500" />
+          {/* <FaStar className="text-yellow-500" /> */}
           <span className="text-sm text-gray-600">Quick Book to travel</span>
         </div>
       </div>
       <div className="mb-4">
         <label className="block text-gray-700 mb-1" htmlFor="tripDate">Departure Date</label>
         <div className="relative">
-          <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
+          {/* <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" /> */}
           <input
             type="date"
             id="tripDate"
@@ -28,7 +28,7 @@ const BookingBox: React.FC = () => {
             className="w-10 h-10 border rounded-l-md bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center"
             aria-label="Decrease number of travelers"
           >
-            <FaMinus />
+            {/* <FaMinus /> */}
           </button>
           <input
             type="number"
@@ -41,7 +41,7 @@ const BookingBox: React.FC = () => {
             className="w-10 h-10 border rounded-r-md bg-gray-100 text-gray-600 hover:bg-gray-200 flex items-center justify-center"
             aria-label="Increase number of travelers"
           >
-            <FaPlus />
+            {/* <FaPlus /> */}
           </button>
         </div>
       </div>
