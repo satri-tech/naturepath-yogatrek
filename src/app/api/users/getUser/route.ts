@@ -23,6 +23,17 @@ export async function GET(request: NextRequest) {
       const getTeam = await prisma.user.findMany({
         skip: (page - 1) * limit,
         take: limit,
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          emailVerified: true,
+          role: true,
+          image: true,
+          accounts: true,
+          sessions: true,
+        },
       });
       console.log("count",getTeam)
 

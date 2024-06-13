@@ -1,3 +1,4 @@
+import { errorResponse } from "@/lib/errorResponse";
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,15 +10,9 @@ export async function GET(request: NextRequest) {
 
   if (!postid) {
     try {
-      const totalCount = await prisma.team.count();
+      const totalCount = await prisma.package.count();
       const totalPages = Math.ceil(totalCount / limit);
-      if(totalPages === 0){
-        return NextResponse.json({
-          status: 200,
-          success: true,
-          message: "No member found ",
-        });
-      }
+
       if (page > totalPages) {
         return NextResponse.json({
           status: 404,
@@ -26,7 +21,7 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getTeam = await prisma.team.findMany({
+      const getTeam = await prisma.package.findMany({
         skip: (page - 1) * limit,
         take: limit,
       });
@@ -47,34 +42,23 @@ export async function GET(request: NextRequest) {
           status: 200,
         });
       } else {
-        return NextResponse.json({
-          
-          success: false,
-          message: "Failed to fetch team member. Please try again",
-      },{
-        status: 404,
-      });
+        return errorResponse(undefined, "Failed to fetch page. Please try again", 500)
       }
     } catch (e) {
-      console.error(e);
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Something went wrong ! Please try again",
-        },
-        {
-          status: 500,
-        }
-      );
+     
+      return errorResponse(undefined, "Something went wrong ! Please try again", 500)
     }
   }
 
   if (postid) {
     try {
-      const getTeam = await prisma.team.findUnique({
+      const getTeam = await prisma.package.findUnique({
         where: {
           id: postid,
         },
+        // include: {
+        //   sections: true, 
+        // },
       });
 
       if (getTeam) {
@@ -84,19 +68,11 @@ export async function GET(request: NextRequest) {
           data: getTeam,
         });
       } else {
-        return NextResponse.json({
-          status: 404,
-          success: false,
-          message: "Member not found. Please try again",
-        });
+        return errorResponse(undefined, "Page not Found ! Please try again", 404)
+        
       }
     } catch (e) {
-      console.error(e);
-      return NextResponse.json({
-        status: 500,
-        success: false,
-        message: "Something went wrong ! Please try again",
-      });
+      return errorResponse(undefined, "Something went wrong ! Please try again", 500)
     }
   }
 }

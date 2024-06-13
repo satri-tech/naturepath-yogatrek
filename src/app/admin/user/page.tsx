@@ -21,20 +21,19 @@ import { CircleCheck, CirclePlus } from "lucide-react";
 const UserList = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/user/getUser`,
-      { next: { tags: [`PageCollection`], revalidate: 600 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/getUser`,
+      { next: { tags: [`UserCollection`], revalidate: 10 } }
     );
     const data = await response.json();
-    console.log(data)
     return (
       <Table>
         <TableHeader>
           <TableRow>
             <TableHead>Users</TableHead>
-            <TableHead className="hidden sm:table-cell">Type</TableHead>
-            <TableHead className="hidden sm:table-cell">Status</TableHead>
-            <TableHead className="hidden md:table-cell">Date</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            {/* <TableHead className="hidden sm:table-cell">Type</TableHead> */}
+            <TableHead className="hidden sm:table-cell">Role</TableHead>
+            {/* <TableHead className="hidden md:table-cell">Date</TableHead>
+            <TableHead className="text-right">Amount</TableHead> */}
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,13 +43,16 @@ const UserList = async () => {
                 <div className="font-medium">
                   {Item.firstName}&nbsp;{Item.lastName}
                 </div>
-                <div className="hidden text-sm text-muted-foreground md:inline">
-                  {Item.email}&nbsp;
+                <div className="hidden text-sm text-muted-foreground  md:flex">
+                  {Item.email}&nbsp;<span>
+
+                  
                   {Item.emailVerified ? (
                     <CircleCheck
                       color="#1ab72c"
                       strokeWidth={3}
                       absoluteStrokeWidth
+                      size={16}
                     />
                   ) : (
                     <CirclePlus
@@ -58,18 +60,20 @@ const UserList = async () => {
                       strokeWidth={3}
                       absoluteStrokeWidth
                       className="rotate-45"
+                      size={16}
                     />
                   )}
+                  </span>
                 </div>
               </TableCell>
-              <TableCell className="hidden sm:table-cell">Sale</TableCell>
+              {/* <TableCell className="hidden sm:table-cell">Sale</TableCell> */}
               <TableCell className="hidden sm:table-cell">
                 <Badge className="text-xs" variant="secondary">
-                  Fulfilled
+                  {Item.role}
                 </Badge>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
-              <TableCell className="text-right">$250.00</TableCell>
+              {/* <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
+              <TableCell className="text-right">$250.00</TableCell> */}
             </TableRow>
           ))}
         </TableBody>

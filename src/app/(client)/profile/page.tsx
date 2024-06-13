@@ -4,9 +4,9 @@ import ProfileInfo from './ProfileInfo';
 import PasswordResetForm from './PasswordResetForm';
 import Testimonials from './Testimonialss';
 import RecentBookings from './RecentBookings';
-import ProfilePictureUpload from './ProfilePictureUpload';
-import Pricing from './Pricing';
-import Services from './Services';
+// import ProfilePictureUpload from './ProfilePictureUpload';
+// import Pricing from './Pricing';
+// import Services from './Services';
 const ProfilePage: React.FC = () => {
     return (
         <div className="min-h-screen bg-gray-100 p-8">
