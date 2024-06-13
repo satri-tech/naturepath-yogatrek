@@ -1,7 +1,7 @@
 // pages/PackageDetailsPage.tsx
 
 import React from 'react';
-import PackageDetails from './PackageDetails';
+import PackageDetails from './PackageDetailsPage/PackageDetails';
 
 const PackageDetailsPage: React.FC = () => (
   <div className="container mx-auto p-6">
