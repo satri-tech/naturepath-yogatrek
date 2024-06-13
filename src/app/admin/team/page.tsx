@@ -27,7 +27,6 @@ const TeamList = async () => {
       { next: { tags: [`MemberCollection`], revalidate: 100 } }
     );
     const data = await response.json();
-    console.log(data);
     return (
       <Table>
         <TableHeader>

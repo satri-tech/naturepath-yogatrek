@@ -25,7 +25,6 @@ const UserList = async () => {
       { next: { tags: [`UserCollection`], revalidate: 10 } }
     );
     const data = await response.json();
-    console.log(data)
     return (
       <Table>
         <TableHeader>

@@ -42,7 +42,6 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
       //convert `FileList` to `File[]`
       setImageError("");
       const _files = Array.from(e.target.files);
-      console.log("files from images", _files[0]);
       setImages(_files[0]);
     }
   };
