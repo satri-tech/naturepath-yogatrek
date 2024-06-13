@@ -1,0 +1,36 @@
+import UpdatePackageForm from "@/components/forms/admin/Package/UpdatePackageForm";
+import Pageheading from "@/layouts/admin/Pageheading";
+import Error from "@/layouts/error/Error";
+import { getServiceslist } from "@/lib/actions.ts/service";
+import React, { Suspense } from "react";
+
+const Package = async ({ id }: { id: string }) => {
+  const service = await getServiceslist();
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/getPackage?id=${id}`,
+      { next: { tags: [`Package-${id}`] } }
+    );
+    const data = await response.json();
+    console.log("package",data.data)
+    return <UpdatePackageForm packages={data.data} service={service} />;
+  } catch (error) {
+    console.log(error);
+    return <Error status={404} message="Bad request" />;
+  }
+};
+
+const CreatePage = async ({ params }: { params: { id: string } }) => {
+  return (
+    <>
+      <Pageheading title={"Update "} />
+      <div className="max-w-lg">
+        <Suspense fallback={<div>Loading...</div>}>
+          <Package id={params.id} />
+        </Suspense>
+      </div>
+    </>
+  );
+};
+
+export default CreatePage;
