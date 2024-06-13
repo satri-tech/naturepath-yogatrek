@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 
 import PackageDetails from "@/components/Package/PackageDetails";
+=======
+import Testimonials from "../PackageDetailsPage/Testimonials";
+import BookingBox from "../PackageDetailsPage/BookingBox";
+import { testimonialsData } from "../PackageDetailsPage/testimonialsData";
+>>>>>>> main
 import {
   Card,
   CardContent,
@@ -26,7 +32,7 @@ const PackageDetail = () => {
           <div className="bg-primary text-white p-3 flex items-center gap-2 max-w-fit rounded-tl-xl rounded-br-xl">
             <Calendar size={32} />
             <div className="text-lg font-medium flex flex-col">
-              <span>3D/2N</span>Duration
+              <span>14D/13N</span>Duration
             </div>
           </div>
           <div className="bg-primary text-white p-3 flex items-center gap-2 max-w-fit rounded-tl-xl rounded-br-xl">
@@ -66,90 +72,60 @@ const PackageDetail = () => {
     />
 
         {/* Description  */}
-        <Card className="bg-indigo-600 text-white my-4 p-4">
+        <Card className="bg-indigo-600 text-black my-4 p-4">
           <CardTitle className="text-center">Highlight</CardTitle>
-          <CardContent className="mt-4">
-            <ul>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor.
-              </li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet .</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-          </CardContent>
+          <div className="p-6">
+      <h1 className="text-2xl font-bold mb-6"></h1>
+      <Testimonials {...testimonialsData}/>
+    </div>
         </Card>
+
         <div className="my-4">
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
-          incidunt corporis nobis veritatis? Temporibus incidunt omnis est
-          aliquam deleniti velit totam, saepe iusto, voluptatibus natus minus
-          neque dignissimos aperiam assumenda.
+        This 14-day, 13-night trekking package in Nepal is perfect for adventure seekers, priced at $120 per person for shared rooms and $180 per person for private rooms.
+         The moderate-grade trek starts and ends in Kathmandu, with accommodation in tea houses or lodges. 
+         Trekkers will reach the Annapurna Base Camp at 4130 meters, with meals provided throughout the trek. 
         </p>
         <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
-          incidunt corporis nobis veritatis? Temporibus incidunt omnis est
-          aliquam deleniti velit totam, saepe iusto, voluptatibus natus minus
-          neque dignissimos aperiam assumenda.
+        Additionally, this package offers a blend of natural beauty and cultural immersion,
+         with every detail designed to enhance the trekking experience.
         </p>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolores
-          incidunt corporis nobis veritatis? Temporibus incidunt omnis est
-          aliquam deleniti velit totam, saepe iusto, voluptatibus natus minus
-          neque dignissimos aperiam assumenda.
-        </p>
-
         </div>
-        <div className="grid sm:grid-cols-2 gap-4">
 
-        <Card className="bg-green-500 text-white my-4 p-4">
+        <div className="grid sm:grid-cols-2 gap-5">
+        <Card className="bg-green-500 text-white p-4">
           <CardTitle className="text-center">Daily Schedule</CardTitle>
-          <CardContent className="mt-4">
-            <ul>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor.
-              </li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet .</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-          </CardContent>
+          <div className="md:col-span-1 my-5">
+        <BookingBox />
+      </div>
         </Card>
         <div className="grid gap-4">
-        <Card className="bg-orange-400 text-white my-4 p-4">
-          <CardTitle className="text-center">Include</CardTitle>
-          <CardContent className="mt-4">
-            <ul>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor.
-              </li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet .</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-          </CardContent>
-        </Card>
-        <Card className="bg-red-600 text-white my-4 p-4">
-          <CardTitle className="text-center">Not Include</CardTitle>
-          <CardContent className="mt-4 text-sm">
-            <ul>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>
-                Lorem ipsum dolor sit amet consectetur Lorem, ipsum dolor.
-              </li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-              <li>Lorem ipsum dolor sit amet .</li>
-              <li>Lorem ipsum dolor sit amet consectetur.</li>
-            </ul>
-          </CardContent>
-        </Card>
+      <Card className="bg-orange-400 text-white p-4">
+        <CardTitle className="text-center font-serif">Include</CardTitle>
+        <CardContent className="mt-4">
+          <ul className="list-disc list-inside">
+            <li>Accommodation: Tea House or Lodge.</li>
+            <li>Meals: Breakfast, Lunch, and Dinner During Trek.</li>
+            <li>Travel insurance.</li>
+            <li>Activity: Trekking.</li>
+            <li>Welcome and farewell dinners in Kathmandu.</li>
+            <li>First aid medical kit.</li>
+          </ul>
+        </CardContent>
+      </Card>
+      <Card className="bg-red-600 text-white  p-4">
+        <CardTitle className="text-center font-serif">Not Include</CardTitle>
+        <CardContent className="mt-4 text-sm">
+          <ul className="list-disc list-inside">
+            <li>International flights to and from Nepal.</li>
+            <li>Nepal entry visa.</li>
+            <li>Rescue insurance.</li>
+            <li>Personal expenses (e.g., drinks, snacks, and souvenirs).</li>
+            <li>Alcohol.</li>
+            <li>Any other costs not specifically mentioned above.</li>
+          </ul>
+        </CardContent>
+      </Card>
         </div>
         </div>
       </div>
@@ -163,3 +139,5 @@ const PackageDetail = () => {
 };
 
 export default PackageDetail;
+
+
