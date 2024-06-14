@@ -2,15 +2,20 @@ import Services from "@/components/Category/Services";
 import Hero from "@/components/Home/Hero";
 import PopularPackage from "@/components/Package/PopularPackage";
 import Testimonial from "./packages/Testimonial/Testimonial";
+import Testimonials from "@/components/Home/Testimonials";
+import FeaturedCard from "@/components/Home/featuredSection/FeaturedCard";
+import FeaturedComponents from "@/components/Home/featuredSection/FeaturedComponents";
 
 export default function Home() {
   return (
     <div>
-      <Hero/>
-      <PopularPackage/>
-    <Services/>
-    
-    <div className=" items-center justify-center bg-orange-300 py-4 px-4">
+      <Hero />
+      <FeaturedComponents/>
+      <PopularPackage />
+      <Services />
+      <Testimonials />
+
+      {/* <div className=" items-center justify-center bg-orange-300 py-4 px-4">
       <Testimonial
         name="Michael Dada"
         title="Everest Visitor"
@@ -21,9 +26,7 @@ export default function Home() {
         rating={5}
         agent="Ghimiray"
       />
+    </div> */}
     </div>
-
-    </div>
-    
   );
-};
+}

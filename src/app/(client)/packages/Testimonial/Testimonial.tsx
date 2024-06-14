@@ -14,7 +14,7 @@ const Testimonial: React.FC<TestimonialProps> = ({ name, title, text, image, rat
   return (
     <div className="bg-pink-500 p-4 rounded-lg shadow-lg text-white w-half mx-1">
       <div className="flex items-center mb-3">
-        <img src={image} alt={name} className="w-12 h-12 rounded-full mr-3" />
+       
         <div>
           <h3 className="text-lg font-bold">{name}</h3>
           <p className="text-sm">{title}</p>
