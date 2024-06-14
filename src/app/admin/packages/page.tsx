@@ -102,7 +102,7 @@ const PackageList = async () => {
       </Table>
     );
   } catch (err) {
-    console.log(err);
+    
     return <Error status={404} message="Bad request" />;
   }
 };

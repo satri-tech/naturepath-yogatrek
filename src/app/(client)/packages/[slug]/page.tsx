@@ -1,11 +1,8 @@
-<<<<<<< HEAD
 
-import PackageDetails from "@/components/Package/PackageDetails";
-=======
-import Testimonials from "../PackageDetailsPage/Testimonials";
+// import PackageDetails from "@/components/Package/PackageDetails";
+// import Testimonials from "../PackageDetailsPage/Testimonials";
 import BookingBox from "../PackageDetailsPage/BookingBox";
 import { testimonialsData } from "../PackageDetailsPage/testimonialsData";
->>>>>>> main
 import {
   Card,
   CardContent,
@@ -56,7 +53,7 @@ const PackageDetail = () => {
           </div>
         </div>
 
-        <PackageDetails
+        {/* <PackageDetails
       duration="14 Days"
       destination="Nepal"
       tripGrade="Moderate"
@@ -69,14 +66,14 @@ const PackageDetail = () => {
       groupSize="1 to 10"
       bestSeason="Spring and Autumn"
       meals="Breakfast, Lunch, and Dinner During Trek"
-    />
+    /> */}
 
         {/* Description  */}
         <Card className="bg-indigo-600 text-black my-4 p-4">
           <CardTitle className="text-center">Highlight</CardTitle>
           <div className="p-6">
       <h1 className="text-2xl font-bold mb-6"></h1>
-      <Testimonials {...testimonialsData}/>
+      {/* <Testimonials {...testimonialsData}/> */}
     </div>
         </Card>
 
