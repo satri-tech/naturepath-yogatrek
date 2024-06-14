@@ -6,20 +6,22 @@ const Hero = () => {
       <div className="grid items-center h-full w-full text-white ">
         <div className="flex flex-col lg:flex-row items-center lg:justify-between container max-w-6xl mt-28 lg:mt-10">
           <div className="flex flex-col items-center">
-            <h1 className="text-3xl font-bold">Deep Blue Cinematics!</h1>
+            <h1 className="text-3xl font-bold">
+              Unleash Your Inner Peace,<br/> Yoga Journeys in the Himalayas
+            </h1>
             <div>
-              <button>Our Work</button> <b/>
-              <button>Our Story</button>
+              {/* <button>Our Work</button> <b />
+              <button>Our Story</button> */}
             </div>
           </div>
 
-          <div className="grid sm:grid-cols gap-5"> 
-            <div className="bg-green-500 text-white p-2"> 
-              <h2 className="text-center">Don't Miss-out!</h2> 
+          <div className="grid sm:grid-cols gap-5">
+            {/* <div className="bg-green-500 text-white p-2"> */}
+              <h2 className="text-center">Don&apos;t Miss-out!</h2>
               <div className="my-6">
-                <BookingBox /> 
+                <BookingBox />
               </div>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
@@ -28,8 +30,9 @@ const Hero = () => {
         autoPlay
         muted
         loop
-        className="absolute top-0 w-full h-full object-cover brightness-50 -z-10"
+        className="absolute top-0 w-full h-full object-cover brightness-50 -z-20"
       />
+      <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 bg-primary/80"/>
       {/* <Image
         src="/hero/Image.jpeg"
         alt="hero image"
