@@ -1,5 +1,5 @@
 import React from "react";
-import BookingBox from "@/app/(client)/packages/PackageDetailsPage/BookingBox";
+import BookingBox from "@/components/Package/PackageDetailsPage/BookingBox";
 const Hero = () => {
   return (
     <div className="container px-0 relative w-full h-[100vh] -translate-y-20 -z-10">

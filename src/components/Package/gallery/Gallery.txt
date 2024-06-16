@@ -1,0 +1,37 @@
+// 'use client'
+// import { ThumbnailData } from '@/lib/type/blogpost'
+// import React from 'react'
+// import ImageContainer from './ImageContainer'
+// import Carousel from '../Home/Hero/carousel'
+// import LightBox from './Lightbox'
+// import { X } from 'lucide-react'
+
+// const Gallery = ({ data }: { data: ThumbnailData[] }) => {
+//     const [isLightboxOpen, setIsLightboxOpen] = React.useState(false)
+//     const [lightboxImageIndex, setLightboxImageIndex] = React.useState(0)
+
+//     const handleOpenLightbox = (index: number) => {
+//         setLightboxImageIndex(index)
+//         setIsLightboxOpen(true)
+//     }
+//     return (
+//         <div className='px-1 my-3 grid grid-cols-gallery auto-rows-[10px]'>
+//             {data.map((item, index) => (
+//                 <ImageContainer key={item.id} item={item} onClick={() => handleOpenLightbox(index)} />
+//             ))
+//             }
+//             {isLightboxOpen &&
+//                 <div className='fixed top-0 left-0 z-50 w-full h-full bg-black md:bg-black/70'>
+//                     <div className='p-4 m-auto relative'>
+//                         <div className='absolute top-4 right-4 z-50 text-white' onClick={() => {setIsLightboxOpen(false); setLightboxImageIndex(0)}}>
+//                             <X />
+//                         </div>
+//                         <LightBox images={data} currentPos={lightboxImageIndex} />
+//                     </div>
+//                 </div>
+//             }
+//         </div>
+//     )
+// }
+
+// export default Gallery
