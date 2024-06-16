@@ -7,7 +7,7 @@ import { signJWt } from "@/lib/jwt";
 import { UserWithAccessToken } from "@/lib/types";
 
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   pages:{
     signIn: "/auth/signin"
   },

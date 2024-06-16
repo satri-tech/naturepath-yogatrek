@@ -2,14 +2,16 @@ import Image from "next/image";
 import React from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const PackageCard = () => {
   return (
+    <Link href={'/packages/test-title'}>
     <div className="relative">
       <div className=" bg-primary mt-4 grid absolute top-0 -right-2 z-20 p-3 rounded-tl-xl">
-        <span className="text-gray-600 text-xs text-center ">Starts at </span>
+        <span className="text-secondary text-xs text-center ">Starts at </span>
         <span className="ml-2 text-lg font-bold text-white "> 1310 $</span>
-        <span className="text-gray-600 text-xs text-center line-through ">
+        <span className="text-xs text-center line-through  text-secondary">
           1800 ${" "}
         </span>
       </div>
@@ -45,15 +47,16 @@ const PackageCard = () => {
             <Button variant={"default"} className="w-full py-2 px-4 ">
               Book Now
             </Button>
-            <Button variant={"secondary"} className="w-full py-2 px-4 ">
+            {/* <Button variant={"secondary"} className="w-full py-2 px-4 ">
               Learn More
-            </Button>
+            </Button> */}
             
           </div>
         
         </div>
       </div>
     </div>
+     </Link>
   );
 };
 

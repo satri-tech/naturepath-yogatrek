@@ -75,34 +75,48 @@ export async function GET(request: NextRequest) {
     }
   }
 
-//   if (postid) {
-//     try {
-//       const getTeam = await prisma.team.findUnique({
-//         where: {
-//           id: postid,
-//         },
-//       });
+  if (postid) {
+    try {
+      const getTeam = await prisma.user.findUnique({
+        where: {
+          id: postid,
+        }, select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          password: false,
+          email: true,
+          emailVerified: true,
+          role: true,
+          image: true,
+          accounts: true,
+          sessions: true,
+          bookings:true,
+          testimonial:true, 
+          reviews:true  
+        },
+      });
 
-//       if (getTeam) {
-//         return NextResponse.json({
-//           status: 200,
-//           success: true,
-//           data: getTeam,
-//         });
-//       } else {
-//         return NextResponse.json({
-//           status: 404,
-//           success: false,
-//           message: "Member not found. Please try again",
-//         });
-//       }
-//     } catch (e) {
-//       console.error(e);
-//       return NextResponse.json({
-//         status: 500,
-//         success: false,
-//         message: "Something went wrong ! Please try again",
-//       });
-//     }
-//   }
+      if (getTeam) {
+        return NextResponse.json({
+          status: 200,
+          success: true,
+          data: getTeam,
+        });
+      } else {
+        return NextResponse.json({
+          status: 404,
+          success: false,
+          message: "Member not found. Please try again",
+        });
+      }
+    } catch (e) {
+      console.error(e);
+      return NextResponse.json({
+        status: 500,
+        success: false,
+        message: "Something went wrong ! Please try again",
+      });
+    }
+  }
 }
