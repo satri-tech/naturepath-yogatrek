@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import StarRating from "@/components/ui/starRating";
 import { useSession } from "next-auth/react";
+import { TestimonialWithUser } from "@/components/Home/Testimonials";
+import { comment } from "postcss";
 
 const schema = z.object({
   rating: z
@@ -28,35 +30,64 @@ const schema = z.object({
 
 type TestimonialFormValues = z.infer<typeof schema>;
 
-export default function TestimonialForm() {
+export default function TestimonialForm({testimonial}:{testimonial:TestimonialWithUser}) {
   const session = useSession();
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
+    defaultValues:{
+      rating:testimonial?.rating?? 0,
+      comment:testimonial?.comment?? ""
+    },
     mode: "onBlur",
     reValidateMode: "onChange",
+    
   });
 
   const onSubmit = async (values: TestimonialFormValues) => {
     try {
-      const formdata = {
-        userId: session.data?.user.id,
-        rating: values.rating,
-        comment: values.comment,
-      };
-      const jsonData = JSON.stringify(formdata);
+      if(testimonial){
+        if(testimonial.rating !==values.rating || testimonial.comment !== values.comment){
+          const formdata = {
+            userId: session.data?.user.id,
+            rating: values.rating,
+            comment: values.comment,
+          };
 
-      const response = await fetch("/api/testimonial/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `bearer ${session.data?.user.accessToken}`,
-        },
-        body: jsonData,
-      });
+          const jsonData = JSON.stringify(formdata);
+          const response = await fetch("/api/testimonial/create", {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${session.data?.user.accessToken}`,
+            },
+            body: jsonData,
+          });
+          const data = await response.json();
+        }else{
+          console.log("updated")
+        }
+      
+      }else{
 
-      const data = await response.json();
-      console.log(data);
+        const formdata = {
+          userId: session.data?.user.id,
+          rating: values.rating,
+          comment: values.comment,
+        };
+        const jsonData = JSON.stringify(formdata);
+        const response = await fetch("/api/testimonial/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
+          },
+          body: jsonData,
+        });
+        const data = await response.json();
+      }
+
+
       // revalidateTag("ServiceCollection")
       
 
@@ -119,8 +150,12 @@ export default function TestimonialForm() {
         </FormControl>
         {errors.comment && <FormMessage>{errors.comment.message}</FormMessage>}
       </FormField> */}
-
-          <Button type="submit">Add Review</Button>
+        {testimonial ? 
+        <Button type="submit">Update Review</Button>
+        :
+        <Button type="submit">Add Review</Button>
+        
+      }
         </form>
       </Form>
     </div>

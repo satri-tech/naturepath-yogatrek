@@ -9,8 +9,8 @@ const PackagePage = () => {
   return (
     <div>
       <Topbanner title='Explore Suitable Package'/>
-      <div className="conatiner max-w-6xl  my-10 mx-4 lg:mx-auto lg:px-4 gap-6 grid grid-cols-1 md:grid-cols-2 ">
-      <div className='md:col-span-2'>
+      <div className="conatiner max-w-[1600px]  my-10 mx-4 lg:mx-auto lg:px-4 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className='sm:col-span-2 lg:col-span-3'>
         <PackageFilterForm/>
       </div>
         {[0, 1, 2, 3,4,5,6,7,8,9,10].map((items) => (

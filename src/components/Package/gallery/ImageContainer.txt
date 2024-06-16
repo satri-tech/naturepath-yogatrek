@@ -1,0 +1,35 @@
+
+import Image from 'next/image'
+import React from 'react'
+
+const ImageContainer = ({ item, onClick }: { item: string, onClick: () => void }) => {
+    // const widthHeightRatio = item.attributes.height / item.attributes.width
+    // const galleryHeight = Math.ceil(250 * widthHeightRatio)
+    // const photoSpans = Math.ceil(galleryHeight / 10) + 1
+    return (
+        <div className='w-[250px] justify-self-center'
+            // style={{ gridRow: `span ${photoSpans}` }}
+        >
+            <div className='grid place-content-center'>
+                <div className='rounded-xl overflow-hidden group'
+                onClick={onClick}
+                >
+                    <Image
+                        src={item}
+                        alt={item}
+                        width={250}
+                        height={250}
+                        // height={galleryHeight}
+
+                        quality={100}
+                        sizes='250px'
+                        className='group-hover:opacity-75'
+                    />
+
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default ImageContainer
