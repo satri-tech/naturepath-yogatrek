@@ -1,12 +1,12 @@
 // pages/PackageDetailsPage.tsx
 
 import React from 'react';
-import PackageDetails from './PackageDetailsPage/PackageDetails';
+// import PackageDetails from './PackageDetailsPage/PackageDetails';
 
 const PackageDetailsPage: React.FC = () => (
   <div className="container mx-auto p-6">
     <h1 className="text-3xl font-bold mb-6">Trekking Package Details</h1>
-    <PackageDetails
+    {/* <PackageDetails
       duration="14 Days"
       destination="Nepal"
       tripGrade="Moderate"
@@ -19,7 +19,7 @@ const PackageDetailsPage: React.FC = () => (
       groupSize="1 to 10"
       bestSeason="Spring and Autumn"
       meals="Breakfast, Lunch, and Dinner During Trek"
-    />
+    /> */}
   </div>
 );
 
