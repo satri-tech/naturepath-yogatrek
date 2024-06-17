@@ -12,8 +12,8 @@ const GetFeaturedcomponets=async()=>{
             `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/getPackage`,
             { next: { tags: [`PackageCollection`], revalidate: 600 } }
           );
-          const data = await response.json();
-          const repeatedData = [].concat(data.data, data.data, data.data) as Package[];
+          const features= data.data?? []
+          const repeatedData = [].concat(features, features, features) as Package[];
            
           return (
             <>
