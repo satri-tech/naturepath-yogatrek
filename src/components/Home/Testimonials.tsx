@@ -26,7 +26,7 @@ const Gettestimonial = async () => {
     const data = await response.json();
 
   
-    return (<TestimonialsCarousel testimonial={data.data}/>
+    return (<TestimonialsCarousel testimonial={data?.data?? []}/>
       
     );
   } catch (err:any) {

@@ -14,7 +14,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {format } from "date-fns";
+import { format } from "date-fns";
 import {
   Select,
   SelectContent,
@@ -29,24 +29,73 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { Package } from "@prisma/client";
 
-const Bookingform = () => {
 
-  const params = useParams()
-  const {slug}=params
-  console.log(slug)
+const Bookingform = ({packages}:{packages: Package[]}) => {
+  console.log("packages",packages)
+  const params = useParams();
+  const { slug } = params;
+  console.log(slug);
+  const session = useSession();
 
   const form = useForm<z.infer<typeof BookingFormSchema>>({
     resolver: zodResolver(BookingFormSchema),
-    mode:"onBlur",
-    reValidateMode:"onChange"
+    mode: "onBlur",
+    reValidateMode: "onChange",
   });
+  
+  console.log("session",session)
 
+  async function onSubmit(values: z.infer<typeof BookingFormSchema>) {
+    try {
+      if(session.data){
+        const formdata = {
+          packageId: values.package,
+          userId: session.data?.user.id,
+          fullname: values.FullName,
+          email: values.Email,
+          phone: values.contact,
+          country: values.country,
+          roomPreferences: values.roomPeferance,
+          noofPerson: parseInt(values.NoofPerson),
+          message: values.Message,
+          bookingDate: values.StartingDate,
+        };
+        const jsonData = JSON.stringify(formdata);
+        const response = await fetch("/api/booking/create", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
+          },
+          body: jsonData,
+        });
+        const data = await response.json();
 
-  function onSubmit(values: z.infer<typeof BookingFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+      }else{
+        const formdata = {
+          packageId: values.package,
+          fullname: values.FullName,
+          email: values.Email,
+          phone: values.contact,
+          country: values.country,
+          roomPreferences: values.roomPeferance,
+          noofPerson: parseInt(values.NoofPerson),
+          message: values.Message,
+          bookingDate: values.StartingDate,
+        };
+        const jsonData = JSON.stringify(formdata);
+        const response = await fetch("/api/booking/create", {
+          method: "POST",
+          body: jsonData,
+        });
+        const data = await response.json();
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -55,6 +104,7 @@ const Bookingform = () => {
         <FormField
           control={form.control}
           name="FullName"
+          defaultValue={session ? `${session.data?.user?.firstName?? ""} ${session.data?.user?.lastName?? ""}` :""}
           render={({ field }) => (
             <FormItem className="space-y-0">
               <FormControl>
@@ -95,6 +145,7 @@ const Bookingform = () => {
         <FormField
           control={form.control}
           name="Email"
+          defaultValue={session ? `${session.data?.user?.email?? ""}` :""}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -109,16 +160,20 @@ const Bookingform = () => {
           name="package"
           render={({ field }) => (
             <FormItem>
-              <Select onValueChange={field.onChange} defaultValue={!!slug ? slug as string:field.value} disabled={!!slug }>
+              <Select
+                onValueChange={field.onChange}
+                defaultValue={!!slug ? (packages.filter((item)=> item.slug === slug)[0].id) : field.value}
+                // disabled={!!slug}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a package" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="hello">Hello</SelectItem>
-                  <SelectItem value="m@google.com">package 2</SelectItem>
-                  <SelectItem value="m@support.com">package 3</SelectItem>
+                  {packages && packages.map((item)=>(
+                    <SelectItem className="line-clamp-1" value={item.id} key={item.id}>{item.title}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -148,69 +203,67 @@ const Bookingform = () => {
         />
 
         <div className="flex flex-wrap gap-2">
-
-        
-        <FormField
-          control={form.control}
-          name="StartingDate"
-          render={({ field }) => (
-            <FormItem>
-              {/* <FormLabel>Date of birth</FormLabel> */}
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={"outline"}
-                      className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
-                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) =>
-                      date <
-                      new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
-                    }
-                    initialFocus
+          <FormField
+            control={form.control}
+            name="StartingDate"
+            render={({ field }) => (
+              <FormItem>
+                {/* <FormLabel>Date of birth</FormLabel> */}
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "w-[240px] pl-3 text-left font-normal",
+                          !field.value && "text-muted-foreground"
+                        )}
+                      >
+                        {field.value ? (
+                          format(field.value, "PPP")
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      disabled={(date) =>
+                        date <
+                        new Date(new Date().getTime() - 24 * 60 * 60 * 1000)
+                      }
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="NoofPerson"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={1}
+                    step={1}
+                    pattern="[0-9]*"
+                    placeholder="Number of Person"
+                    {...field}
                   />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="NoofPerson"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="number"
-                  min={1}
-                  step={1}
-                  pattern="[0-9]*"
-                  placeholder="Number of Person"
-                  {...field}
-                />
-              </FormControl>   
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <FormField
           control={form.control}
