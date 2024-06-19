@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 
 const Topbanner = ({title}:{title:string}) => {
   return (
-    <div className="container px-0 relative w-full h-[60vh] -translate-y-20 -z-10">
+    <div className="container px-0 relative w-full h-[55vh] -translate-y-20 -z-10">
       <div className="grid items-center h-full w-full text-white ">
       <div className="flex flex-col items-center">
             <Badge className='bg-white'><Breadcrumbs /></Badge>

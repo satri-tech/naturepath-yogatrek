@@ -1,10 +1,10 @@
 "use client";
 
-import PasswordResetForm from "@/app/(client)/profile/PasswordResetForm";
-import ProfileInfo from "@/app/(client)/profile/ProfileInfo";
-import RecentBookings from "@/app/(client)/profile/RecentBookings";
+import PasswordResetForm from "./PasswordResetForm";
+import ProfileInfo from "./ProfileInfo";
+import RecentBookings from "./RecentBookings";
 import { useSession } from "next-auth/react";
-import Testimonials from "../Home/Testimonials";
+
 import { useQuery } from "@tanstack/react-query";
 import TestimonialForm from "../forms/Client/testimonialForm";
 
