@@ -8,12 +8,11 @@ import StarRating from "../ui/Rating";
 import Image from "next/image";
 
 function TestimonialsCarousel({
-  testimonial,
+  testimonial = [],
 }: {
   testimonial: TestimonialWithUser[];
 }) {
   const slides = testimonial;
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ function TestimonialsCarousel({
             <MoveLeft onClick={prevSlide} size={30} />
           </div>
           {/* Right Arrow */}
-          <div className="    text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <div className="text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
             <MoveRight onClick={nextSlide} size={30} />
           </div>
         </div>
@@ -67,10 +66,10 @@ function TestimonialsCarousel({
             className={`w-full h-full rounded-2xl bg-center bg-cover text-white duration-500 py-4 sm:px-4 ${
               index === currentIndex ? "" : "hidden"
             } ${
-                index % 2 == 0
-                  ? "bg-gradient-to-r from-emerald-400 to-cyan-400"
-                  : "bg-gradient-to-r from-orange-400 to-red-500"
-              }`}
+              index % 2 == 0
+                ? "bg-gradient-to-r from-emerald-400 to-cyan-400"
+                : "bg-gradient-to-r from-orange-400 to-red-500"
+            }`}
             key={item.id}
           >
             <div>
