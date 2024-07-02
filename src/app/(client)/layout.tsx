@@ -1,4 +1,3 @@
-
 import Footer from "@/layouts/Footer/Footer";
 import Navbar from "@/layouts/Header/navbar";
 
@@ -15,13 +14,10 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-
-      <>
-        <Navbar />
-        {children}
-        <Footer/>
-      </>
-           
-   
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
   );
 }

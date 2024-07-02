@@ -1,9 +1,15 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+
 import "./globals.css";
 import Provider from "@/components/HOC/provider";
 
-const inter = Inter({ subsets: ["latin"] });
+import { Noto_Sans_Display } from "next/font/google";
+
+const noto = Noto_Sans_Display({
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800"],
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -17,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` container px-0 mx-auto max-w-[1600px] ${inter.className}`}>
+      <body
+        className={` container px-0 mx-auto max-w-[1900px] ${noto.className}`}
+      >
         <Provider>{children}</Provider>
       </body>
     </html>

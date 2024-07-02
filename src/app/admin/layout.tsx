@@ -2,9 +2,6 @@ import PageWrapper from "@/layouts/PageWrapper";
 import Navbar from "@/layouts/admin/navbar";
 import Sidebar from "@/layouts/admin/sidebar";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Admin",
@@ -17,7 +14,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className={`${inter.className} flex flex-1 h-screen w-screen`}>
+    <main className={`flex flex-1 h-screen w-screen`}>
       <aside className="h-full">
         <Sidebar />
       </aside>
