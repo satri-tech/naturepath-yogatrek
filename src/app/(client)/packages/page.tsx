@@ -15,8 +15,8 @@ const PackageList = async () => {
     const data = await response.json();
     return (
       <>
-        {data.data.map((items:Package) => (
-          <PackageCard key={items.id} packages={items}/>
+        {data.data.map((items: Package) => (
+          <PackageCard key={items.id} packages={items} />
         ))}
       </>
     );
@@ -29,7 +29,7 @@ const PackagePage = () => {
   return (
     <div>
       <Topbanner title="Explore Suitable Package" />
-      <div className="conatiner max-w-[1600px]  my-10 mx-4 lg:mx-auto lg:px-4 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="container my-10 mx-4 lg:mx-auto lg:px-4 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         <div className="sm:col-span-2 lg:col-span-3">
           <PackageFilterForm />
         </div>

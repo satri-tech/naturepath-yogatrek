@@ -43,7 +43,6 @@ const ServicesList = async () => {
       </div>
     );
   } catch (error) {
-    console.log(error);
     return <Error status={404} message="Bad request" />;
   }
 };
