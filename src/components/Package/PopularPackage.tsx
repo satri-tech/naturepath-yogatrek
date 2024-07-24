@@ -27,7 +27,7 @@ const PopularPackage = () => {
   return (
     <>
       <Headings>Popular Packages</Headings>
-      <div className="conatiner max-w-6xl  my-10 mx-4 lg:mx-auto gap-6 grid grid-cols-1 md:grid-cols-2 ">
+      <div className="conatiner max-w-6xl  mb-10 mx-4 lg:mx-auto gap-6 grid grid-cols-1 md:grid-cols-2 ">
         <PackageList/>
       </div>
     </>
