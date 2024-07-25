@@ -11,7 +11,7 @@ const Headings = ({
   className?: string;
 }) => {
   return (
-    <div className="max-w-lg mx-auto mt-10 mb-8">
+    <div className="max-w-lg mx-auto mb-8">
       <h1
         className={cn(
           `relative text-2xl sm:text-3xl lg:text-4xl font-extrabold text-center ${petrona.className}`,

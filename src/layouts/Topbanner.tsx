@@ -22,7 +22,7 @@ const Topbanner = ({ title }: { title: string }) => {
         height={2048}
         className="absolute top-0 w-full h-full object-cover  -z-20"
       />
-      <div className="bg-indigo-700/85 absolute top-0 bottom-0 left-0 right-0 -z-10"></div>
+      <div className="bg-primary/50 absolute top-0 bottom-0 left-0 right-0 -z-10"></div>
     </div>
   );
 };

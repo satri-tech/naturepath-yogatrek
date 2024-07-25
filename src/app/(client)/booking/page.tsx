@@ -11,16 +11,16 @@ const BookingPage = () => {
   return (
     <div>
       <div className="px-0 relative w-full h-full -translate-y-20 z-10 -mb-20">
-        <Image
+        {/* <Image
           src="https://cdn.pixabay.com/photo/2017/04/08/22/26/buddhism-2214532_1280.jpg"
           alt="hero image"
           width={2048}
           height={2048}
           className="absolute top-0 w-full h-full object-cover  -z-20"
-        />
-        <div className="bg-indigo-700/85 absolute top-0 bottom-0 left-0 right-0 -z-10"></div>
+        /> */}
+        {/* <div className="bg-indigo-700/85 absolute top-0 bottom-0 left-0 right-0 -z-10"></div> */}
 
-        <div className="grid items-center h-full w-full text-white ">
+        <div className="grid items-center h-full w-full text-primary ">
           <div className="flex flex-col items-center mt-20">
             <Badge className="bg-white">
               <Breadcrumbs />
