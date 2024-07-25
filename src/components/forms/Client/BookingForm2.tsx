@@ -286,7 +286,7 @@ const AllBookingform = () => {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        <Button type="submit" className="w-full sm:w-fit">
           Submit
         </Button>
       </form>

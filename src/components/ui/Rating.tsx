@@ -8,11 +8,11 @@ const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
  
 
   return (
-    <div className="flex space-x-1">
+    <div className="flex">
       {[1, 2, 3, 4, 5].map((star) => (
         <svg
           key={star}
-          className={`w-6 h-6 cursor-pointer ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
+          className={`w-4 h-4 cursor-pointer ${star <= rating ? 'text-yellow-500' : 'text-gray-300'}`}
           fill="currentColor"
           viewBox="0 0 20 20"
         >

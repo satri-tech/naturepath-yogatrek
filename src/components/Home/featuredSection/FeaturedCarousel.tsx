@@ -44,7 +44,7 @@ function Carousel({ featuredlist }: { featuredlist: Package[] }) {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true, // Enable autoplay
-    autoplaySpeed: 2000, // Set autoplay speed (ms)
+    autoplaySpeed: 5000, // Set autoplay speed (ms)
     arrows: false,
   };
 
@@ -74,12 +74,12 @@ function Carousel({ featuredlist }: { featuredlist: Package[] }) {
       <Slider
         // style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
         ref={sliderRef}
-        className="w-full h-full rounded-2xl bg-center bg-cover duration-500"
+        className=" rounded-2xl bg-center bg-cover duration-500"
         {...settings}
       >
         {slides.map((item: Package, index: number) => (
           <div
-            className={`w-full h-full rounded-2xl bg-center bg-cover text-white duration-500 pb-4 sm:px-4 ${
+            className={` rounded-2xl bg-center bg-cover text-white duration-500 pb-6 lg:pb-8 sm:px-4 ${
               index === currentIndex ? "" : "hidden"
             }`}
             key={item.id}

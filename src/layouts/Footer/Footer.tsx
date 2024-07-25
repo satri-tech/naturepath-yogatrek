@@ -46,7 +46,7 @@ const Resources = [
 
 const Footer = () => {
   return (
-    <footer className="bg-primary/90 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
+    <footer className="bg-primary/85 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
       <Image
         src="https://cdn.pixabay.com/photo/2021/07/08/03/55/mount-everest-6395758_1280.jpg"
         alt="hero image"
@@ -71,7 +71,7 @@ const Footer = () => {
             </h1>
             <div className="flex sm:flex-row flex-col gap-4 max-w-md">
               <Input id="email" type="email" placeholder="Email Address" />
-              <Button>Subscribe</Button>
+              <Button className="">Subscribe</Button>
             </div>
           </div>
         </div>
