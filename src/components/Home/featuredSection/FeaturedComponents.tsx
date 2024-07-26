@@ -4,6 +4,7 @@ import FeaturedCard from "./FeaturedCard";
 import Carousel from "./FeaturedCarousel";
 import Error from "@/layouts/error/Error";
 import { Package } from "@prisma/client";
+import { petrona } from "@/app/layout";
 
 const GetFeaturedcomponets = async () => {
   try {
@@ -30,10 +31,10 @@ const GetFeaturedcomponets = async () => {
 
 const FeaturedComponents = async () => {
   return (
-    <div>
+    <section className=" section-padding-b">
       <Headings>Featuring now</Headings>
       <GetFeaturedcomponets />
-    </div>
+    </section>
   );
 };
 

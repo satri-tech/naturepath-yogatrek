@@ -1,4 +1,14 @@
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
+
+  @layer{
+    .section-padding{
+      @apply py-6 sm:py-8 md:py-10 lg:py-12 xl:py-14
+    }
+
+    .section-padding-b{
+      @apply pb-6 sm:pb-8 md:pb-10 lg:pb-12 xl:pb-14
+    }
+  }
   
