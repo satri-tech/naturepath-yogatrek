@@ -9,6 +9,7 @@ import { LucideMenu, Moon, Sun, X } from "lucide-react";
 // import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 // import { useTheme } from "next-themes";
 import MobileMenu from "./MobileMenu";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   // const [mobileMenu, setMobileMenu] = useState(false);
@@ -16,15 +17,19 @@ const Navbar = () => {
   const [show, setShow] = useState("translate-y-0 bg-transparent text-white");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [categories, setCategories] = useState(null);
+
+  const pathname = usePathname();
   // const { setTheme } = useTheme()
 
   //   const {cartItems}= useSelector((state => state.cart))
 
   const controlNavbar = () => {
-    if(!window.scrollY){
-      setShow("translate-y-0 bg-transparent text-white")
-    }else if (window.scrollY > 200) {
-      if (window.scrollY > lastScrollY ) {
+    if (!window.scrollY) {
+      if (pathname != "/booking")
+        setShow("translate-y-0 bg-transparent text-white");
+      else setShow("translate-y-0 bg-transparent text-black");
+    } else if (window.scrollY > 200) {
+      if (window.scrollY > lastScrollY) {
         setShow("-translate-y-[80px] bg-white ");
       } else {
         setShow("shadow-sm bg-white");
