@@ -42,10 +42,10 @@ const Gettestimonial = async () => {
 
 const Testimonials = () => {
   return (
-    <div className="mt-20">
+    <section className=" section-padding">
         <Headings>Happy Travellers</Headings>
       <Gettestimonial />
-    </div>
+    </section>
   );
 };
 
