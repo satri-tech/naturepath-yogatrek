@@ -2,7 +2,13 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Inter } from "next/font/google";
 
+const inter = Inter({
+  weight: [ "600"],
+  style: ["normal"],
+  subsets: ["latin"],
+});
 interface MenuType {
   id: number;
   name: string;
@@ -12,21 +18,24 @@ interface MenuType {
 
 export const Menus: MenuType[] = [
   { id: 1, name: "Home", url: "/" },
-  { id: 2, name: "Get a booking", url: "/booking" },
-  { id: 2, name: "Our Packages", url: "/packages" },
-  { id: 3, name: "Contact Us", url: "/contact" },
+  { id: 2, name: "About", url: "/about" },
+  { id: 3, name: "Booking", url: "/booking" },
+  { id: 4, name: "Service", url: "/packages" },
+  { id: 5, name: "Blog", url: "/blog" },
+  { id: 6, name: "Contact Us", url: "/contact" },
 ];
 
 const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
   const pathname = usePathname();
   return (
-    <ul className="hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white ">
+    <ul className={`${inter.className} hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white
+`}>
       {Menus.map((items) => {
         return (
           <React.Fragment key={items.id}>
             {!!items?.subMenu ? (
               <li
-                className="cursor-pointer flex items-center gap-2 relative hover:text-gray"
+                className="cursor-pointer flex items-center gap-2 relative hover:text-gray font-semibold text-xl"
                 onMouseEnter={() => setShowCatMenu(true)}
                 onMouseLeave={() => {
                   setShowCatMenu(false);
@@ -45,7 +54,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
                             setShowCatMenu(false);
                           }}
                         >
-                          <li className="h-12 flex justify-between items-center px-3 hover:bg-smokeWhite rounded-md">
+                          <li className="h-12 font-semibold flex justify-between items-center px-3 hover:bg-smokeWhite rounded-md text-xl">
                             {c.name}
                             <span className="opacity-50 text-sm">{`(${c.products.data.length})`}</span>
                           </li>
