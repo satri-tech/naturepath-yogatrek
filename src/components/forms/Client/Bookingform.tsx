@@ -32,12 +32,10 @@ import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Package } from "@prisma/client";
 
-
-const Bookingform = ({packages}:{packages: Package[]}) => {
-  console.log("packages",packages)
+const Bookingform = ({ packages }: { packages: Package[] }) => {
   const params = useParams();
   const { slug } = params;
-  console.log(slug);
+
   const session = useSession();
 
   const form = useForm<z.infer<typeof BookingFormSchema>>({
@@ -45,12 +43,10 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
     mode: "onBlur",
     reValidateMode: "onChange",
   });
-  
-  console.log("session",session)
 
   async function onSubmit(values: z.infer<typeof BookingFormSchema>) {
     try {
-      if(session.data){
+      if (session.data) {
         const formdata = {
           packageId: values.package,
           userId: session.data?.user.id,
@@ -73,8 +69,7 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
           body: jsonData,
         });
         const data = await response.json();
-
-      }else{
+      } else {
         const formdata = {
           packageId: values.package,
           fullname: values.FullName,
@@ -104,7 +99,13 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
         <FormField
           control={form.control}
           name="FullName"
-          defaultValue={session ? `${session.data?.user?.firstName?? ""} ${session.data?.user?.lastName?? ""}` :""}
+          defaultValue={
+            session
+              ? `${session.data?.user?.firstName ?? ""} ${
+                  session.data?.user?.lastName ?? ""
+                }`
+              : ""
+          }
           render={({ field }) => (
             <FormItem className="space-y-0">
               <FormControl>
@@ -145,7 +146,7 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
         <FormField
           control={form.control}
           name="Email"
-          defaultValue={session ? `${session.data?.user?.email?? ""}` :""}
+          defaultValue={session ? `${session.data?.user?.email ?? ""}` : ""}
           render={({ field }) => (
             <FormItem>
               <FormControl>
@@ -162,7 +163,11 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
             <FormItem>
               <Select
                 onValueChange={field.onChange}
-                defaultValue={!!slug ? (packages.filter((item)=> item.slug === slug)[0].id) : field.value}
+                defaultValue={
+                  !!slug
+                    ? packages.filter((item) => item.slug === slug)[0].id
+                    : field.value
+                }
                 // disabled={!!slug}
               >
                 <FormControl>
@@ -171,9 +176,16 @@ const Bookingform = ({packages}:{packages: Package[]}) => {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {packages && packages.map((item)=>(
-                    <SelectItem className="line-clamp-1" value={item.id} key={item.id}>{item.title}</SelectItem>
-                  ))}
+                  {packages &&
+                    packages.map((item) => (
+                      <SelectItem
+                        className="line-clamp-1"
+                        value={item.id}
+                        key={item.id}
+                      >
+                        {item.title}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
               <FormMessage />

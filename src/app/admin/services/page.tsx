@@ -21,12 +21,11 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { Suspense } from "react";
 
-
-
 const ServicesList = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`, {next: { tags: [`ServicesCollection`], revalidate: 600 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,
+      { next: { tags: [`ServicesCollection`], revalidate: 100 } }
     );
     const data = await response.json();
     return (
@@ -46,7 +45,9 @@ const ServicesList = async () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="hidden sm:table-cell">Thumbnail</TableHead>
+                <TableHead className="hidden sm:table-cell">
+                  Thumbnail
+                </TableHead>
                 <TableHead>Service</TableHead>
                 <TableHead></TableHead>
               </TableRow>
@@ -71,29 +72,28 @@ const ServicesList = async () => {
                   </TableCell>
                   <TableCell className="flex gap-2 items-center">
                     <Link href={`/admin/services/update/${Item.id}`}>
-                      <div><Eye/></div>   
+                      <div>
+                        <Eye />
+                      </div>
                     </Link>
 
                     {/* <form action={DeleteService}> */}
-                      {/* <input type="hidden" value={Item.id} name="id"/> */}
-                        <Button variant={"link"} type="submit"><Trash2 /></Button>
-                      {/* </form> */}
+                    {/* <input type="hidden" value={Item.id} name="id"/> */}
+                    <Button variant={"link"} type="submit">
+                      <Trash2 />
+                    </Button>
+                    {/* </form> */}
                   </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </CardContent>
-      </Card>    
+      </Card>
     );
   } catch (error) {
     console.log(error);
-    return (<Error
-      status={404}
-      message="Bad request"
-    />
-      
-    );
+    return <Error status={404} message="Bad request" />;
   }
 };
 
