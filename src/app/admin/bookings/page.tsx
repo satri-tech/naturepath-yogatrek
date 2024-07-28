@@ -15,6 +15,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import Success from '@/components/ui/success'
+import Danger from '@/components/ui/danger'
 
 const BookingPage = () => {
   return (
@@ -44,11 +46,11 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Sale</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
-              <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
+              <TableCell className="hidden md:table-cell">
+                <span className=" inline-block w-[125px]">2023-06-23</span>
+              </TableCell>
               <TableCell className="text-right">$250.00</TableCell>
             </TableRow>
             <TableRow>
@@ -60,9 +62,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Refund</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="outline">
-                  Declined
-                </Badge>
+                <Danger>Declined</Danger>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-24</TableCell>
               <TableCell className="text-right">$150.00</TableCell>
@@ -78,9 +78,7 @@ const BookingPage = () => {
                 Subscription
               </TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-25</TableCell>
               <TableCell className="text-right">$350.00</TableCell>
@@ -94,9 +92,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Sale</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-26</TableCell>
               <TableCell className="text-right">$450.00</TableCell>
@@ -110,9 +106,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Sale</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
@@ -126,9 +120,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Sale</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-23</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
@@ -142,9 +134,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Refund</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="outline">
-                  Declined
-                </Badge>
+                <Danger>Declined</Danger>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-24</TableCell>
               <TableCell className="text-right">$150.00</TableCell>
@@ -158,9 +148,7 @@ const BookingPage = () => {
               </TableCell>
               <TableCell className="hidden sm:table-cell">Sale</TableCell>
               <TableCell className="hidden sm:table-cell">
-                <Badge className="text-xs" variant="secondary">
-                  Fulfilled
-                </Badge>
+                <Success>Fulfilled</Success>
               </TableCell>
               <TableCell className="hidden md:table-cell">2023-06-26</TableCell>
               <TableCell className="text-right">$450.00</TableCell>
@@ -169,7 +157,7 @@ const BookingPage = () => {
         </Table>
       </CardContent>
     </Card>
-  )
+  );
 }
 
 export default BookingPage

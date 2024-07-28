@@ -88,13 +88,13 @@ const PackageList = async () => {
               </TableCell>
               <TableCell className="">
                 <span className=" inline-block w-[175px]">
-                  Shared: <span className=" text-primary font-medium">{pac.SharingPrice}</span>{" "}
-                  <span className=" line-through text-red-500 font-medium">{pac.SharingOffer}</span>
+                  Shared: <span className="  font-medium">{pac.SharingOffer}</span>{" "}
+                  <span className=" line-through  font-medium">{pac.SharingPrice}</span>
                 </span>
                 <br />
                 <span>
-                  Private: <span className=" text-primary font-medium">{pac.PrivatePrice}</span>{" "}
-                  <span className=" line-through text-red-500 font-medium">{pac.PrivateOffer}</span>
+                  Private: <span className="  font-medium">{pac.PrivateOffer}</span>{" "}
+                  <span className=" line-through  font-medium">{pac.PrivatePrice}</span>
                 </span>
               </TableCell>
               {/* <TableCell className="">

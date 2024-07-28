@@ -39,7 +39,7 @@ const Breadcrumbs = ({className}:{className?:string}) => {
       <title>{pathSegments[pathSegments.length - 1]?.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()) || 'Home'}</title>
     </Head>
     <ol className={"list-none p-0 inline-flex items-center space-x-1 "}>
-      <BreadcrumbItem href="/" icon={<Home />} />
+      <BreadcrumbItem href="/" icon={<Home size={18} />} />
       {pathSegments.map((segment, index) => (
         <BreadcrumbItem
           key={index}
