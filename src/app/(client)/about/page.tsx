@@ -77,7 +77,7 @@ const AboutPage = async () => {
 
           <section className=" flex flex-col gap-4 section-padding">
             <h2
-              className={`${petrona.className} uppercase font-bold text-xl md:text-2xl text-center`}
+              className={`${petrona.className} uppercase font-extrabold text-xl md:text-2xl text-center text-primary`}
             >
               why choose our Yoga and trek company
             </h2>
