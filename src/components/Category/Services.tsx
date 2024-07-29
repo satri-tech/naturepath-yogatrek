@@ -30,11 +30,11 @@ const ServicesList = async () => {
               />
             </div>
             <div className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 backdrop-blur text-white p-4 rounded-b-lg opacity-0 transition duration-300 ease-in-out transform ">
-              <h1 className="text-2xl font-bold text-center">
+              <h1 className="text-xl font-bold px-6">
                 {item.title}
               </h1>
               <p
-                className=" text-center px-6 pt-4"
+                className=" text-sm px-6 pt-4"
                 dangerouslySetInnerHTML={{ __html: item.description }}
               />
             </div>

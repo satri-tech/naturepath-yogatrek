@@ -90,11 +90,11 @@ function TestimonialsCarousel({
           </p> */}
         </div>
         <div className="hidden lg:flex gap-2 ">
-          <div className="text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <div className="text-2xl rounded-full p-3 border-2 bg-black/20 md:bg-primary md:border-primary md:text-white transition-all duration-300 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
             <MoveLeft onClick={goToPrevSlide} size={30} />
           </div>
           {/* Right Arrow */}
-          <div className="text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
+          <div className="text-2xl rounded-full p-3 border-2 bg-black/20 md:bg-white md:border-primary md:text-primary transition-all duration-300 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
             <MoveRight onClick={goToNextSlide} size={30} />
           </div>
         </div>
