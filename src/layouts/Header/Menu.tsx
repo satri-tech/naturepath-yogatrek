@@ -13,8 +13,9 @@ interface MenuType {
 export const Menus: MenuType[] = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "Get a booking", url: "/booking" },
-  { id: 2, name: "Our Packages", url: "/packages" },
-  { id: 3, name: "Contact Us", url: "/contact" },
+  { id: 3, name: "Our Packages", url: "/packages" },
+  { id: 4, name: "About", url: "/about" },
+  { id: 5, name: "Contact Us", url: "/contact" },
 ];
 
 const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
