@@ -70,7 +70,7 @@ const Menu = async() => {
         </div>
         <Sheet >
             <SheetTrigger asChild>
-                <AlignLeft className='md:hidden' />
+                <AlignLeft className='md:hidden cursor-pointer' />
             </SheetTrigger>
             <SheetContent side={'left'} className='max-w-60 p-0'>
                 <div className='h-screen '>
