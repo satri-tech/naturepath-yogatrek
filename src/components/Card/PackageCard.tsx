@@ -24,12 +24,12 @@ const PackageCard = ({ packages }: { packages: Package }) => {
             {packages.PrivatePrice}{" "}
           </span>
         </div> */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="relative">
+        <div className="bg-white rounded-lg shadow-md overflow-hidden group/parent">
+          <div className="relative overflow-hidden">
             <Image
               src={packages.image}
               alt={packages.title}
-              className="w-full h-72 object-cover hover:scale-105 transition-all duration-500"
+              className="w-full h-[215px] sm:h-[250px] md:h-[300px] object-cover group-hover/parent:scale-105 transition-all duration-500"
               width={500}
               height={500}
               quality={100}
@@ -47,7 +47,7 @@ const PackageCard = ({ packages }: { packages: Package }) => {
             </div>
 
             <div className=" flex justify-between gap-8">
-              <h2 className="text-xl font-semibold">{packages.title}</h2>
+              <h2 className="text-xl font-semibold group-hover/parent:text-primary transition-all duration-500">{packages.title}</h2>
 
               <div className={` flex flex-col ${petrona.className}`}>
                 <span className="text-3xl font-extrabold text-primary">
