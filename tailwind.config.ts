@@ -32,6 +32,7 @@ const config = {
         "yoga-red": "#dc3545",
         "yoga-yellow": "#ffc107",
         "yoga-green": "#198754",
+        "bg-white": "#f5f5f5",
       },
       keyframes: {
         "accordion-down": {
