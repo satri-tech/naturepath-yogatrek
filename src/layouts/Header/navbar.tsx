@@ -70,13 +70,13 @@ const Navbar = () => {
             className="h-16 w-auto hidden dark:block"
           />
         </Link>
-        <Menu
-          showCatMenu={showCatMenu}
-          setShowCatMenu={setShowCatMenu}
-          categories={categories}
-        />
 
         <div className="flex gap-4 items-center">
+          <Menu
+            showCatMenu={showCatMenu}
+            setShowCatMenu={setShowCatMenu}
+            categories={categories}
+          />
           <div className="hidden min-[900px]:inline-block">
             {/* <DropdownMenu>
             <DropdownMenuTrigger className="p-2 bg-zinc-100 dark:bg-zinc-950/90 drop-shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-950 rounded-sm flex ">
