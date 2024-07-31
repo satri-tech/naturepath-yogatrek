@@ -10,6 +10,7 @@ const Pages = async ({ id }: { id: string }) => {
       { next: { tags: [`Page-${id}`] } ,cache: 'no-store' }
     );
     const data = await response.json();
+    console.log("page",data)
     return <UpdateSitePageForm meta={data.data} />;
   } catch (error) {
     console.log(error);

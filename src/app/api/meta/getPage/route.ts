@@ -7,61 +7,49 @@ export async function GET(request: NextRequest) {
   const page = parseInt(url.searchParams.get("page") ?? "1");
   const limit = parseInt(url.searchParams.get("limit") ?? "25");
   const postid = url.searchParams.get("id");
+  const slug = url.searchParams.get("slug");
+
 
   if (!postid) {
-    try {
-      const totalCount = await prisma.sitePage.count();
-      const totalPages = Math.ceil(totalCount / limit);
-
-      if (page > totalPages) {
-        return NextResponse.json({
-          status: 404,
-          success: false,
-          message: "Page not found",
+    if (!slug) {
+      try {
+        const totalCount = await prisma.sitePage.count();
+        const totalPages = Math.ceil(totalCount / limit);
+  
+        if (page > totalPages) {
+          return NextResponse.json({
+            status: 404,
+            success: false,
+            message: "Page not found",
+          });
+        }
+  
+        const getTeam = await prisma.sitePage.findMany({
+          skip: (page - 1) * limit,
+          take: limit,
         });
-      }
-
-      const getTeam = await prisma.sitePage.findMany({
-        skip: (page - 1) * limit,
-        take: limit,
-      });
-
-      if (getTeam && getTeam.length) {
-        return NextResponse.json({
-          success: true,
-          data: getTeam,
-          meta: {
-            pagination: {
-              page,
-              limit,
-              total: totalCount,
-              lastPage: totalPages,
+  
+        if (getTeam && getTeam.length) {
+          return NextResponse.json({
+            success: true,
+            data: getTeam,
+            meta: {
+              pagination: {
+                page,
+                limit,
+                total: totalCount,
+                lastPage: totalPages,
+              },
             },
-          },
-        },{
-          status: 200,
-        });
-      } else {
-        return errorResponse(undefined, "Failed to fetch page. Please try again", 500)
-      //   return NextResponse.json({
-      //     success: false,
-      //     message: "Failed to fetch page. Please try again",
-      // },{
-      //   status: 404,
-      // });
+          },{
+            status: 200,
+          });
+        } else {
+          return errorResponse(undefined, "Failed to fetch page. Please try again", 500)
+        }
+      } catch (e) {
+        return errorResponse(undefined, "Something went wrong ! Please try again", 500)
       }
-    } catch (e) {
-     
-      return errorResponse(undefined, "Something went wrong ! Please try again", 500)
-      // return NextResponse.json(
-      //   {
-      //     success: false,
-      //     message: "Something went wrong ! Please try again",
-      //   },
-      //   {
-      //     status: 500,
-      //   }
-      // );
     }
   }
 
@@ -90,4 +78,39 @@ export async function GET(request: NextRequest) {
       return errorResponse(undefined, "Something went wrong ! Please try again", 500)
     }
   }
+
+  if (slug) {
+    try {
+      const getTeam = await prisma.sitePage.findUnique({
+        where: {
+          slug: slug,
+        },
+        include: {
+          sections: true, // Include the sections relation
+        },
+      });
+
+      if (getTeam) {
+        return NextResponse.json({
+          status: 200,
+          success: true,
+          data: getTeam,
+        });
+      } else {
+        return errorResponse(
+          undefined,
+          "Page not Found ! Please try again",
+          404
+        );
+      }
+    } catch (e) {
+      return errorResponse(
+        undefined,
+        "Something went wrong ! Please try again",
+        500
+      );
+    }
+  }
 }
+
+
