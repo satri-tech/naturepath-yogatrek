@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
   if (!postid) {
     try {
-      const totalCount = await prisma.package.count();
+      const totalCount = await prisma.booking.count();
       const totalPages = Math.ceil(totalCount / limit);
 
       if (page > totalPages) {
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getTeam = await prisma.package.findMany({
+      const getTeam = await prisma.booking.findMany({
         skip: (page - 1) * limit,
         take: limit,
       });
@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
   if (postid) {
     try {
-      const getTeam = await prisma.package.findUnique({
+      const getTeam = await prisma.booking.findUnique({
         where: {
           id: postid,
         },

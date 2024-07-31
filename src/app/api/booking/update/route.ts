@@ -27,14 +27,14 @@ const parseResult =async (request:NextRequest)=>{
      
     }
     const { id } = extractData;
-    const updatedBlogPost = await prisma.package.update({
+    const updateBooking = await prisma.booking.update({
       where: {
         id: id,
       },
       data: extractData,
     });
 
-    if (updatedBlogPost) {
+    if (updateBooking) {
 
       return NextResponse.json({
         success: true,

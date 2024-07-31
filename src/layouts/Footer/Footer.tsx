@@ -46,7 +46,7 @@ const Resources = [
 
 const Footer = () => {
   return (
-    <footer className="bg-primary/85 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
+    <footer className="bg-primary/60 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
       <Image
         src="https://cdn.pixabay.com/photo/2021/07/08/03/55/mount-everest-6395758_1280.jpg"
         alt="hero image"
@@ -66,7 +66,7 @@ const Footer = () => {
             </div>
           </div>
           <div className=" flex flex-col gap-4">
-            <h1 className="sm:max-w-lg text-xl font-semibold tracking-tight">
+            <h1 className="sm:max-w-lg text-xl font-bold tracking-tight">
               Subscribe our newsletter.
             </h1>
             <div className="flex sm:flex-row flex-col gap-4 max-w-md">
@@ -171,7 +171,7 @@ const Footer = () => {
                 </h1>
                 <div className="flex sm:flex-row flex-col gap-4 max-w-md">
                   <Input id="email" type="email" placeholder="Email Address" />
-                  <Button>Subscribe</Button>
+                  <Button variant={"secondary"}>Subscribe</Button>
                 </div>
               </div>
             </div>
@@ -210,18 +210,18 @@ const Footer = () => {
                   Follow us on.
                 </h1>
                 <div className="flex flex-row flex-1  gap-1">
-                  {/* <Socialmedia/> */}
+                  <Socialmedia/>
                 </div>
               </div>
               {/* large screen payments  */}
-              <div className="flex flex-row flex-1  gap-1 items-end">
+              {/* <div className="flex flex-row flex-1  gap-1 items-end">
                 <Associaltion />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
       </div>
-      <div className=" border-t-2 border-darkPrimary/30 dark:border-white/30 flex items-center p-4 w-full">
+      <div className=" border-t-2 bg-primary border-darkPrimary/30 dark:border-white/30 flex items-center p-4 w-full">
         <p className=" w-full text-center">
           Copyright &copy; 2024 Stellar Labs
         </p>
