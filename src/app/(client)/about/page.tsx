@@ -5,18 +5,18 @@ import { SitePageType } from "@/utils/types/SitePageType";
 import PageWrapper from "@/layouts/PageWrapper";
 import { petrona } from "@/app/layout";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
+import { ExtendedSitePage } from "@/components/forms/admin/SitePages/UpdateSitePageForm";
 
 const AboutPage = async () => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/meta/getPage`,
-      { next: { tags: [`MetasCollection`], revalidate: 100 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/meta/getPage?slug=about`,
+      { next: { tags: [`Metas About`], revalidate: 200 } }
     );
     const data = await response.json();
+    const about_page_details: ExtendedSitePage = data.data;
+    
 
-    const about_page_details: SitePageType = data.data.find(
-      (page: SitePageType) => page.slug == "about"
-    );
 
     const choose_reasons = [
       {
@@ -58,22 +58,27 @@ const AboutPage = async () => {
         </section> */}
 
         <PageWrapper className=" flex flex-col">
-          <section className="flex flex-col gap-3 md:gap-4">
+          {about_page_details.sections?.map((sec) => (
+          <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
             <p>
-              At out Yoga and trek company, we share the holistic principles of
+              {/* At out Yoga and trek company, we share the holistic principles of
               yoga and eternaln wisdom in an accessible way. We strive to be a
               heart center of excellence in healing, meditation, and traditional
               yoga teachings, promoting community development and sustainable
-              lifestyles based on yoga&apos;s principles worldwide.
+              lifestyles based on yoga&apos;s principles worldwide. */}
+                {sec.description}
+                
             </p>
-            <p>
+            {/* <p>
               We believe that regular yoga practice enhances physical, mental,
               and spiritual health, creating a positive ripple effect in
               communities and workplaces. Mukti Yoga Retreat welcomes all who
               seek a healthier life, ensuring a safe and nurturing environment
               for our students.
-            </p>
+            </p> */}
           </section>
+            
+          ))}
 
           <section className=" flex flex-col gap-4 section-padding">
             <h2
