@@ -32,6 +32,10 @@ const config = {
         "yoga-red": "#dc3545",
         "yoga-yellow": "#ffc107",
         "yoga-green": "#198754",
+        "yoga-purple": "#6610f2",
+        "yoga-light-blue": "#0d6efd",
+        "yoga-pink": "#d63384",
+        "yoga-orange": "#fd7e14",
         "bg-white": "#f5f5f5",
       },
       keyframes: {

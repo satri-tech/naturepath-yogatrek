@@ -12,7 +12,7 @@ const MobileMenu = () => {
     <div className="inline-block min-[900px]:hidden">
     <Sheet>
       <SheetTrigger asChild>
-        <div className='bg-zinc-100 dark:bg-zinc-950 p-2 rounded-sm'><LucideMenu/></div>
+        <div className=' cursor-pointer p-2 rounded-sm'><LucideMenu/></div>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
