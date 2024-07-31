@@ -3,9 +3,10 @@ import BookingBox from "@/components/Package/BookingBox";
 import { petrona } from "@/app/layout";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import Link from "next/link";
 const Hero = () => {
   return (
-    <div className="px-0 relative w-full h-[100vh] -translate-y-20 -z-10">
+    <div className="px-0 relative w-full h-[100vh] -translate-y-20 z-10">
       <div className="grid items-center h-full w-full text-white">
         <div className="flex flex-col lg:flex-row lg:justify-between container max-w-7xl mt-28 lg:mt-10">
           <div className="flex flex-col gap-6 md:gap-8 xl:gap-10">
@@ -20,9 +21,9 @@ const Hero = () => {
                 <span className=" text-secondary">Love</span>
               </h1>
             </div>
-            <div>
-              <Button className=" uppercase">Book Now</Button>
-            </div>
+            <Link href={"/booking"}>
+              <Button className=" uppercase cursor-pointer">Book Now</Button>
+            </Link>
           </div>
 
           {/* <div className="grid sm:grid-cols gap-5"> */}
