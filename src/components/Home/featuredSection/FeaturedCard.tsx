@@ -14,7 +14,7 @@ const FeaturedCard = ({data, numb}:{data:Package, numb:number}) => {
             <div className="relative">
               <Image
                 src={data.image}
-                className="w-full relative z-10 h-[350px] object-cover object-center"
+                className="w-full relative z-10 h-[250px] lg:h-[300px] xl:h-[350px] object-cover object-center"
                 alt={data.title}
                 // layout="responsive"
                 width={500}

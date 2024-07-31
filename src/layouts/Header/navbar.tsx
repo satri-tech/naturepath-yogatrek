@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const controlNavbar = () => {
     if (!window.scrollY) {
-      if (pathname != "/booking")
+      if (pathname != "/booking" && pathname!="/about")
         setShow("translate-y-0 bg-transparent text-white");
       else setShow("translate-y-0 bg-transparent text-black");
     } else if (window.scrollY > 200) {
