@@ -22,7 +22,7 @@ import { useSession } from "next-auth/react";
 import { Section, SitePage } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
-interface ExtendedSitePage extends SitePage {
+export interface ExtendedSitePage extends SitePage {
   sections: Section[];
 }
 
@@ -37,7 +37,7 @@ const UpdatePageForm = ({ meta }: { meta: ExtendedSitePage }) => {
       title: meta?.title,
       slug: meta?.slug,
       // image: meta?.image,
-      sections: meta.sections.map((section) => ({
+      sections: meta.sections?.map((section) => ({
         title: section.title,
         description: section.description,
       })),
