@@ -28,6 +28,11 @@ const config = {
         // primary: "#98FB98",
         primary: "#74C365",
         secondary: "#FFD280",
+        "yoga-blue": "#0d6efd",
+        "yoga-red": "#dc3545",
+        "yoga-yellow": "#ffc107",
+        "yoga-green": "#198754",
+        "bg-white": "#f5f5f5",
       },
       keyframes: {
         "accordion-down": {

@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import DeleteButton from "@/components/ui/deleteButton";
 import {
   Table,
   TableBody,
@@ -14,6 +16,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import UpdateButton from "@/components/ui/updateButton";
+import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
 import { Service } from "@prisma/client";
 import { Eye, Trash2 } from "lucide-react";
@@ -45,43 +49,40 @@ const ServicesList = async () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="hidden sm:table-cell">
-                  Thumbnail
-                </TableHead>
-                <TableHead>Service</TableHead>
-                <TableHead></TableHead>
+                <TableHead className="">Service</TableHead>
+                <TableHead>Thumbnail</TableHead>
+                <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {data.data.map((Item: Service) => (
                 <TableRow className="bg-accent" key={Item.id}>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell>
+                    <div className="font-medium">{Item.title}</div>
+                    {/* <div className="hidden text-sm text-muted-foreground md:inline">
+                      {Item.id}
+                    </div> */}
+                  </TableCell>
+                  <TableCell className="">
                     <Image
                       alt={Item.title}
                       className="aspect-square rounded-md object-cover"
-                      height="64"
+                      height="48"
                       src={Item.image}
-                      width="64"
+                      width="48"
                     />
                   </TableCell>
-                  <TableCell>
-                    <div className="font-medium">{Item.title}</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">
-                      {Item.id}
-                    </div>
-                  </TableCell>
                   <TableCell className="flex gap-2 items-center">
-                    <Link href={`/admin/services/update/${Item.id}`}>
-                      <div>
-                        <Eye />
-                      </div>
-                    </Link>
+                    <ViewButton url={`/admin/services/update/${Item.id}`} className="" />
+
+                    {/*update*/}
+                    <UpdateButton url={`/admin/services/update/${Item.id}`} />
 
                     {/* <form action={DeleteService}> */}
                     {/* <input type="hidden" value={Item.id} name="id"/> */}
-                    <Button variant={"link"} type="submit">
-                      <Trash2 />
-                    </Button>
+
+                    {/*later put delete api request here in the function*/}
+                    <DeleteButton clickFunc={() => {}} />
                     {/* </form> */}
                   </TableCell>
                 </TableRow>

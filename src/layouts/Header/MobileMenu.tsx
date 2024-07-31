@@ -33,7 +33,7 @@ const MobileMenu = () => {
         <div className="flex flex-col  w-full">
             {Menus.map((item)=>(
           <SheetClose asChild key={item.id}>
-            <Link href={item.url} className='w-full justify-center flex p-2 text-lg'>{item.name}</Link>
+            <Link href={item.url} className='w-full  flex p-2 text-lg hover:text-primary transition-all duration-200'>{item.name}</Link>
             </SheetClose>
             ))}  
         </div>

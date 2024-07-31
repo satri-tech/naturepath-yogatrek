@@ -17,12 +17,12 @@ const BreadcrumbItem = ({ label, href, icon, className }:BreadcrumbItemProps) =>
   <li>
     {label && href? (
       <Link href={href}>
-        <span className={cn(`text-slate-400 hover:text-primary transition-colors duration-300 text-xs sm:text-sm md:text-base`, className)}>
+        <span className={cn(`text-slate-600 hover:text-primary transition-colors duration-300 text-sm md:text-base`, className)}>
           {label}
         </span>
       </Link>
     ) : (
-        <span className={cn(`text-slate-400 hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`, className)}>
+        <span className={cn(`text-slate-600 hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`, className)}>
         {icon}
       </span>
     )}
@@ -39,7 +39,7 @@ const Breadcrumbs = ({className}:{className?:string}) => {
       <title>{pathSegments[pathSegments.length - 1]?.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()) || 'Home'}</title>
     </Head>
     <ol className={"list-none p-0 inline-flex items-center space-x-1 "}>
-      <BreadcrumbItem href="/" icon={<Home />} />
+      <BreadcrumbItem href="/" icon={<Home className='w-5 h-5' />} />
       {pathSegments.map((segment, index) => (
         <BreadcrumbItem
           key={index}
