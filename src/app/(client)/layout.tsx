@@ -1,3 +1,4 @@
+import WhatsappChat from "@/components/ui/whatsAppChat";
 import Footer from "@/layouts/Footer/Footer";
 import Navbar from "@/layouts/Header/navbar";
 
@@ -18,6 +19,7 @@ export default function MainLayout({
       <Navbar />
       {children}
       <Footer />
+      <WhatsappChat />
     </>
   );
 }
