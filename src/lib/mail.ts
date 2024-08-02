@@ -3,6 +3,10 @@ import nodemailer from "nodemailer";
 import { activationTemplete } from "./mailTemplates/activation";
 import { resetPassword } from "./mailTemplates/resetPassword";
 
+import { userBookingTemplate } from "./mailTemplates/userBookingTemplate";
+import { adminBookingTemplate } from "./mailTemplates/adminBookingTemplate";
+import { Booking, Package } from "@prisma/client";
+
 export async function sendmail({
   to,
   subject,
@@ -23,7 +27,6 @@ export async function sendmail({
 
   try {
     const testResult = await transport.verify();
-    console.log("test result of transport ", testResult);
   } catch (err) {
     console.log(err);
   }
@@ -35,7 +38,6 @@ export async function sendmail({
         subject:subject,
         html:body,
     });
-    console.log("test result of transport ", sendResult);
   } catch (err) {
     console.log(err);
   }
@@ -58,4 +60,36 @@ export function compileResetPassTemplete(name:string, url:string){
         url,
     });
     return htmlBody;
+}
+
+export function compileAdminTemplate(booking: any, packages:Package) {
+    const template = Handlebars.compile(adminBookingTemplate);
+    const htmlBody = template({
+      name: booking.fullname,
+      email: booking.email,
+      package: packages.title, 
+      startDate: booking.bookingDate,
+      phone: booking.phone,
+      country: booking.country,
+      noofPerson: booking.noofPerson,
+      roomPreferences: booking.roomPreferences,
+      message: booking.message,
+    });
+  return htmlBody;
+}
+
+export function compileUserTemplate(booking: any, packages: Package) {
+  const template = Handlebars.compile(userBookingTemplate);
+  const htmlBody = template({
+    name: booking.fullname,
+    email: booking.email,
+    package: packages.title,
+    startDate: booking.bookingDate,
+    phone: booking.phone,
+    country: booking.country,
+    noofPerson: booking.noofPerson,
+    roomPreferences: booking.roomPreferences,
+    message: booking.message,
+  });
+  return htmlBody;
 }
