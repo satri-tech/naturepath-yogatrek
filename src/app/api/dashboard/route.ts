@@ -24,6 +24,17 @@ const parseResult = async (request: NextRequest, response: NextResponse) => {
       today.getDate()
     );
     const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
+    const startOfPreviousMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() - 1,
+      1
+    );
+    const startOfYesterday = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 1
+    );
+
 
     const totalBookingToday = await prisma.booking.count({
       where: {
@@ -49,18 +60,76 @@ const parseResult = async (request: NextRequest, response: NextResponse) => {
       },
     });
 
+    const totalBookingPreviousMonth = await prisma.booking.count({
+      where: {
+        createdAt: {
+          gte: startOfPreviousMonth,
+          lt: startOfMonth,
+        },
+      },
+    });
+
+    const totalBookingYesterday = await prisma.booking.count({
+      where: {
+        createdAt: {
+          gte: startOfYesterday,
+          lt: startOfDay,
+        },
+      },
+    });
+
+
+    const totalUserPreviousMonth = await prisma.user.count({
+      where: {
+        emailVerified: {
+          gte: startOfPreviousMonth,
+          lt: startOfMonth,
+        },
+      },
+    });
+    console.log(totalBookingPreviousMonth, totalBookingYesterday,totalUserPreviousMonth);
+
+    // Calculate percentages
+  const percentageChangeInBookingsTodayVsYesterday =
+    totalBookingYesterday === 0
+      ? totalBookingToday > 0
+        ? 100
+        : 0 // if yesterday is 0, return 100% if today is positive, or 0% if today is 0
+      : ((totalBookingToday - totalBookingYesterday) / totalBookingYesterday) *
+        100;
+
+  const percentageChangeInBookingsThisMonthVsPreviousMonth =
+    totalBookingPreviousMonth === 0
+      ? totalBookingThisMonth > 0
+        ? 100
+        : 0 // if previous month is 0, return 100% if this month is positive, or 0% if this month is 0
+      : ((totalBookingThisMonth - totalBookingPreviousMonth) /
+          totalBookingPreviousMonth) *
+        100;
+
+  const percentageChangeInUsersThisMonthVsPreviousMonth =
+    totalUserPreviousMonth === 0
+      ? totalUserThisMonth > 0
+        ? 100
+        : 0 // if previous month is 0, return 100% if this month is positive, or 0% if this month is 0
+      : ((totalUserThisMonth - totalUserPreviousMonth) /
+          totalUserPreviousMonth) *
+        100;
+
+    
+
     const data = {
       packages: {
         totalPackage: totalPackage,
       },
       booking: {
         totalBooking: totalBooking,
-        bookingThisMonth: totalBookingThisMonth,
-        bookingToday: totalBookingToday,
+        bookingThisMonth: percentageChangeInBookingsThisMonthVsPreviousMonth.toFixed(2),
+        bookingToday: percentageChangeInBookingsTodayVsYesterday.toFixed(2),
       },
       user: {
         totalUser: totalUser,
-        totalUserThisMonth: totalUserThisMonth,
+        totalUserThisMonth: percentageChangeInUsersThisMonthVsPreviousMonth.toFixed(2),
       },
     };
 
