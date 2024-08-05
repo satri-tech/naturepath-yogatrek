@@ -25,7 +25,7 @@ const PageList = async () => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/meta/getPage`,
-      { next: { tags: [`PageCollection`], revalidate: 600 } }
+      { next: { tags: [`PageCollection`], revalidate: 100 } }
     );
     const data = await response.json();
     return (
