@@ -31,7 +31,7 @@ const FeaturedCard = ({data, numb}:{data:Package, numb:number}) => {
                 {numb}
               </h1>
               <p
-                className="text-sm"
+                className="text-sm line-clamp-3"
                 dangerouslySetInnerHTML={{ __html: data.description }}
               />
 

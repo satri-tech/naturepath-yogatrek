@@ -21,8 +21,18 @@ export async function POST(request: NextRequest, response: NextResponse) {
 const parseResult =async (request:NextRequest , response:NextResponse)=>{
   try {
     const extractServiceData = await request.json();
+    const slug = extractServiceData.title
+      .toLowerCase()
+      .replace(/[^a-z0-9-]/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/--+/g, "-");
+
+
     const newlyCreatedService = await prisma.service.create({
-      data: extractServiceData,
+      data:{
+       ...extractServiceData,
+        slug, 
+      } ,
     });
 
 

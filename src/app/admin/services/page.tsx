@@ -33,19 +33,7 @@ const ServicesList = async () => {
     );
     const data = await response.json();
     return (
-      <Card>
-        <CardHeader className="sm:px-7">
-          <div className="flex justify-between items-center">
-            <div>
-              <CardTitle>Services</CardTitle>
-              <CardDescription>List of Service.</CardDescription>
-            </div>
-            <Link href={"/admin/services/create"}>
-              <Button variant={"default"}>Create New Service</Button>
-            </Link>
-          </div>
-        </CardHeader>
-        <CardContent>
+      
           <Table>
             <TableHeader>
               <TableRow>
@@ -89,8 +77,7 @@ const ServicesList = async () => {
               ))}
             </TableBody>
           </Table>
-        </CardContent>
-      </Card>
+        
     );
   } catch (error) {
     console.log(error);
@@ -100,11 +87,24 @@ const ServicesList = async () => {
 
 const ServicesPage = () => {
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <ServicesList />
-      </Suspense>
-    </div>
+    <Card>
+      <CardHeader className="sm:px-7">
+        <div className="flex justify-between items-center">
+          <div>
+            <CardTitle>Services</CardTitle>
+            <CardDescription>List of Service.</CardDescription>
+          </div>
+          <Link href={"/admin/services/create"}>
+            <Button variant={"default"}>Create New Service</Button>
+          </Link>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <Suspense fallback={<div>Loading...</div>}>
+          <ServicesList />
+        </Suspense>
+      </CardContent>
+    </Card>
   );
 };
 
