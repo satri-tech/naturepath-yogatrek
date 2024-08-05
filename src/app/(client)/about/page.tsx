@@ -59,25 +59,13 @@ const AboutPage = async () => {
 
         <PageWrapper className=" flex flex-col">
           {about_page_details.sections?.map((sec) => (
-          <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
-            <p>
-              {/* At out Yoga and trek company, we share the holistic principles of
-              yoga and eternaln wisdom in an accessible way. We strive to be a
-              heart center of excellence in healing, meditation, and traditional
-              yoga teachings, promoting community development and sustainable
-              lifestyles based on yoga&apos;s principles worldwide. */}
-                {sec.description}
+            <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
+              <article className="prose lg:prose-xl mx-auto">
+                <h1>{sec.title}</h1>
+               <div  dangerouslySetInnerHTML={{__html: sec.description}} />
                 
-            </p>
-            {/* <p>
-              We believe that regular yoga practice enhances physical, mental,
-              and spiritual health, creating a positive ripple effect in
-              communities and workplaces. Mukti Yoga Retreat welcomes all who
-              seek a healthier life, ensuring a safe and nurturing environment
-              for our students.
-            </p> */}
-          </section>
-            
+              </article>
+            </section>
           ))}
 
           <section className=" flex flex-col gap-4 section-padding">
