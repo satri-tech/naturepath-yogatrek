@@ -7,7 +7,7 @@ interface PackageDetailsProps {
   price: string;
 }
 
-const PackageDetails: React.FC<PackageDetailsProps> = ({
+const PackageDetailss: React.FC<PackageDetailsProps> = ({
   duration,
   
   pax,
@@ -36,4 +36,4 @@ const PackageDetails: React.FC<PackageDetailsProps> = ({
   </div>
 );
 
-export default PackageDetails;
+export default PackageDetailss;

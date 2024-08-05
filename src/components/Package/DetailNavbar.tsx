@@ -1,4 +1,4 @@
-// DetailNavbar.tsx
+"use client"
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
@@ -28,7 +28,7 @@ const DetailNavbar: React.FC = () => {
 
   return (
     <nav
-      className={`bg-gray-800 text-white fixed w-full z-10 transition-transform duration-300 ${
+      className={`bg-gray-800 text-white sticky  w-full z-10 transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
