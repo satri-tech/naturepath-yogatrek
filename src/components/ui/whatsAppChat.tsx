@@ -7,7 +7,7 @@ import Image from "next/image";
   /* retrieve number from backend later dynamically*/
 }
 export default function WhatsappChat() {
-  const phoneNumber = "9771343434343"; // Replace with the target phone number in international format without "+" sign
+  const phoneNumber = "9779827128881"; // Replace with the target phone number in international format without "+" sign
   const message = "Hello, I have a question regarding your services."; // Default message
 
   return (

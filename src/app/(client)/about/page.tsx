@@ -15,8 +15,6 @@ const AboutPage = async () => {
     );
     const data = await response.json();
     const about_page_details: ExtendedSitePage = data.data;
-    
-
 
     const choose_reasons = [
       {
@@ -57,32 +55,16 @@ const AboutPage = async () => {
           })}
         </section> */}
 
-        <PageWrapper className=" flex flex-col">
+        <PageWrapper className=" flex flex-col gap-3 md:gap-4">
           {about_page_details.sections?.map((sec) => (
-          <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
-            <p>
-              {/* At out Yoga and trek company, we share the holistic principles of
-              yoga and eternaln wisdom in an accessible way. We strive to be a
-              heart center of excellence in healing, meditation, and traditional
-              yoga teachings, promoting community development and sustainable
-              lifestyles based on yoga&apos;s principles worldwide. */}
-                {sec.description}
-                
-            </p>
-            {/* <p>
-              We believe that regular yoga practice enhances physical, mental,
-              and spiritual health, creating a positive ripple effect in
-              communities and workplaces. Mukti Yoga Retreat welcomes all who
-              seek a healthier life, ensuring a safe and nurturing environment
-              for our students.
-            </p> */}
-          </section>
-            
+            <section key={sec.id} className="flex flex-col ">
+              <p>{sec.description}</p>
+            </section>
           ))}
 
           <section className=" flex flex-col gap-4 section-padding">
             <h2
-              className={`${petrona.className} uppercase font-extrabold text-xl md:text-2xl text-center text-primary`}
+              className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
             >
               why choose our Yoga and trek company
             </h2>
@@ -119,6 +101,17 @@ const AboutPage = async () => {
                 );
               })}
             </div>
+          </section>
+
+          <section className=" flex flex-col gap-4 section-padding">
+            <h2
+              className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
+            >
+              Meet Our Extraordinary team
+            </h2>
+
+            {/*team members here*/}
+            <div className=" flex flex-wrap gap-3 md:gap-4 justify-center"></div>
           </section>
         </PageWrapper>
       </main>

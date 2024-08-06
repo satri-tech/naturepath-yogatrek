@@ -52,9 +52,9 @@ export default function TopStatisticCard({single_analytic}:{single_analytic:TopA
                 )}
               </span>
             )}
-            {rate_increase != null && rate && (
+            {rate_increase != null && (
               <div>
-                <span>{rate_increase ? "+" : "-"}</span>
+                <span>{rate_increase==true ? "+" : "-"}</span>
                 <span>{rate}%</span>
               </div>
             )}
