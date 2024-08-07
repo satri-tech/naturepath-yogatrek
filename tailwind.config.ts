@@ -37,6 +37,10 @@ const config = {
         "yoga-pink": "#d63384",
         "yoga-orange": "#fd7e14",
         "bg-white": "#f5f5f5",
+        //dark below
+        "text-dark": "rgba(255, 255, 255, .8)",
+        "black-dark": "rgba(45, 45, 48)",
+        "gray-dark": "#343a40",
       },
       keyframes: {
         "accordion-down": {

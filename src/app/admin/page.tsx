@@ -28,7 +28,8 @@ export default async function Admin() {
         rate: 20,
         rate_increase: true,
         img: "/admin/chart1.png",
-        className: "text-yoga-green bg-yoga-green/15",
+        className:
+          "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green dark:bg-yoga-green/30",
       },
       {
         id: "4",
@@ -36,7 +37,7 @@ export default async function Admin() {
         title: "Total Packages",
         value: 2000,
         img: "/admin/package.png",
-        className: "text-yoga-pink bg-yoga-pink/15",
+        className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
       },
       {
         id: "5",
@@ -46,7 +47,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: false,
         img: "/admin/chart7.png",
-        className: "text-yoga-purple bg-yoga-purple/15",
+        className: "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
       },
       {
         id: "6",
@@ -56,7 +57,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: true,
         img: "/admin/chart6.png",
-        className: "text-yoga-orange bg-yoga-orange/15",
+        className: "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
       },
     ];
   } else {
@@ -73,7 +74,7 @@ export default async function Admin() {
         ),
         rate_increase: dashboarddata.user.totalUserThisMonth > 0 ? true : false,
         img: "/admin/chart1.png",
-        className: "text-yoga-green bg-yoga-green/15",
+        className: "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green/30",
       },
       {
         id: "4",
@@ -81,7 +82,7 @@ export default async function Admin() {
         title: "Total Packages",
         value: dashboarddata.packages.totalPackage,
         img: "/admin/package.png",
-        className: "text-yoga-pink bg-yoga-pink/15",
+        className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
       },
       {
         id: "5",
@@ -91,7 +92,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: false,
         img: "/admin/chart7.png",
-        className: "text-yoga-purple bg-yoga-purple/15",
+        className: "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
       },
       {
         id: "6",
@@ -101,17 +102,17 @@ export default async function Admin() {
         rate: 34,
         rate_increase: true,
         img: "/admin/chart6.png",
-        className: "text-yoga-orange bg-yoga-orange/15",
+        className: "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
       },
     ];
   }
   return (
-    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8">
+    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 vertical-padding-dashboard dark:text-text-dark bg-bg-white dark:bg-gray-dark">
       <div>
-        <h2 className={`${petrona.className} font-bold text-xl md:text-2xl`}>
+        <h2 className={`${petrona} font-bold text-2xl md:text-3xl`}>
           <span className=" text-primary">Welcome</span> back! Navin Sirr
         </h2>
-        <p className=" text-black/75 md:text-sm  text-xs">
+        <p className=" text-black/75 dark:text-text-dark md:text-sm  text-xs">
           Track your packages, package bookings, revenues and other analytics.
         </p>
       </div>

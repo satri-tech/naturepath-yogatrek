@@ -35,13 +35,13 @@ export default function TopStatisticCard({single_analytic}:{single_analytic:TopA
               <span>{prefix && prefix}</span>
               <span>{value}</span>
             </div>
-            <span className=" font-semibold text-sm md:text-base text-gray-500 leading-tight">
+            <span className=" font-semibold text-sm md:text-base text-gray-500 dark:text-text-dark/80 leading-tight">
               {title}
             </span>
           </div>
 
           <div
-            className={`flex gap-1 text-sm items-center ${rate_increase == true ? " text-yoga-green/85" : " text-yoga-red/85"}`}
+            className={`flex gap-1 text-sm items-center ${rate_increase == true ? " text-yoga-green/85 dark:text-yoga-green" : " text-yoga-red/85 dark:text-yoga-red"}`}
           >
             {rate_increase != null && (
               <span className={``}>

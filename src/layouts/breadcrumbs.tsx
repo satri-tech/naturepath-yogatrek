@@ -13,16 +13,31 @@ type BreadcrumbItemProps = {
     className?: string;
   };
 
-const BreadcrumbItem = ({ label, href, icon, className }:BreadcrumbItemProps) => (
+const BreadcrumbItem = ({
+  label,
+  href,
+  icon,
+  className,
+}: BreadcrumbItemProps) => (
   <li>
-    {label && href? (
+    {label && href ? (
       <Link href={href}>
-        <span className={cn(`text-slate-600 hover:text-primary transition-colors duration-300 text-sm md:text-base`, className)}>
+        <span
+          className={cn(
+            `text-slate-600 dark:text-text-dark hover:text-primary transition-colors duration-300 text-sm md:text-base`,
+            className
+          )}
+        >
           {label}
         </span>
       </Link>
     ) : (
-        <span className={cn(`text-slate-600 hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`, className)}>
+      <span
+        className={cn(
+          `text-slate-600 dark:text-text-dark hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`,
+          className
+        )}
+      >
         {icon}
       </span>
     )}

@@ -20,9 +20,7 @@ export default function AdminLayout({
       </aside>
       <div className="h-full w-full overflow-y-auto">
         <Navbar />
-        <div className="h-[90%] overflow-y-auto">
-          <PageWrapper className="bg-bg-white">{children}</PageWrapper>
-        </div>
+        <div className="h-[90%] overflow-y-auto">{children}</div>
       </div>
     </main>
   );
