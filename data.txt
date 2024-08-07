@@ -1,2 +1,7 @@
   provider = "postgresql"
   url      = env("DATABASE_URL")
+
+
+UPDATE "User"
+SET role = 'ADMIN'
+WHERE id = 'id';

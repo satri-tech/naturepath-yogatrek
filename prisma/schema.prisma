@@ -15,6 +15,10 @@ datasource db {
   url = env("POSTGRES_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+ 
+
+
+
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -61,6 +65,8 @@ model User {
   bookings      Booking[]
   testimonial   Testimonial[]
   reviews       Review[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model VerificationToken {
@@ -78,7 +84,12 @@ model Service {
   description String
   image       String
   packages    Package[]
+  slug     String   
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
+
+ 
 
 model Team {
   id   String @id @default(cuid())
@@ -86,6 +97,8 @@ model Team {
   bio String
   position String
   image String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model SitePage {

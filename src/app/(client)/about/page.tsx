@@ -57,8 +57,12 @@ const AboutPage = async () => {
 
         <PageWrapper className=" flex flex-col gap-3 md:gap-4">
           {about_page_details.sections?.map((sec) => (
-            <section key={sec.id} className="flex flex-col ">
-              <p>{sec.description}</p>
+            <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
+              <article className="prose lg:prose-xl mx-auto">
+                <h1>{sec.title}</h1>
+               <div  dangerouslySetInnerHTML={{__html: sec.description}} />
+                
+              </article>
             </section>
           ))}
 
