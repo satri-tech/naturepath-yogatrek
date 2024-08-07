@@ -14,7 +14,7 @@ export default function UploadImageField({
 }) {
   return (
     <>
-      <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md relative">
+      <div className="grid grid-cols-12 gap-2 my-2 border border-black dark:border-text-dark/75 rounded-md relative cursor-pointer">
         {images ? (
           <>
             <div className="relative col-span-12" key={images.name}>
@@ -33,12 +33,12 @@ export default function UploadImageField({
             </div>
           </>
         ) : (
-          <div className="relative col-span-12 grid h-40 w-auto justify-center">
-            <p className=" mx-auto place-self-center">Upload the image</p>
+          <div className="relative col-span-12 grid h-40 w-auto justify-center cursor-pointer">
+            <p className=" mx-auto place-self-center dark:text-text-dark/75">Upload the image</p>
           </div>
         )}
 
-        <div className="flex flex-1 justify-between absolute left-0 right-0 bottom-0 top-0 z-10">
+        <div className="flex flex-1 justify-between absolute left-0 right-0 bottom-0 top-0 z-10 cursor-pointer">
           <Input
             type="file"
             accept="image/png, image/jpeg"

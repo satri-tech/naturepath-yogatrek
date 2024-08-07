@@ -1,17 +1,16 @@
-
-;
+import PageWrapper from "@/layouts/PageWrapper";
 
 export default function Layout({
-  children, expenses
+  children,
+  expenses,
 }: Readonly<{
   children: React.ReactNode;
   expenses: React.ReactNode;
 }>) {
   return (
-            <>
-            {children}
-            {expenses}
-            </>
-        
+    <PageWrapper>
+      {children}
+      {expenses}
+    </PageWrapper>
   );
 }

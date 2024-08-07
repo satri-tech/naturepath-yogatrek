@@ -22,17 +22,11 @@ import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
 import UploadImageField from "@/components/ui/uploadImageField";
 
-
-
-
-
- const CreateServicesForm = () => {
+const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
-  const [imageerror, setImageError]= useState<string>("")
- 
+  const [imageerror, setImageError] = useState<string>("");
 
   const session = useSession();
- 
 
   const form = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
@@ -41,63 +35,64 @@ import UploadImageField from "@/components/ui/uploadImageField";
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImageError('')
+      setImageError("");
       const _files = Array.from(e.target.files);
       console.log("files from images", _files[0]);
       setImages(_files[0]);
     }
   };
 
- async function onSubmit(values: z.infer<typeof ServiceFormSchema>) {
-    if(images){
-        const res = await UploadCloudinary(images)
-        if(res.url){
-            try{
-              const formdata= {
-                "title": values.title,
-                "description": values.Description,
-                "image":res.url
-              }
-              const jsonData = JSON.stringify(formdata)
-  
-              const response = await fetch("/api/services/create", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization :`bearer ${session.data?.user.accessToken}`
-                },  
-                body: jsonData,
-              });
-              const data = await response.json();
-              revalidateTag("ServiceCollection")
-              form.reset();
+  async function onSubmit(values: z.infer<typeof ServiceFormSchema>) {
+    if (images) {
+      const res = await UploadCloudinary(images);
+      if (res.url) {
+        try {
+          const formdata = {
+            title: values.title,
+            description: values.Description,
+            image: res.url,
+          };
+          const jsonData = JSON.stringify(formdata);
 
-              if(data && data.success){
-                form.reset();
-                setImages(null);
-              }
+          const response = await fetch("/api/services/create", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `bearer ${session.data?.user.accessToken}`,
+            },
+            body: jsonData,
+          });
+          const data = await response.json();
+          revalidateTag("ServiceCollection");
+          form.reset();
 
-
-            }catch(err){
-                console.log(err);
-            } 
+          if (data && data.success) {
+            form.reset();
+            setImages(null);
+          }
+        } catch (err) {
+          console.log(err);
         }
-        if(res.error){
-            setImageError(res.error);
-        }
-    }else{
-        setImageError("Upload the Image");
+      }
+      if (res.error) {
+        setImageError(res.error);
+      }
+    } else {
+      setImageError("Upload the Image");
     }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-wrap gap-4"
+      >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className=" w-full">
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="Service Title" {...field} />
@@ -107,30 +102,39 @@ import UploadImageField from "@/components/ui/uploadImageField";
           )}
         />
 
-        <FormItem className="flex flex-col gap-2 mb-3 ">
+        <FormItem className="flex flex-col w-full xl:w-[calc(50%_-_8px)]">
           <FormLabel className="">Thumbnail</FormLabel>
-          <UploadImageField images={images} imageerror={imageerror} handleChangeFunc={handleImageFileSelected} />
+          <UploadImageField
+            images={images}
+            imageerror={imageerror}
+            handleChangeFunc={handleImageFileSelected}
+          />
         </FormItem>
 
         <FormField
           control={form.control}
           name="Description"
           render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormControl>
-                <RichTextEditor placeholder="Description" {...field} />
+            <FormItem className="w-full xl:w-[calc(50%_-_8px)] h-[200px]">
+              <FormLabel>Description</FormLabel>
+              <FormControl className=" ">
+                <RichTextEditor
+                  placeholder="Description"
+                  className="dark:text-text-dark/75 dark:placeholder:text-text-dark/75 h-[125px]"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-
-        <Button type="submit">Submit</Button>
+        <div className=" w-full">
+          <Button type="submit">Submit</Button>
+        </div>
       </form>
     </Form>
   );
 };
 
 export default CreateServicesForm;
-

@@ -22,7 +22,7 @@ const UpdateServicePage = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <Pageheading title={"Update Service"} />
-      <div className="max-w-lg">
+      <div className="">
         <Suspense fallback={<div>Loading...</div>}>
           <Service id={params.id} />
         </Suspense>

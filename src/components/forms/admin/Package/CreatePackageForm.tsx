@@ -152,7 +152,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="Service Title" {...field} />
@@ -290,7 +290,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
 
         <FormItem className="flex flex-col gap-2 mb-3 ">
           <FormLabel className="">Thumbnail</FormLabel>
-          <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
+          <div className="grid grid-cols-12 gap-2 my-2 border border-black dark:border-text-dark/40 rounded-md ">
             {images ? (
               <div className="relative col-span-12" key={images.name}>
                 <Image
@@ -304,7 +304,9 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
               </div>
             ) : (
               <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                <p className=" mx-auto place-self-center">Upload the image</p>
+                <p className=" mx-auto place-self-center dark:text-text-dark/75">
+                  Upload the image
+                </p>
               </div>
             )}
           </div>
@@ -322,10 +324,14 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="highlights"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Highlights</FormLabel>
               <FormControl>
-                <RichTextEditor placeholder="Highlights" {...field} />
+                <RichTextEditor
+                  placeholder="Highlights"
+                  className="dark:text-text-dark/75 dark:placeholder:text-text-dark/75"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -335,7 +341,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <RichTextEditor
@@ -352,7 +358,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="itinerary"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Itinerary</FormLabel>
               <FormControl>
                 <RichTextEditor placeholder="Itinerary" {...field} />
@@ -365,7 +371,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="costInclusion"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Cost Inclusion</FormLabel>
               <FormControl>
                 <RichTextEditor placeholder="Cost Inclusion" {...field} />
@@ -378,7 +384,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           control={form.control}
           name="costExclusion"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className="space-y-2">
               <FormLabel>Cost Exclusion</FormLabel>
               <FormControl>
                 <RichTextEditor placeholder="Cost Exclusion" {...field} />

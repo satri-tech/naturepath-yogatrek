@@ -127,13 +127,16 @@ interface UpdateFormTypes{
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex flex-wrap gap-4"
+      >
         <input type="hidden" name="id" value={services.id} />
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className=" w-full">
               <FormLabel>Title</FormLabel>
               <FormControl>
                 <Input type="text" placeholder="Service Title" {...field} />
@@ -143,7 +146,7 @@ interface UpdateFormTypes{
           )}
         />
 
-        <FormItem className="flex flex-col gap-2 mb-3 ">
+        <FormItem className="flex flex-col gap-2 mb-3 w-full xl:w-[calc(50%_-_8px)]">
           <FormLabel className="">Thumbnail</FormLabel>
           <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
             {images ? (
@@ -172,7 +175,7 @@ interface UpdateFormTypes{
                   </div>
                 ) : (
                   <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                    <p className=" mx-auto place-self-center">
+                    <p className=" mx-auto place-self-center dark:text-text-dark/75">
                       Upload the image
                     </p>
                   </div>
@@ -194,9 +197,14 @@ interface UpdateFormTypes{
           control={form.control}
           name="Description"
           render={({ field }) => (
-            <FormItem className="space-y-0">
+            <FormItem className=" w-full xl:w-[calc(50%_-_8px)]">
+              <FormLabel className="">Description</FormLabel>
               <FormControl>
-                <RichTextEditor placeholder="Description" {...field} />
+                <RichTextEditor
+                  placeholder="Description"
+                  className=" dark:text-text-dark/75"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -14,4 +14,13 @@
   .vertical-padding-dashboard {
     @apply py-4 sm:py-6 md:py-8 lg:py-10;
   }
+
+  .dark .quill-editor .ql-editor {
+    color: white;
+  }
+
+  .dark .quill-editor .ql-editor .ql-bold,
+  .dark .quill-editor .ql-editor .ql-underline {
+    color: white;
+  }
 }

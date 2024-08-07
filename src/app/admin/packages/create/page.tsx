@@ -9,7 +9,7 @@ const CreatePage = async() => {
   return (
     <>
       <Pageheading title={"Create New Package"} />
-      <div className="max-w-xl">
+      <div className="">
       <CreatePackageForm service={service}/>
       </div>
     </>

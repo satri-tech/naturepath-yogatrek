@@ -74,7 +74,7 @@ const Menu = async() => {
           </SheetTrigger>
           <SheetContent side={"left"} className="max-w-60 p-0">
             <div className="h-screen ">
-              <h1 className="font-bold text-sm md:text-xl text-center place-self-center text-primary border-b border-secondary h-[10%] md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out pt-4">
+              <h1 className="font-bold text-sm md:text-xl text-center place-self-center text-primary border-b border-primary h-[10%] md:block shadow-xl px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out pt-4">
                 ERS<span className="text-secondary">.</span>
               </h1>
               <div
