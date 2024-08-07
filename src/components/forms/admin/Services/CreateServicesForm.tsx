@@ -20,6 +20,7 @@ import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
+import UploadImageField from "@/components/ui/uploadImageField";
 
 
 
@@ -108,32 +109,7 @@ import { revalidateTag } from "next/cache";
 
         <FormItem className="flex flex-col gap-2 mb-3 ">
           <FormLabel className="">Thumbnail</FormLabel>
-          <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
-            {images ? (
-              <div className="relative col-span-12" key={images.name}>
-                <Image
-                  src={URL.createObjectURL(images)}
-                  alt={images.name}
-                  className="object-fit h-40 w-auto mx-auto"
-                  height={500}
-                  width={500}
-                  quality={100}
-                />
-              </div>
-            ) : (
-              <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                <p className=" mx-auto place-self-center">Upload the image</p>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-1 justify-between">
-            <Input
-              type="file"
-              accept="image/png, image/jpeg"
-              onChange={handleImageFileSelected}
-            />
-          </div>
-          {imageerror && <p className="text-red-700">{imageerror}</p>}
+          <UploadImageField images={images} imageerror={imageerror} handleChangeFunc={handleImageFileSelected} />
         </FormItem>
 
         <FormField

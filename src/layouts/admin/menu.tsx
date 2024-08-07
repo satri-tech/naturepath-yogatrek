@@ -39,19 +39,19 @@ export const MenuList:MenulistType[]=[
         icons:<Slack />
     },
     {
-        id:4,
+        id:5,
         href:"/admin/blog",
         name:"Blog",
         icons:<LibraryBig />
     },
     {
-        id:4,
+        id:6,
         href:"/admin/team",
         name:"Team",
         icons:<Users />
     },
     {
-        id:4,
+        id:7,
         href:"/admin/user",
         name:"Users",
         icons:<Users />
