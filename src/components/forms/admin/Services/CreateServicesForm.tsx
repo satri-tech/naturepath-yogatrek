@@ -21,6 +21,11 @@ import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
 import UploadImageField from "@/components/ui/uploadImageField";
+import { inputType } from "@/utils/types/admin/inputType";
+import { serviceFormInput } from "@/utils/types/admin/serviceType";
+import TextInput from "../../FormElements/TextInput";
+import RichTextArea from "../../FormElements/RichTextArea";
+import ImageInputSingle from "../../FormElements/ImageInputSingle";
 
 const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
@@ -28,9 +33,17 @@ const CreateServicesForm = () => {
 
   const session = useSession();
 
-  const form = useForm<z.infer<typeof ServiceFormSchema>>({
+  const methods = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
   });
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+  } = methods;
 
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,7 +62,7 @@ const CreateServicesForm = () => {
         try {
           const formdata = {
             title: values.title,
-            description: values.Description,
+            description: values.description,
             image: res.url,
           };
           const jsonData = JSON.stringify(formdata);
@@ -64,10 +77,10 @@ const CreateServicesForm = () => {
           });
           const data = await response.json();
           revalidateTag("ServiceCollection");
-          form.reset();
+          reset();
 
           if (data && data.success) {
-            form.reset();
+            reset();
             setImages(null);
           }
         } catch (err) {
@@ -82,57 +95,148 @@ const CreateServicesForm = () => {
     }
   }
 
+  const inputs: inputType<serviceFormInput>[] = [
+    {
+      name: "title",
+      label: "Service Title",
+      type: "text",
+      placeholder: "Enter service titile",
+      error: errors.title?.message,
+      element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "text",
+      placeholder: "Enter description",
+      error: errors.description?.message,
+      element: "rich-text",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "image",
+      label: "Service thumbnail",
+      type: "file",
+      placeholder: "Select thumbnail",
+      error: errors.image?.message,
+      element: "image",
+      className: "w-full",
+    },
+  ];
+
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-wrap gap-4"
-      >
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className=" w-full">
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Service Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormItem className="flex flex-col w-full xl:w-[calc(50%_-_8px)]">
-          <FormLabel className="">Thumbnail</FormLabel>
-          <UploadImageField
-            images={images}
-            imageerror={imageerror}
-            handleChangeFunc={handleImageFileSelected}
-          />
-        </FormItem>
-
-        <FormField
-          control={form.control}
-          name="Description"
-          render={({ field }) => (
-            <FormItem className="w-full xl:w-[calc(50%_-_8px)] h-[200px]">
-              <FormLabel>Description</FormLabel>
-              <FormControl className=" ">
-                <RichTextEditor
-                  placeholder="Description"
-                  className="dark:text-text-dark/75 dark:placeholder:text-text-dark/75 h-[125px]"
-                  {...field}
+    <Form methods={methods} register={register} handleSubmit={handleSubmit} onSubmit={onSubmit}>
+      {inputs.map((input, i) => {
+        const {
+          name,
+          type,
+          placeholder,
+          error,
+          autoFocus,
+          label,
+          element,
+          min,
+          step,
+          className,
+          showField = true,
+          multiple,
+        } = input;
+        return showField ? (
+          element == "input" ? (
+            <FormField
+              key={i}
+              control={control}
+              name="title"
+              render={({ field }) => (
+                <TextInput
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  min={min}
+                  step={step}
+                  wrapperClass={className}
+                  field={field}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className=" w-full">
-          <Button type="submit">Submit</Button>
-        </div>
-      </form>
+              )}
+            />
+          ) : element == "rich-text" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              render={({ field }) => (
+                <RichTextArea
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                />
+              )}
+            />
+          ) : (
+            //  : element == "images" ? (
+            //   <Controller
+            //     key={i}
+            //     name={name}
+            //     control={control}
+            //     defaultValue={[]} //empty array as default value
+            //     render={({ field }) => (
+            //       <ImageInputMultiple
+            //         key={i}
+            //         name={name}
+            //         label={label}
+            //         type={type}
+            //         placeholder={placeholder}
+            //         error={error}
+            //         autoFocus={autoFocus}
+            //         register={register}
+            //         wrapperClass={className}
+            //         field={field}
+            //         containerSizeClass="h-[200px]"
+            //         iconSizeClass="text-[75px]"
+            //       />
+            //     )}
+            //   />
+            // )
+            //later for single image input component
+            <FormField
+              control={control}
+              name="title"
+              render={({ field }) => (
+                <ImageInputSingle
+                  key={i}
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                  handleImageFileSelected={handleImageFileSelected}
+                  imageerror={imageerror}
+                  images={images}
+                  containerSizeClass="h-[150px]"
+                  iconSizeClass="text-[60px]"
+                />
+              )}
+            />
+          )
+        ) : (
+          <span className={className} key={i}></span>
+        );
+      })}
     </Form>
   );
 };

@@ -7,8 +7,8 @@ import ThemeToggle from "@/components/ui/themeToggle";
 
 const Navbar = () => {
   return (
-    <PageWrapper className="">
-      <nav className="sticky top-0 flex flex-row py-3 justify-between h-[10%] shadow-sm dark:bg-black/95">
+    <PageWrapper className="dark:!bg-black/85">
+      <nav className="sticky top-0 flex flex-row py-3 justify-between h-[10%] shadow-sm ">
         <div className="flex gap-4 flex-1 items-center ">
           <span className="md:hidden flex">
             <Menu />

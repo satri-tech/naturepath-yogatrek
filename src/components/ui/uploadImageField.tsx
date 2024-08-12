@@ -14,7 +14,7 @@ export default function UploadImageField({
 }) {
   return (
     <>
-      <div className="grid grid-cols-12 gap-2 my-2 border border-black dark:border-text-dark/75 rounded-md relative cursor-pointer">
+      <div className="grid grid-cols-12 gap-2 my-2 border border-slate-200 bg-white  dark:bg-slate-950  px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:text-text-dark/75 dark:focus-visible:ring-slate-300 rounded-md relative cursor-pointer">
         {images ? (
           <>
             <div className="relative col-span-12" key={images.name}>
@@ -34,7 +34,9 @@ export default function UploadImageField({
           </>
         ) : (
           <div className="relative col-span-12 grid h-40 w-auto justify-center cursor-pointer">
-            <p className=" mx-auto place-self-center dark:text-text-dark/75">Upload the image</p>
+            <p className=" mx-auto place-self-center dark:text-text-dark/75">
+              Upload the image
+            </p>
           </div>
         )}
 

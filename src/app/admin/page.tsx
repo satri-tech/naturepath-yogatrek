@@ -107,7 +107,7 @@ export default async function Admin() {
     ];
   }
   return (
-    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 dark:text-text-dark bg-bg-white dark:bg-gray-dark ">
+    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 dark:text-text-dark bg-bg-white dark:bg-gray-dark vertical-padding-dashboard">
       <div>
         <h2 className={`${petrona} font-bold text-2xl md:text-3xl`}>
           <span className=" text-primary">Welcome</span> back! Navin Sirr

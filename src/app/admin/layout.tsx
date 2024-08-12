@@ -20,7 +20,7 @@ export default function AdminLayout({
       </aside>
       <div className="h-full w-full overflow-y-auto">
         <Navbar />
-        <div className="overflow-y-auto vertical-padding-dashboard">
+        <div className="overflow-y-auto bg-bg-white dark:bg-gray-dark">
           {children}
         </div>
       </div>

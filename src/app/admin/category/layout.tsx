@@ -5,5 +5,9 @@ export default function CategoryLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <PageWrapper>{children}</PageWrapper>;
+  return (
+    <PageWrapper className="vertical-padding-dashboard min-h-screen">
+      {children}
+    </PageWrapper>
+  );
 }

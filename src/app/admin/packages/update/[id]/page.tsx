@@ -12,7 +12,7 @@ const Package = async ({ id }: { id: string }) => {
       { next: { tags: [`Package-${id}`] } }
     );
     const data = await response.json();
-    console.log("package",data.data)
+    console.log("package", data.data);
     return <UpdatePackageForm packages={data.data} service={service} />;
   } catch (error) {
     console.log(error);
@@ -22,14 +22,14 @@ const Package = async ({ id }: { id: string }) => {
 
 const CreatePage = async ({ params }: { params: { id: string } }) => {
   return (
-    <>
+    <main className=" dark:bg-black/85 bg-white p-4 md:p-5 rounded-md">
       <Pageheading title={"Update "} />
       <div className="max-w-lg">
         <Suspense fallback={<div>Loading...</div>}>
           <Package id={params.id} />
         </Suspense>
       </div>
-    </>
+    </main>
   );
 };
 

@@ -8,7 +8,7 @@ export default function Layout({
   expenses: React.ReactNode;
 }>) {
   return (
-    <PageWrapper>
+    <PageWrapper className="vertical-padding-dashboard min-h-screen">
       {children}
       {expenses}
     </PageWrapper>

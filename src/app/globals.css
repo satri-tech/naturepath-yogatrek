@@ -15,12 +15,11 @@
     @apply py-4 sm:py-6 md:py-8 lg:py-10;
   }
 
-  .dark .quill-editor .ql-editor {
-    color: white;
-  }
-
-  .dark .quill-editor .ql-editor .ql-bold,
-  .dark .quill-editor .ql-editor .ql-underline {
-    color: white;
-  }
+  /* .quill,
+  .ql-toolbar,
+  .ql-snow,
+  .ql-editor,
+  .ql-blank {
+    @apply dark:border-0 dark:outline-offset-0 dark:ring-offset-0;
+  } */
 }

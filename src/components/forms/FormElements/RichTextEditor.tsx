@@ -20,19 +20,18 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({ value, onChange, classN
 
   return (
     <ReactQuill
-    
       theme="snow"
       value={value}
       onChange={onChange}
-      className={className}
+      className={` bg-white  dark:bg-slate-950 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:placeholder:text-slate-400 dark:text-text-dark/75 dark:placeholder:text-text-dark/75 h-[175px]  rounded-md ${className}`}
       placeholder={placeholder}
       modules={{
         toolbar: [
           [{ header: [1, 2, 3, false] }],
-          ['bold', 'italic', 'underline', 'strike'],
-          [{ list: 'ordered' }, { list: 'bullet' }],
-          ['link', 'image'],
-          ['clean'],
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["link", "image"],
+          ["clean"],
         ],
       }}
     />
