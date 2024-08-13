@@ -27,7 +27,7 @@ const RichTextArea = <T extends {}>({
   ...rest
 }: TextInputProps<T>) => {
   return (
-    <FormItem className={`h-[215px] ${wrapperClass}`}>
+    <FormItem className={`${wrapperClass}`}>
       <FormLabel>{label}</FormLabel>
       <FormControl>
         <RichTextEditor placeholder={placeholder} className="" {...field} />

@@ -37,6 +37,14 @@ const CreateServicesForm = () => {
     resolver: zodResolver(ServiceFormSchema),
   });
 
+  const updateImages = (img: File | null) => {
+    setImages(img);
+  };
+
+  const updateImgError = (imgError: string) => {
+    setImageError(imgError);
+  };
+
   const {
     register,
     control,
@@ -103,7 +111,7 @@ const CreateServicesForm = () => {
       placeholder: "Enter service titile",
       error: errors.title?.message,
       element: "input",
-      className: "w-full md:w-[calc(50%_-_8px)]",
+      className: "w-full",
     },
     {
       name: "description",
@@ -112,7 +120,7 @@ const CreateServicesForm = () => {
       placeholder: "Enter description",
       error: errors.description?.message,
       element: "rich-text",
-      className: "w-full md:w-[calc(50%_-_8px)]",
+      className: "w-full",
     },
     {
       name: "image",
@@ -126,7 +134,12 @@ const CreateServicesForm = () => {
   ];
 
   return (
-    <Form methods={methods} register={register} handleSubmit={handleSubmit} onSubmit={onSubmit}>
+    <Form
+      methods={methods}
+      register={register}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
       {inputs.map((input, i) => {
         const {
           name,
@@ -147,7 +160,7 @@ const CreateServicesForm = () => {
             <FormField
               key={i}
               control={control}
-              name="title"
+              name={name}
               render={({ field }) => (
                 <TextInput
                   name={name}
@@ -211,7 +224,9 @@ const CreateServicesForm = () => {
             //later for single image input component
             <FormField
               control={control}
-              name="title"
+              key={i}
+              name={name}
+              defaultValue=""
               render={({ field }) => (
                 <ImageInputSingle
                   key={i}
@@ -229,6 +244,8 @@ const CreateServicesForm = () => {
                   images={images}
                   containerSizeClass="h-[150px]"
                   iconSizeClass="text-[60px]"
+                  updateImages={updateImages}
+                  updateImgError={updateImgError}
                 />
               )}
             />

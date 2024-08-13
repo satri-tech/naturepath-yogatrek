@@ -6,7 +6,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { InputProps, TextInputProps } from "@/utils/types/admin/inputType";
+import { TextInputProps } from "@/utils/types/admin/inputType";
 import React from "react";
 
 const TextInput = <T extends {}>({
@@ -27,10 +27,10 @@ const TextInput = <T extends {}>({
   ...rest
 }: TextInputProps<T>) => {
   return (
-    <FormItem className={` ${wrapperClass}`}>
+    <FormItem className={`${wrapperClass}`}>
       <FormLabel>{label}</FormLabel>
-      <FormControl>
-        <Input type="text" placeholder={placeholder} {...field} />
+      <FormControl className=" flex">
+        <Input type="text" placeholder={placeholder} className="flex-1" {...field} />
       </FormControl>
       <FormMessage />
     </FormItem>

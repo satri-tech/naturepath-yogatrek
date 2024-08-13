@@ -46,14 +46,14 @@ const PackageList = async () => {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="hidden w-[100px] sm:table-cell">
-              <span className="sr-only">Image</span>
+            <TableHead className=" w-[100px] sm:table-cell">
+              <span className="">Image</span>
             </TableHead>
             <TableHead className=" w-[175px]">Name</TableHead>
-            <TableHead className="hidden md:table-cell">
+            <TableHead className=" md:table-cell">
               Package Duration
             </TableHead>
-            <TableHead className="hidden md:table-cell">Pricing</TableHead>
+            <TableHead className=" md:table-cell">Pricing</TableHead>
             {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
             <TableHead>
               <span className="">Actions</span>

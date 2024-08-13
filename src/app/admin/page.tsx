@@ -81,7 +81,7 @@ export default async function Admin() {
         icon: <Package />,
         title: "Total Packages",
         value: dashboarddata.packages.totalPackage,
-        img: "/admin/package.png",
+        img: "/admin/package2.png",
         className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
       },
       {

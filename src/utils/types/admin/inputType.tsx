@@ -69,6 +69,8 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   handleImageFileSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
   images: File | null;
   imageerror: string;
+  updateImages: (img:File|null) => void;
+  updateImgError: (imgError: string) => void;
 }
 
 export interface RichTextEditorInputProps<T extends FieldValues>

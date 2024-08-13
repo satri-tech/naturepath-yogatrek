@@ -28,7 +28,12 @@ const Form = <T extends FieldValues>({
 }: IFormProps<T>) => {
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} method="POST" {...rest}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        method="POST"
+        className=" flex flex-col gap-4"
+        {...rest}
+      >
         <div className="flex flex-wrap gap-4 w-full">{children}</div>
         <div className=" w-full">
           <Button type="submit">Submit</Button>
