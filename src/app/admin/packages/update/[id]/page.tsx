@@ -22,7 +22,7 @@ const Package = async ({ id }: { id: string }) => {
 
 const CreatePage = async ({ params }: { params: { id: string } }) => {
   return (
-    <main className=" dark:bg-black/85 bg-white p-4 md:p-5 rounded-md">
+    <main className=" dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
       <Pageheading title={"Update Package"} />
       <div className="">
         <Suspense fallback={<div>Loading...</div>}>

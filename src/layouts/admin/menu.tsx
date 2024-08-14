@@ -61,8 +61,11 @@ export const MenuList:MenulistType[]=[
 const Menu = async() => {
     return (
       <>
-        <div className="md:space-y-10 mt-5 dark:!bg-black/85">
-          <div id="menu" className="md:flex flex-col space-y-2 hidden">
+        <div className="md:space-y-10 mt-5 dark:!bg-black-dark">
+          <div
+            id="menu"
+            className="md:flex flex-col space-y-2 hidden dark:!bg-black-dark"
+          >
             {MenuList.map(async (list) => (
               <MenuItem key={`${list.id}-${list.name}`} list={list} />
             ))}

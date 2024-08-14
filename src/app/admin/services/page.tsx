@@ -1,4 +1,5 @@
 "use client";
+import ServiceListLoading from "@/components/loading/admin/ServiceListLoading";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -100,7 +101,7 @@ const ServicesPage = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<ServiceListLoading />}>
           <ServicesList />
         </Suspense>
       </CardContent>

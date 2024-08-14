@@ -24,7 +24,7 @@ const BreadcrumbItem = ({
       <Link href={href}>
         <span
           className={cn(
-            `text-slate-600 dark:text-text-dark hover:text-primary transition-colors duration-300 text-sm md:text-base`,
+            `text-slate-600 dark:text-text-dark dark:!bg-black-dark hover:text-primary transition-colors duration-300 text-sm md:text-base`,
             className
           )}
         >
@@ -34,7 +34,7 @@ const BreadcrumbItem = ({
     ) : (
       <span
         className={cn(
-          `text-slate-600 dark:text-text-dark hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`,
+          `text-slate-600 dark:text-text-dark dark:!bg-black-dark hover:text-primary cursor-pointer transition-colors duration-300 text-xs sm:text-sm md:text-base`,
           className
         )}
       >
@@ -50,27 +50,35 @@ const Breadcrumbs = ({className}:{className?:string}) => {
 
   return (
     <>
-    <Head>
-      <title>{pathSegments[pathSegments.length - 1]?.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()) || 'Home'}</title>
-    </Head>
-    <ol className={"list-none p-0 inline-flex items-center space-x-1 "}>
-      <BreadcrumbItem href="/" icon={<Home className='w-5 h-5' />} />
-      {pathSegments.map((segment, index) => (
-        <BreadcrumbItem
-          key={index}
-          label={`/${" "}${segment.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}`}
-          href={`/${pathSegments.slice(0, index + 1).join('/')}`}
-          className="md:block hidden"
-        />
-      ))}
-      {pathSegments.length > 0 && 
-      <BreadcrumbItem
-        label={`/${" "}${pathSegments[pathSegments.length - 1]?.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase())}`}
-        href={`/${pathSegments.join('/')}`}
-        className={cn("block md:hidden", className)}
-      />
-      }
-    </ol>
+      <Head>
+        <title className="dark:!bg-black-dark">
+          {pathSegments[pathSegments.length - 1]
+            ?.replace(/-/g, " ")
+            .replace(/\b\w/g, (l) => l.toUpperCase()) || "Home"}
+        </title>
+      </Head>
+      <ol
+        className={
+          "list-none p-0 inline-flex items-center space-x-1 dark:!bg-black-dark"
+        }
+      >
+        <BreadcrumbItem href="/" icon={<Home className="w-5 h-5" />} />
+        {pathSegments.map((segment, index) => (
+          <BreadcrumbItem
+            key={index}
+            label={`/${" "}${segment.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}`}
+            href={`/${pathSegments.slice(0, index + 1).join("/")}`}
+            className="md:block hidden"
+          />
+        ))}
+        {pathSegments.length > 0 && (
+          <BreadcrumbItem
+            label={`/${" "}${pathSegments[pathSegments.length - 1]?.replace(/-/g, " ").replace(/\b\w/g, (l) => l.toUpperCase())}`}
+            href={`/${pathSegments.join("/")}`}
+            className={cn("block md:hidden", className)}
+          />
+        )}
+      </ol>
     </>
   );
 };

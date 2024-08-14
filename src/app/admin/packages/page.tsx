@@ -34,6 +34,7 @@ import { Package } from "@prisma/client";
 import ViewButton from "@/components/ui/viewButton";
 import UpdateButton from "@/components/ui/updateButton";
 import DeleteButton from "@/components/ui/deleteButton";
+import PackageListLoading from "@/components/loading/admin/PackageListLoading";
 
 const PackageList = async () => {
   try {
@@ -50,9 +51,7 @@ const PackageList = async () => {
               <span className="">Image</span>
             </TableHead>
             <TableHead className=" w-[175px]">Name</TableHead>
-            <TableHead className=" md:table-cell">
-              Package Duration
-            </TableHead>
+            <TableHead className=" md:table-cell">Package Duration</TableHead>
             <TableHead className=" md:table-cell">Pricing</TableHead>
             {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
             <TableHead>
@@ -88,13 +87,19 @@ const PackageList = async () => {
               </TableCell>
               <TableCell className="">
                 <span className=" inline-block w-[175px]">
-                  Shared: <span className="  font-medium">{pac.SharingOffer}</span>{" "}
-                  <span className=" line-through  font-medium">{pac.SharingPrice}</span>
+                  Shared:{" "}
+                  <span className="  font-medium">{pac.SharingOffer}</span>{" "}
+                  <span className=" line-through  font-medium">
+                    {pac.SharingPrice}
+                  </span>
                 </span>
                 <br />
                 <span>
-                  Private: <span className="  font-medium">{pac.PrivateOffer}</span>{" "}
-                  <span className=" line-through  font-medium">{pac.PrivatePrice}</span>
+                  Private:{" "}
+                  <span className="  font-medium">{pac.PrivateOffer}</span>{" "}
+                  <span className=" line-through  font-medium">
+                    {pac.PrivatePrice}
+                  </span>
                 </span>
               </TableCell>
               {/* <TableCell className="">
@@ -158,7 +163,7 @@ const PackagePage = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<PackageListLoading />}>
           <PackageList />
         </Suspense>
       </CardContent>

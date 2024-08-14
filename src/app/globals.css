@@ -41,4 +41,21 @@
   .quill {
     @apply !rounded-md;
   }
+
+  /*skeleton animation*/
+  .skeleton {
+      @apply !text-transparent selection:!text-transparent !text-opacity-0 !animate-[skeleton-loading-animation_1s_infinite_ease-in-out_alternate];
+    }
+
+    @keyframes skeleton-loading-animation {
+      from {
+        @apply bg-gray-500/5;
+      }
+
+      to {
+        @apply bg-gray-500/20;
+      }
+    }
+
+  
 }
