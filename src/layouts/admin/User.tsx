@@ -31,7 +31,7 @@ const User = () => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent className=" absolute -right-5 top-[calc(100%_+_12px)]">
-              <DropdownMenuItem className=" flex items-start gap-2 cursor-default w-full">
+              <DropdownMenuItem className=" flex gap-2 cursor-default w-full items-center">
                 <Image
                   src="https://randomuser.me/api/portraits/men/20.jpg"
                   alt=""
@@ -40,7 +40,7 @@ const User = () => {
                   quality={100}
                   className="rounded-full w-10 h-10 object-cover "
                 />
-                <span className=" whitespace-nowrap shrink-0 inline-block font-semibold text-black/90">
+                <span className=" whitespace-nowrap shrink-0 inline-block font-semibold text-black/90 dark:text-white/70">
                   {session?.user?.firstName} {session?.user?.lastName}
                 </span>
               </DropdownMenuItem>

@@ -12,7 +12,7 @@ export default function PackageListLoading() {
   return (
     <div className=" skeleton !overflow-hidden">
       <TableHeader className=" hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">
-        <TableRow>
+        <TableRow className=" hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">
           <TableHead className=" w-[100px] sm:table-cell hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">
             <span className="">Image</span>
           </TableHead>
@@ -26,7 +26,7 @@ export default function PackageListLoading() {
             Pricing
           </TableHead>
           {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
-          <TableHead>
+          <TableHead className=" hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">
             <span className="">Actions</span>
           </TableHead>
         </TableRow>
