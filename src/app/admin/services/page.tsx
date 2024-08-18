@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import DeleteButton from "@/components/ui/deleteButton";
+import DeletePopover from "@/components/ui/deletePopover";
 import {
   Table,
   TableBody,
@@ -34,51 +35,55 @@ const ServicesList = async () => {
     );
     const data = await response.json();
     return (
-      
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="">Service</TableHead>
-                <TableHead>Thumbnail</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.data.map((Item: Service) => (
-                <TableRow className="bg-accent" key={Item.id}>
-                  <TableCell>
-                    <div className="font-medium">{Item.title}</div>
-                    {/* <div className="hidden text-sm text-muted-foreground md:inline">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="">Service</TableHead>
+            <TableHead>Thumbnail</TableHead>
+            <TableHead>Actions</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.data.map((Item: Service) => (
+            <TableRow className="bg-accent" key={Item.id}>
+              <TableCell>
+                <div className="font-medium">{Item.title}</div>
+                {/* <div className="hidden text-sm text-muted-foreground md:inline">
                       {Item.id}
                     </div> */}
-                  </TableCell>
-                  <TableCell className="">
-                    <Image
-                      alt={Item.title}
-                      className="aspect-square rounded-md object-cover"
-                      height="48"
-                      src={Item.image}
-                      width="48"
-                    />
-                  </TableCell>
-                  <TableCell className="flex gap-2 items-center">
-                    <ViewButton url={`/admin/services/update/${Item.id}`} className="" />
+              </TableCell>
+              <TableCell className="">
+                <Image
+                  alt={Item.title}
+                  className="aspect-square rounded-md object-cover"
+                  height="48"
+                  src={Item.image}
+                  width="48"
+                />
+              </TableCell>
+              <TableCell className="flex gap-2 items-center">
+                <ViewButton
+                  url={`/admin/services/update/${Item.id}`}
+                  className=""
+                />
 
-                    {/*update*/}
-                    <UpdateButton url={`/admin/services/update/${Item.id}`} />
+                {/*update*/}
+                <UpdateButton url={`/admin/services/update/${Item.id}`} />
 
-                    {/* <form action={DeleteService}> */}
-                    {/* <input type="hidden" value={Item.id} name="id"/> */}
+                {/* <form action={DeleteService}> */}
+                {/* <input type="hidden" value={Item.id} name="id"/> */}
 
-                    {/*later put delete api request here in the function*/}
-                    <DeleteButton clickFunc={() => {}} />
-                    {/* </form> */}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        
+                {/*later put delete api request here in the function*/}
+                <DeletePopover text="service" deleteFn={()=>{}}>
+                  <DeleteButton />
+                </DeletePopover>
+
+                {/* </form> */}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
     );
   } catch (error) {
     console.log(error);

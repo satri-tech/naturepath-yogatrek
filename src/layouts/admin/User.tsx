@@ -10,16 +10,19 @@ import { Home, LogOut } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { LayoutDashboard } from "lucide-react";
+import LogoutPopover from "@/components/ui/logoutPopover";
 
 const User = () => {
   const { data: session } = useSession();
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
   return (
     <>
       {session && session.user ? (
         <div className="flex gap-4 flex-1 items-center justify-end">
-          <DropdownMenu>
+          <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
               <Image
                 src="https://randomuser.me/api/portraits/men/20.jpg"
@@ -30,7 +33,7 @@ const User = () => {
                 className="rounded-full w-10 h-10 object-cover "
               />
             </DropdownMenuTrigger>
-            <DropdownMenuContent className=" absolute -right-5 top-[calc(100%_+_12px)]">
+            <DropdownMenuContent className={` absolute -right-5 top-[calc(100%_+_12px)] z-0`}>
               <DropdownMenuItem className=" flex gap-2 cursor-default w-full items-center">
                 <Image
                   src="https://randomuser.me/api/portraits/men/20.jpg"
@@ -57,13 +60,10 @@ const User = () => {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="  bg-yoga-red/10 text-yoga-red hover:!text-yoga-red hover:!bg-yoga-red/20">
-                <Link
-                  href={"/api/auth/signout"}
-                  className="flex items-center gap-2"
-                >
+                <LogoutPopover>
                   <LogOut className=" w-5 h-5" />
                   <span>Logout</span>
-                </Link>
+                </LogoutPopover>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
