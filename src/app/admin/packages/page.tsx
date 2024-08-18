@@ -35,6 +35,7 @@ import ViewButton from "@/components/ui/viewButton";
 import UpdateButton from "@/components/ui/updateButton";
 import DeleteButton from "@/components/ui/deleteButton";
 import PackageListLoading from "@/components/loading/admin/PackageListLoading";
+import DeletePopover from "@/components/ui/deletePopover";
 
 const PackageList = async () => {
   try {
@@ -135,7 +136,9 @@ const PackageList = async () => {
                 {/* <input type="hidden" value={Item.id} name="id"/> */}
 
                 {/*later put delete api request here in the function*/}
-                <DeleteButton clickFunc={() => {}} />
+                <DeletePopover text="service" deleteFn={() => {}}>
+                  <DeleteButton />
+                </DeletePopover>
                 {/* </form> */}
               </TableCell>
             </TableRow>
