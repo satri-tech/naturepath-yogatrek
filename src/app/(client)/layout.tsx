@@ -15,11 +15,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <main className=" dark:bg-gray-dark">
       <Navbar />
       {children}
       <Footer />
       <WhatsappChat />
-    </>
+    </main>
   );
 }

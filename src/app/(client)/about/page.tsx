@@ -39,11 +39,11 @@ const AboutPage = async () => {
     ];
 
     return (
-      <main className=" ">
+      <main className=" dark:text-text-dark">
         <Image
           src={about_page_details.image}
           alt={about_page_details.title}
-          className="w-full h-[215px] sm:h-[250px] md:h-[300px] object-cover group-hover/parent:scale-105 transition-all duration-500"
+          className="w-full h-[215px] sm:h-[250px] md:h-[300px] object-cover group-hover/parent:scale-105 transition-all duration-500 dark:brightness-75"
           width={500}
           height={500}
           quality={100}
@@ -59,9 +59,11 @@ const AboutPage = async () => {
           {about_page_details.sections?.map((sec) => (
             <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
               <article className="prose lg:prose-xl mx-auto">
-                <h1>{sec.title}</h1>
-               <div  dangerouslySetInnerHTML={{__html: sec.description}} />
-                
+                <h1 className="dark:text-text-dark">{sec.title}</h1>
+                <div
+                  className=" dark:text-text-dark"
+                  dangerouslySetInnerHTML={{ __html: sec.description }}
+                />
               </article>
             </section>
           ))}
@@ -91,13 +93,13 @@ const AboutPage = async () => {
                       quality={100}
                     />
 
-                    <div className=" flex flex-col items-center">
+                    <div className=" flex flex-col items-center dark:text-text-dark">
                       <CardTitle
-                        className={` text-black/80 text-xl ${petrona.className}`}
+                        className={` text-black/80 dark:text-text-dark text-xl ${petrona.className}`}
                       >
                         {title}
                       </CardTitle>
-                      <CardDescription className=" text-base text-center">
+                      <CardDescription className=" text-base text-center dark:text-text-dark/70">
                         {detail}
                       </CardDescription>
                     </div>

@@ -28,15 +28,13 @@ const ThemeToggle = () => {
   return (
     <button
       onClick={toggleTheme}
-      className=" hover:bg-gray-200 dark:hover:bg-gray-600 text-black/85 dark:text-text-dark relative flex items-center justify-center p-3 bg-gray-100 dark:bg-gray-dark rounded-full focus:outline-none gap-4"
+      className=" hover:bg-gray-200 dark:bg-gray-700/80 text-black/85 dark:text-text-dark relative flex items-center justify-center p-3 bg-gray-100 dark:hover:bg-gray-700 rounded-full focus:outline-none gap-4"
     >
       <div
         className={`absolute w-8 h-8 top-1/2 left-2  z-0  rounded-full shadow-md transform transition-transform dark:translate-x-[calc(100%_+_4px)] translate-x-0 -translate-y-1/2 dark:bg-black/90 bg-white duration-300 ease-in-out`}
       ></div>
 
-      <IoMdSunny
-        className={`w-6 h-6 shrink-0 text-yellow-500 relative z-10`}
-      />
+      <IoMdSunny className={`w-6 h-6 shrink-0 text-yellow-500 relative z-10`} />
       <BsMoonStarsFill
         className={`w-5 h-5 shrink-0 dark:text-gray-200 text-black/40  relative z-10`}
       />

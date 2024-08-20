@@ -3,9 +3,10 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
+import ThemeToggle from "@/components/ui/themeToggle";
 
 const inter = Inter({
-  weight: [ "600"],
+  weight: ["600"],
   style: ["normal"],
   subsets: ["latin"],
 });
@@ -28,8 +29,10 @@ export const Menus: MenuType[] = [
 const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
   const pathname = usePathname();
   return (
-    <ul className={`${inter.className} hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white
-`}>
+    <ul
+      className={`${inter.className} hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white
+`}
+    >
       {Menus.map((items) => {
         return (
           <React.Fragment key={items.id}>
@@ -76,6 +79,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
           </React.Fragment>
         );
       })}
+      <ThemeToggle />
     </ul>
   );
 };

@@ -7,6 +7,7 @@ import {
   UseFormReturn,
   UseFormSetValue,
 } from "react-hook-form";
+import { selectOptionType } from "./selectOptionType";
 
 export interface InputProps<T extends FieldValues>
   extends InputHTMLAttributes<
@@ -58,6 +59,7 @@ export interface inputType<T extends FieldValues>
   showField?: boolean;
   multiple?: boolean;
   wrapperClass?: string;
+  options?: selectOptionType[]
 }
 
 export interface TextInputProps<T extends FieldValues> extends InputProps<T> {
@@ -83,4 +85,11 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   field: ControllerRenderProps<T>;
   iconSizeClass: string;
   containerSizeClass: string;
+}
+
+export interface SelectInputProps<T extends FieldValues>
+  extends InputProps<T> {
+  field: ControllerRenderProps<T>;
+  setValue: UseFormSetValue<T>;
+  options: selectOptionType[];
 }

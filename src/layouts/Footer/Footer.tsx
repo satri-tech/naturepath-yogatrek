@@ -46,14 +46,14 @@ const Resources = [
 
 const Footer = () => {
   return (
-    <footer className="bg-primary/60 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
+    <footer className="bg-primary/95 dark:bg-primary/80 text-white relative ">
       <Image
         src="https://cdn.pixabay.com/photo/2021/07/08/03/55/mount-everest-6395758_1280.jpg"
         alt="hero image"
         width={2048}
         height={2048}
      
-        className="absolute top-0 w-full h-full object-cover  -z-20"
+        className="absolute top-0 w-full h-full object-cover -z-20"
       />
       <div className=" container lg:hidden flex flex-col items-start ">
         <div className="grid md:grid-cols-2 gap-4 my-4 w-full">
@@ -76,7 +76,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className=" dark:bg-zinc-900">
+      <div className="">
         <div className="container lg:hidden py-4">
           <div className="block md:hidden border-b-2 border-darkPrimary/30 dark:border-white/30 pb-4 mb-2">
             <Image

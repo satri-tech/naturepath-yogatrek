@@ -42,7 +42,7 @@ const Gettestimonial = async () => {
 
 const Testimonials = () => {
   return (
-    <section className=" section-padding">
+    <section className=" section-padding dark:text-text-dark">
         <Headings>Happy Travellers</Headings>
       <Gettestimonial />
     </section>

@@ -12,29 +12,6 @@ function Carousel({ featuredlist }: { featuredlist: Package[] }) {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     nextSlide();
-  //   }, 8000);
-  //   return () => clearInterval(interval);
-  // }, [currentIndex]);
-
-  // const prevSlide = () => {
-  //   const isFirstSlide = currentIndex === 0;
-  //   const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-  //   setCurrentIndex(newIndex);
-  // };
-
-  // const nextSlide = () => {
-  //   const isLastSlide = currentIndex === slides.length - 1;
-  //   const newIndex = isLastSlide ? 0 : currentIndex + 1;
-  //   setCurrentIndex(newIndex);
-  // };
-
-  // const goToSlide = (slideIndex: React.SetStateAction<number>) => {
-  //   setCurrentIndex(slideIndex);
-  // };
-
   const sliderRef = useRef<Slider | null>(null);
 
   const settings = {

@@ -7,21 +7,21 @@ import React from "react";
 
 const FeaturedCard = ({data, numb}:{data:Package, numb:number}) => {
   return (
-    <div className=" flex items-center px-5 lg:px-10 relative">
-      <div className="w-full max-w-6xl rounded bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 relative md:text-left">
+    <div className=" flex items-center px-5 lg:px-10 relative ">
+      <div className="w-full max-w-6xl rounded bg-white shadow-xl p-10 lg:p-20 mx-auto text-gray-800 dark:bg-black-dark dark:text-text-dark relative md:text-left">
         <div className="md:flex items-center -mx-10">
           <div className="w-full md:w-1/2 px-14 py-4 mb-10 md:mb-0">
             <div className="relative">
               <Image
                 src={data.image}
-                className="w-full relative z-10 h-[250px] lg:h-[300px] xl:h-[350px] object-cover object-center"
+                className="w-full relative z-10 h-[250px] lg:h-[300px] xl:h-[350px] object-cover object-center dark:brightness-[75%]"
                 alt={data.title}
                 // layout="responsive"
                 width={500}
                 height={500} // Adjusted height to maintain the landscape aspect ratio
                 quality={100}
               />
-              <div className="border-[3px] border-secondary absolute -top-5 -bottom-5 -left-5 -right-5 md:-top-10 md:-bottom-10 md:-left-10 md:-right-10 z-0"></div>
+              <div className="border-[3px] border-secondary dark:border-secondary/75 absolute -top-5 -bottom-5 -left-5 -right-5 md:-top-10 md:-bottom-10 md:-left-10 md:-right-10 z-0"></div>
             </div>
           </div>
           <div className="w-full md:w-1/2 px-10">
