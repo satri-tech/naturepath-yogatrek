@@ -14,13 +14,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
   Table,
   TableBody,
   TableCell,
@@ -125,7 +118,7 @@ const PackageList = async () => {
               </TableCell> */}
               <TableCell className="flex gap-2 items-center">
                 <ViewButton
-                  url={`/admin/packages/update/${pac.id}`}
+                  url={`/admin/packages/view/${pac.id}`}
                   className=""
                 />
 
