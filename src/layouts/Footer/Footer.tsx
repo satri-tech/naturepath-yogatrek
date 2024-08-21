@@ -179,8 +179,15 @@ const Footer = () => {
                   Subscribe our newsletter.
                 </h1>
                 <div className="flex sm:flex-row flex-col gap-4 max-w-md">
-                  <Input id="email" type="email" placeholder="Email Address" />
-                  <Button variant={"default"}>Subscribe</Button>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Email Address"
+                    className=" dark:bg-white dark:text-black/90 dark:border-primary"
+                  />
+                  <Button className=" border border-white bg-primary/90 hover:bg-white hover:text-primary transition-all duration-300 hover:border-primary dark:hover:bg-white dark:hover:text-primary dark:hover:border-primary">
+                    Subscribe
+                  </Button>
                 </div>
               </div>
             </div>
