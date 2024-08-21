@@ -22,7 +22,7 @@ const BookingPage = () => {
 
         <div className="grid items-center h-full w-full text-primary ">
           <div className="flex flex-col items-center mt-20">
-            <Badge className="bg-white">
+            <Badge className="bg-white dark:bg-transparent dark:hover:bg-black/50">
               <Breadcrumbs />
             </Badge>
             <Headings className="">Get your bookings</Headings>

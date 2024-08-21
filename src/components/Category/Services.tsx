@@ -16,7 +16,7 @@ const ServicesList = async () => {
       <div className="flex flex-col lg:flex-row  overflow-hidden ">
         {data.data.map((item: Service, index: number) => (
           <div
-            className="group group/parent relative w-full h-[10rem] lg:flex-1 lg:h-[25rem] hover:h-[25rem] cursor-pointer transition-all duration-300 ease-in-out transform dark:text-text-dark"
+            className="group group/parent relative w-full h-[10rem] lg:flex-1 lg:h-[14rem] hover:h-[15rem] lg:hover:h-[14rem] cursor-pointer transition-all duration-300 ease-in-out transform dark:text-text-dark"
             key={index}
           >
             <div className=" relative w-full h-full overflow-hidden">
@@ -32,7 +32,7 @@ const ServicesList = async () => {
             <div className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 backdrop-blur text-white p-4 rounded-b-lg opacity-0 transition duration-300 ease-in-out transform ">
               <h1 className="text-xl font-bold px-6">{item.title}</h1>
               <p
-                className=" text-sm px-6 pt-4"
+                className=" text-sm px-6 pt-2"
                 dangerouslySetInnerHTML={{ __html: item.description }}
               />
             </div>

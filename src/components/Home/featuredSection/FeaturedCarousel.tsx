@@ -1,5 +1,5 @@
 "use client";
-import { DotIcon, MoveLeft, MoveRight } from "lucide-react";
+import { DotIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import FeaturedCard from "./FeaturedCard";
 import { Package } from "@prisma/client";
@@ -67,12 +67,12 @@ function Carousel({ featuredlist }: { featuredlist: Package[] }) {
       </Slider>
 
       {/* Left Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <MoveLeft onClick={goToPrevSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-md p-2 bg-black/20 text-white cursor-pointer">
+        <ChevronLeft onClick={goToPrevSlide} size={28} />
       </div>
       {/* Right Arrow */}
-      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-        <MoveRight onClick={goToNextSlide} size={30} />
+      <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-md p-2 bg-black/20 text-white cursor-pointer">
+        <ChevronRight onClick={goToNextSlide} size={28} />
       </div>
       <div className="flex gap-3 top-4 justify-center items-center py-2">
         {slides.map((slides, slideIndex: number) => (

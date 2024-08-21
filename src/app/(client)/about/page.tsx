@@ -55,7 +55,7 @@ const AboutPage = async () => {
           })}
         </section> */}
 
-        <PageWrapper className=" flex flex-col gap-3 md:gap-4">
+        <PageWrapper className=" flex flex-col gap-3 md:gap-4  py-3 lg:py-5">
           {about_page_details.sections?.map((sec) => (
             <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
               <article className="prose lg:prose-xl mx-auto">

@@ -16,7 +16,6 @@ export interface TestimonialWithUser extends Testimonial {
   user: User;
 }
 
-
 const Gettestimonial = async () => {
   try {
     const response = await fetch(
@@ -25,16 +24,13 @@ const Gettestimonial = async () => {
     );
     const data = await response.json();
 
-  
-    return (<TestimonialsCarousel testimonial={data?.data?? []}/>
-      
-    );
-  } catch (err:any) {
+    return <TestimonialsCarousel testimonial={data?.data ?? []} />;
+  } catch (err: any) {
     console.log(err);
-   
+
     return (
       <ul>
-        <Error status={404} message="not found"/>
+        <Error status={404} message="not found" />
       </ul>
     );
   }
@@ -43,12 +39,10 @@ const Gettestimonial = async () => {
 const Testimonials = () => {
   return (
     <section className=" section-padding dark:text-text-dark">
-        <Headings>Happy Travellers</Headings>
+      <Headings>Happy Travellers</Headings>
       <Gettestimonial />
     </section>
   );
 };
 
 export default Testimonials;
-
-

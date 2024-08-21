@@ -69,8 +69,8 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
               </li>
             ) : (
               <li
-                className={`cursor-pointer hover:text-Primary ${
-                  items.url === pathname ? "text-secondary" : ""
+                className={`cursor-pointer hover:text-primary ${
+                  items.url === pathname ? "text-primary/95" : ""
                 }`}
               >
                 <Link href={items.url}>{items.name}</Link>
