@@ -21,8 +21,8 @@ const Hero = () => {
                 <span className=" text-secondary">Love</span>
               </h1>
             </div>
-            <Link href={"/booking"}>
-              <Button className=" uppercase cursor-pointer">Book Now</Button>
+            <Link href={"/booking"} className=" w-fit">
+              <Button className=" uppercase cursor-pointer w-fit">Book Now</Button>
             </Link>
           </div>
         </div>
