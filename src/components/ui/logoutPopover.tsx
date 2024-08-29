@@ -25,8 +25,8 @@ export default function LogoutPopover({
         </div>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 rounded-md shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-[100] max-w-md max-h-[95%] flex justify-center bg-wh p-5 lg:p-6 flex-col gap-4 bg-white dark:bg-black-dark">
+        <Dialog.Overlay className="fixed inset-0 bg-black/50 z-[200]" />
+        <Dialog.Content className="fixed top-1/2 left-1/2 rounded-md shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-[300] max-w-md max-h-[95%] flex justify-center bg-wh p-5 lg:p-6 flex-col gap-4 bg-white dark:bg-black-dark">
           <span className={` font-semibold lg:text-lg text-yoga-red`}>
             Logout!
           </span>
