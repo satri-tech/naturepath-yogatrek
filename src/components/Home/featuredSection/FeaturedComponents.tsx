@@ -31,7 +31,7 @@ const GetFeaturedcomponets = async () => {
 
 const FeaturedComponents = async () => {
   return (
-    <section className=" section-padding-b">
+    <section className=" section-padding-b dark:text-text-dark">
       <Headings>Featuring now</Headings>
       <GetFeaturedcomponets />
     </section>

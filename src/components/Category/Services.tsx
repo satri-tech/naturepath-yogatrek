@@ -13,28 +13,26 @@ const ServicesList = async () => {
     );
     const data = await response.json();
     return (
-      <div className="flex flex-col lg:flex-row  overflow-hidden">
+      <div className="flex flex-col lg:flex-row  overflow-hidden ">
         {data.data.map((item: Service, index: number) => (
           <div
-            className="group group/parent relative w-full h-[10rem] lg:flex-1 lg:h-[25rem] hover:h-[25rem] cursor-pointer transition-all duration-300 ease-in-out transform"
+            className="group group/parent relative w-full h-[10rem] lg:flex-1 lg:h-[14rem] hover:h-[15rem] lg:hover:h-[14rem] cursor-pointer transition-all duration-300 ease-in-out transform dark:text-text-dark"
             key={index}
           >
             <div className=" relative w-full h-full overflow-hidden">
               <Image
                 src={item.image}
                 alt={item.title}
-                className="object-cover w-full h-full brightness-90 lg:group-hover/parent:scale-110 lg:overflow-hidden lg:group-hover/parent:z-50 transition-all duration-300 ease-in-out transform"
+                className="object-cover w-full h-full brightness-90 lg:group-hover/parent:scale-110 lg:overflow-hidden lg:group-hover/parent:z-50 transition-all duration-300 ease-in-out transform dark:brightness-[75%]"
                 width={1024}
                 height={1024}
                 quality={100}
               />
             </div>
             <div className="group-hover:opacity-100 absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 backdrop-blur text-white p-4 rounded-b-lg opacity-0 transition duration-300 ease-in-out transform ">
-              <h1 className="text-xl font-bold px-6">
-                {item.title}
-              </h1>
+              <h1 className="text-xl font-bold px-6">{item.title}</h1>
               <p
-                className=" text-sm px-6 pt-4"
+                className=" text-sm px-6 pt-2"
                 dangerouslySetInnerHTML={{ __html: item.description }}
               />
             </div>
@@ -49,7 +47,7 @@ const ServicesList = async () => {
 
 const Services = () => {
   return (
-    <section className="section-padding">
+    <section className="section-padding dark:text-text-dark">
       <Headings>Our Services</Headings>
       <Suspense fallback={<p>Loading...</p>}>
         <ServicesList />

@@ -27,15 +27,15 @@ const Navbar = () => {
     if (!window.scrollY) {
       if (pathname != "/booking" && pathname!="/about")
         setShow("translate-y-0 bg-transparent text-white");
-      else setShow("translate-y-0 bg-transparent text-black");
+      else setShow("translate-y-0 bg-transparent text-black dark:text-white");
     } else if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY) {
-        setShow("-translate-y-[80px] bg-white ");
+        setShow("-translate-y-[80px] bg-white dark:!bg-gray-dark");
       } else {
-        setShow("shadow-sm bg-white");
+        setShow("shadow-sm bg-white dark:!bg-gray-dark");
       }
     } else {
-      setShow("translate-y-0 bg-white");
+      setShow("translate-y-0 bg-white dark:!bg-gray-dark");
     }
     setLastScrollY(window.scrollY);
   };
@@ -49,7 +49,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full h-20 md:h-20 bg-transprent dark:bg-darkPrimary flex items-center z-20 sticky top-0  ease-linear transition-all duration-500 ${show}`}
+      className={`w-full h-20 md:h-20 bg-transprent flex items-center z-20 sticky top-0  ease-linear transition-all duration-500 ${show}`}
     >
       <div className=" container h-16 w-full flex justify-between items-center">
         <Link href="/">

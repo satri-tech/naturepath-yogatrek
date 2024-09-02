@@ -63,7 +63,7 @@ const ServicesList = async () => {
               </TableCell>
               <TableCell className="flex gap-2 items-center">
                 <ViewButton
-                  url={`/admin/services/update/${Item.id}`}
+                  url={`/admin/services/view/${Item.id}`}
                   className=""
                 />
 

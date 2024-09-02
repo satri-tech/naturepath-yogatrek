@@ -40,21 +40,23 @@ const Resources = [
   },
   {
     href: "/",
-    name: "Careeers",
+    name: "Careers",
   },
 ];
 
+const company_name = `Copyright \u00A9 2024 Samartha Technical Research And Innovations`;
+
 const Footer = () => {
   return (
-    <footer className="bg-primary/60 text-white relative dark:bg-zinc-700 text-darkPrimary dark:text-white">
-      <Image
+    <footer className="bg-primary d text-white ">
+      {/* <Image
         src="https://cdn.pixabay.com/photo/2021/07/08/03/55/mount-everest-6395758_1280.jpg"
         alt="hero image"
         width={2048}
         height={2048}
      
-        className="absolute top-0 w-full h-full object-cover  -z-20"
-      />
+        className="absolute top-0 w-full h-full object-cover -z-20"
+      /> */}
       <div className=" container lg:hidden flex flex-col items-start ">
         <div className="grid md:grid-cols-2 gap-4 my-4 w-full">
           <div className=" flex flex-col gap-4">
@@ -70,13 +72,20 @@ const Footer = () => {
               Subscribe our newsletter.
             </h1>
             <div className="flex sm:flex-row flex-col gap-4 max-w-md">
-              <Input id="email" type="email" placeholder="Email Address" />
-              <Button className="">Subscribe</Button>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Email Address"
+                className=" dark:bg-white dark:text-black/90 dark:border-primary"
+              />
+              <Button className=" border border-white bg-primary/90 hover:bg-white hover:text-primary transition-all duration-300 hover:border-primary dark:hover:bg-white dark:hover:text-primary dark:hover:border-primary">
+                Subscribe
+              </Button>
             </div>
           </div>
         </div>
       </div>
-      <div className=" dark:bg-zinc-900">
+      <div className="">
         <div className="container lg:hidden py-4">
           <div className="block md:hidden border-b-2 border-darkPrimary/30 dark:border-white/30 pb-4 mb-2">
             <Image
@@ -170,8 +179,15 @@ const Footer = () => {
                   Subscribe our newsletter.
                 </h1>
                 <div className="flex sm:flex-row flex-col gap-4 max-w-md">
-                  <Input id="email" type="email" placeholder="Email Address" />
-                  <Button variant={"secondary"}>Subscribe</Button>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Email Address"
+                    className=" dark:bg-white dark:text-black/90 dark:border-primary"
+                  />
+                  <Button className=" border border-white bg-primary/90 hover:bg-white hover:text-primary transition-all duration-300 hover:border-primary dark:hover:bg-white dark:hover:text-primary dark:hover:border-primary">
+                    Subscribe
+                  </Button>
                 </div>
               </div>
             </div>
@@ -210,7 +226,7 @@ const Footer = () => {
                   Follow us on.
                 </h1>
                 <div className="flex flex-row flex-1  gap-1">
-                  <Socialmedia/>
+                  <Socialmedia />
                 </div>
               </div>
               {/* large screen payments  */}
@@ -221,14 +237,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className=" border-t-2 bg-primary border-darkPrimary/30 dark:border-white/30 flex items-center p-4 w-full">
-        <p className=" w-full text-center">
-          Copyright &copy; 2024 Stellar Labs
-        </p>
+      <div className=" border-t-2 border-darkPrimary/30 dark:border-white/30 flex items-center p-4 w-full">
+        <p className=" w-full text-center">{company_name}</p>
       </div>
-   
-      
-      
     </footer>
   );
 };

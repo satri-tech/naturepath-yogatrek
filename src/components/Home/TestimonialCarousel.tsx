@@ -1,7 +1,7 @@
 "use client";
 // import Testimonial from '@/components/Card/Testimonial';
 // import { TestimonialData } from '@/lib/type/testimonial';
-import { DotIcon, MoveLeft, MoveRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, DotIcon, MoveLeft, MoveRight } from "lucide-react";
 import React, { useEffect, useRef, useState } from "react";
 import { TestimonialWithUser } from "./Testimonials";
 import StarRating from "../ui/Rating";
@@ -17,25 +17,6 @@ function TestimonialsCarousel({
 }) {
   const slides = testimonial;
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     nextSlide();
-  //   }, 8000);
-  //   return () => clearInterval(interval);
-  // }, [currentIndex]);
-
-  // const prevSlide = () => {
-  //   const isFirstSlide = currentIndex === 0;
-  //   const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-  //   setCurrentIndex(newIndex);
-  // };
-
-  // const nextSlide = () => {
-  //   const isLastSlide = currentIndex === slides.length - 1;
-  //   const newIndex = isLastSlide ? 0 : currentIndex + 1;
-  //   setCurrentIndex(newIndex);
-  // };
 
   const sliderRef = useRef<Slider | null>(null);
 
@@ -71,16 +52,12 @@ function TestimonialsCarousel({
     }
   };
 
-  // const goToSlide = (slideIndex: React.SetStateAction<number>) => {
-  //   setCurrentIndex(slideIndex);
-  // };
-
   return (
     <div className="container flex flex-col  lg:flex-row">
       <div className="lg:w-1/2 w-full  grid items-center content-center space-y-0.5 text-center lg:text-start">
         <div>
           <h2
-            className={`text-2xl sm:text-3xl font-bold uppercase text-primary lg:mb-4 lg:w-[500px] ${petrona.className}`}
+            className={`text-xl sm:text-2xl font- uppercase text-primary lg:mb-4 lg:w-[500px]`}
           >
             Checkout what our customers want to say.
           </h2>
@@ -90,12 +67,12 @@ function TestimonialsCarousel({
           </p> */}
         </div>
         <div className="hidden lg:flex gap-2 ">
-          <div className="text-2xl rounded-full p-3 border-2 bg-black/20 md:bg-primary md:border-primary md:text-white transition-all duration-300 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
-            <MoveLeft onClick={goToPrevSlide} size={30} />
+          <div className="text-2xl rounded-md p-2 border-2 bg-black/20 md:bg-primary md:border-primary md:text-white transition-all duration-300 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
+            <ChevronLeft onClick={goToPrevSlide} size={28} />
           </div>
           {/* Right Arrow */}
-          <div className="text-2xl rounded-full p-3 border-2 bg-black/20 md:bg-white md:border-primary md:text-primary transition-all duration-300 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
-            <MoveRight onClick={goToNextSlide} size={30} />
+          <div className="text-2xl rounded-md p-2 border-2 bg-black/20 md:bg-white md:border-primary md:text-primary transition-all duration-240 md:hover:bg-primary md:hover:text-white text-white cursor-pointer">
+            <ChevronRight onClick={goToNextSlide} size={28} />
           </div>
         </div>
       </div>
@@ -197,12 +174,12 @@ function TestimonialsCarousel({
 
         {/* Left Arrow */}
         <div className="lg:hidden block">
-          <div className="hidden  group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <MoveLeft onClick={goToPrevSlide} size={30} />
+          <div className="hidden  group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-md p-2 bg-black/20 text-white cursor-pointer">
+            <ChevronLeft onClick={goToPrevSlide} size={28} />
           </div>
           {/* Right Arrow */}
-          <div className="hidden  group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
-            <MoveRight onClick={goToNextSlide} size={30} />
+          <div className="hidden  group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-md p-2 bg-black/20 text-white cursor-pointer">
+            <ChevronRight onClick={goToNextSlide} size={28} />
           </div>
         </div>
 

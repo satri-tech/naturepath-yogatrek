@@ -6,7 +6,9 @@ const ContactForm = () => {
     <form className="space-y-6">
       <div className="flex flex-col md:flex-row md:space-x-4">
         <div className="flex-1">
-          <label className="block text-gray-700 text-lg">Full Name</label>
+          <label className="block text-gray-700 dark:text-text-dark text-lg">
+            Full Name
+          </label>
           <input
             type="text"
             className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
@@ -16,7 +18,9 @@ const ContactForm = () => {
       </div>
       <div className="flex flex-col md:flex-row md:space-x-4">
         <div className="flex-1">
-          <label className="block text-gray-700 text-lg">Email</label>
+          <label className="block text-gray-700 dark:text-text-dark text-lg">
+            Email
+          </label>
           <input
             type="email"
             className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
@@ -25,7 +29,9 @@ const ContactForm = () => {
         </div>
       </div>
       <div>
-        <label className="block text-gray-700 text-lg">Address</label>
+        <label className="block text-gray-700 dark:text-text-dark text-lg">
+          Address
+        </label>
         <input
           type="text"
           className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
@@ -33,7 +39,9 @@ const ContactForm = () => {
         />
       </div>
       <div>
-        <label className="block text-gray-700 text-lg">Your Message</label>
+        <label className="block text-gray-700 dark:text-text-dark text-lg">
+          Your Message
+        </label>
         <textarea
           className="w-full px-4 py-3 mt-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600"
           placeholder="Type your message here"

@@ -9,9 +9,9 @@ const Contact: React.FC = () => {
         <Topbanner title="Clear your Queries" />
         <div className="container my-10 mx-4 lg:mx-auto lg:px-4 gap-6 -translate-y-48 ">
           <div className=" flex items-center justify-center max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row container px-0 bg-white shadow-xl rounded-lg overflow-hidden">
+            <div className="flex flex-col md:flex-row container px-0 bg-white dark:bg-black-dark dark:text-text-dark shadow-xl rounded-lg overflow-hidden">
               <div className="md:w-1/2 p-8 color">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-6">
+                <h2 className="text-2xl font-semibold text-gray-900 dark:text-text-dark mb-6">
                   Let&apos;s Plan your trip
                 </h2>
                 <ContactForm />

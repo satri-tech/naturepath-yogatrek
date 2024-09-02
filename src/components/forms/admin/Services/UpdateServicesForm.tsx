@@ -217,7 +217,7 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
             <FormField
               key={i}
               control={control}
-              name="title"
+              name={name}
               render={({ field }) => (
                 <TextInput
                   name={name}
@@ -258,7 +258,7 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
             <FormField
               control={control}
               key={i}
-              name="title"
+              name={name}
               render={({ field }) => (
                 <ImageInputSingle
                   key={i}
