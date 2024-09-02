@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
 import ThemeToggle from "@/components/ui/themeToggle";
+import User from "../admin/User";
+import { useSession } from "next-auth/react";
 
 const inter = Inter({
   weight: ["600"],
@@ -28,6 +30,8 @@ export const Menus: MenuType[] = [
 
 const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
   return (
     <ul
       className={`${inter.className} hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white
@@ -79,7 +83,12 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
           </React.Fragment>
         );
       })}
-      <ThemeToggle />
+      <div
+        className={` flex items-center ${session?.user.role == "ADMIN" ? "gap-4" : ""}`}
+      >
+        <ThemeToggle />
+        {session?.user.role == "ADMIN" && <User />}
+      </div>
     </ul>
   );
 };

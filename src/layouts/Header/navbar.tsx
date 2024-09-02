@@ -25,7 +25,7 @@ const Navbar = () => {
 
   const controlNavbar = () => {
     if (!window.scrollY) {
-      if (pathname != "/booking" && pathname!="/about")
+      if (pathname != "/booking" && pathname != "/about")
         setShow("translate-y-0 bg-transparent text-white");
       else setShow("translate-y-0 bg-transparent text-black dark:text-white");
     } else if (window.scrollY > 200) {
@@ -77,22 +77,6 @@ const Navbar = () => {
             setShowCatMenu={setShowCatMenu}
             categories={categories}
           />
-          <div className="hidden min-[900px]:inline-block">
-            {/* <DropdownMenu>
-            <DropdownMenuTrigger className="p-2 bg-zinc-100 dark:bg-zinc-950/90 drop-shadow-sm hover:bg-zinc-200 dark:hover:bg-zinc-950 rounded-sm flex ">
-              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-0 transition-all dark:-rotate-90 dark:scale-100" />
-              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-270 scale-100 transition-all dark:rotate-0 dark:scale-0" />
-              <span className="sr-only">Toggle theme</span>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={()=>setTheme("dark")}>Dark</DropdownMenuItem>
-              <DropdownMenuItem onClick={()=>setTheme("light")}>Light</DropdownMenuItem>
-              <DropdownMenuItem onClick={()=>setTheme("system")}>System</DropdownMenuItem>
-            </DropdownMenuContent>
-        </DropdownMenu> */}
-          </div>
-          {/* <DropDownUser/>
-           */}
 
           <MobileMenu />
         </div>

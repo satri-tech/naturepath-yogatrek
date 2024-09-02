@@ -2,9 +2,6 @@
 import React from "react";
 import { GetUserData } from "@/components/Profile/ProfileComponents";
 
-
-
-
 const ProfilePage: React.FC = async () => {
   return (
     <>

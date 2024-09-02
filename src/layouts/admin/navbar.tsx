@@ -18,7 +18,7 @@ const Navbar = () => {
 
         <div className=" flex gap-3 items-center">
           <ThemeToggle />
-          <User />
+          <User isInAdmin={true} />
         </div>
       </nav>
     </PageWrapper>

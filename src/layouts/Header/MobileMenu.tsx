@@ -10,14 +10,18 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
-import { LucideMenu, User } from "lucide-react";
+import { LucideMenu } from "lucide-react";
 // import { NavigationMenu, NavigationMenuLink, NavigationMenuList } from '../ui/navigation-menu'
 import Link from "next/link";
 import { Menus } from "./Menu";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/themeToggle";
+import User from "../admin/User";
+import { useSession } from "next-auth/react";
 
 const MobileMenu = () => {
+  const { data: session } = useSession();
+
   return (
     <div className="inline-block min-[900px]:hidden">
       <Sheet>
@@ -31,18 +35,7 @@ const MobileMenu = () => {
         </div>
         <SheetContent>
           <SheetHeader>
-            <SheetTitle className="flex flex-col items-center justify-center"></SheetTitle>
-            <SheetDescription className="flex flex-col w-full gap-5">
-              <>
-                <div className="flex flex-col items-center justify-center w-full max-w-full">
-                  <SheetClose asChild>
-                    <Link href="/profile" className="w-full p-4 text-lg">
-                      Profile
-                    </Link>
-                  </SheetClose>
-                </div>
-              </>
-            </SheetDescription>
+            {session?.user.role == "ADMIN" && <User className=" mb-2" />}
           </SheetHeader>
           <div className="flex flex-col  w-full">
             {Menus.map((item) => (
@@ -56,17 +49,6 @@ const MobileMenu = () => {
               </SheetClose>
             ))}
           </div>
-          {/* <SheetFooter className='flex gap-4 flex-col mt-10'>
-          <SheetClose asChild>
-            <Button >Sign in</Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button >Sign up</Button>
-          </SheetClose>
-          <SheetClose asChild>
-            <Button >Sign Out</Button>
-          </SheetClose>
-        </SheetFooter> */}
         </SheetContent>
       </Sheet>
     </div>
