@@ -22,7 +22,9 @@ export default function DeletePopover({
 }) {
   return (
     <Dialog.Root>
-      <Dialog.Trigger>{children}</Dialog.Trigger>
+      <Dialog.Trigger asChild>
+        <>{children}</>
+      </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
         <Dialog.Content className="fixed top-1/2 left-1/2 rounded-md shadow-lg transform -translate-x-1/2 -translate-y-1/2 z-[100] max-w-md max-h-[95%] flex justify-center bg-wh p-5 lg:p-6 flex-col gap-4 bg-white dark:bg-black-dark">
@@ -30,7 +32,9 @@ export default function DeletePopover({
             Delete {text}
           </span>
           <div className=" flex flex-col gap-2">
-            <p className=" text-black/80 dark:text-gray-400">Do you want to delete the {text}</p>
+            <p className=" text-black/80 dark:text-gray-400">
+              Do you want to delete the {text}
+            </p>
             <div className=" flex justify-end gap-3 items-center">
               <Dialog.Close>
                 <Button variant={"outline"} className=" capitalize">

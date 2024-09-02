@@ -6,12 +6,24 @@ import { Card } from "@/components/ui/card";
 import TopStatisticCard from "@/components/Card/admin/TopStatisticCard";
 import DashSectionHeading from "@/components/ui/DashSectionHeading";
 import RecentBookingsTable from "@/components/admin/dashboard/RecentBookingsTable";
-import BookingPieChart from "@/components/admin/dashboard/BookingPieChart";
-import RevenueBarGraph from "@/components/admin/dashboard/RevenueBarGraph";
 import TopStatisticCardLoading from "@/components/loading/admin/TopStatisticCardLoading";
 import BookingAnalyticsLoading from "@/components/loading/admin/BookingAnalyticsLoading";
 import RevenueLoading from "@/components/loading/admin/RevenueLoading";
 import RecentBookingLoading from "@/components/loading/admin/RecentBookingLoading";
+import dynamic from "next/dynamic";
+
+const BookingPieChart = dynamic(
+  () => import("@/components/admin/dashboard/BookingPieChart"),
+  {
+    ssr: false,
+  }
+);
+const RevenueBarGraph = dynamic(
+  () => import("@/components/admin/dashboard/RevenueBarGraph"),
+  {
+    ssr: false,
+  }
+);
 
 export default async function Admin() {
   const dashboarddata = await DashboardData();

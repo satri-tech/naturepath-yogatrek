@@ -1,11 +1,20 @@
+"use client";
+
 import { petrona } from "@/app/layout";
 import { Button } from "@/components/ui/button";
 import { Package } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const FeaturedCard = ({data, numb}:{data:Package, numb:number}) => {
+const FeaturedCard = ({ data, numb }: { data: Package; numb: number }) => {
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    // Set the description after the component mounts
+    setDescription(data.description);
+  }, [data.description]);
+
   return (
     <div className=" flex items-center px-5 lg:px-10 relative ">
       <div className="w-full max-w-6xl rounded bg-white shadow-md p-10 lg:p-20 mx-auto text-gray-800 dark:bg-black-dark dark:text-text-dark relative md:text-left group">
@@ -32,7 +41,7 @@ const FeaturedCard = ({data, numb}:{data:Package, numb:number}) => {
               </h1>
               <p
                 className="text-sm line-clamp-3"
-                dangerouslySetInnerHTML={{ __html: data.description }}
+                dangerouslySetInnerHTML={{ __html: description }}
               />
 
               <Link
