@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
-const BlogCard = ({blog}:{blog:Blog}) => {
+const TrekkingTipsCard = ({blog}:{blog:Blog}) => {
   return (
     <div className="bg-white dark:bg-slate-700 text-black dark:text-white rounded-lg border p-4">
     <Image src={blog.img_url} alt="Placeholder Image" width={300} height={200} quality={100} className="w-full h-48 rounded-md object-cover" />
@@ -23,4 +23,4 @@ const BlogCard = ({blog}:{blog:Blog}) => {
   )
 }
 
-export default BlogCard
+export default TrekkingTipsCard

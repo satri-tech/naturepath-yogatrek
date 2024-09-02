@@ -1,40 +1,28 @@
+import React from "react";
+import BlogCard from "@/components/Trekking_Tips/TrekkingTipsCard";
+import { client } from "@/services/sanityconfig";
+import { Blog } from "@/utils/types/BlogType";
+import Topbanner from "@/layouts/Topbanner";
 
-import React from 'react'
-import BlogCard from '@/components/Blog/BlogCard';
-import { client } from '@/services/sanityconfig';
-import { Blog } from '@/utils/types/BlogType';
-import Topbanner from '@/layouts/Topbanner';
-
-
-export const revalidate = 100
-
+export const revalidate = 100;
 
 async function BlogList() {
-
-     const result:Blog[] = await client.fetch(`*[_type =="post"]| order(publishedAt)
+  const result: Blog[] =
+    await client.fetch(`*[_type =="post"]| order(publishedAt)
      {"id":_id,title,"slug":slug.current,"authors":author->name,"category":categories[]->title,keywords, publishedAt,"img_url":mainImage.asset->url,body}`);
 
-    //  const result = await client.fetch(`*[_type =="skill"]{"id":_id,title,description,"skillset": skillset[].icon.asset->url}`);
-     console.log("result of blog",result)
+  //  const result = await client.fetch(`*[_type =="skill"]{"id":_id,title,description,"skillset": skillset[].icon.asset->url}`);
+  console.log("result of blog", result);
 
-
-    return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {result.length > 0 && result.map((item: Blog) => (
-                <BlogCard key={item.slug} blog={item} />
-            ))
-            }
-        </div>
-    )
-
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {result.length > 0 &&
+        result.map((item: Blog) => <BlogCard key={item.slug} blog={item} />)}
+    </div>
+  );
 }
 
-
-
-
-
 const Page = () => {
-
   return (
     <>
       <Topbanner title="Journeys & Perspectives" />
@@ -52,11 +40,6 @@ const Page = () => {
       </div>
     </>
   );
-  }
-  
-  export default Page
+};
 
-
-
-
-
+export default Page;

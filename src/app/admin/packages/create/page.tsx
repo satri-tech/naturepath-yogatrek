@@ -7,7 +7,7 @@ const CreatePage = async () => {
   const service = await getServiceslist();
 
   return (
-    <main className=" dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
+    <main className=" ">
       <Pageheading title={"Create New Package"} />
       <div className="">
         <CreatePackageForm service={service} />
