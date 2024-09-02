@@ -30,24 +30,40 @@ const schema = z.object({
 
 type TestimonialFormValues = z.infer<typeof schema>;
 
-export default function TestimonialForm({testimonial}:{testimonial:TestimonialWithUser}) {
+export default function TestimonialForm({
+  testimonial,
+}: {
+  testimonial: TestimonialWithUser;
+}) {
   const session = useSession();
 
-  const form = useForm<z.infer<typeof schema>>({
+  const methods = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues:{
-      rating:testimonial?.rating?? 0,
-      comment:testimonial?.comment?? ""
+    defaultValues: {
+      rating: testimonial?.rating ?? 0,
+      comment: testimonial?.comment ?? "",
     },
     mode: "onBlur",
     reValidateMode: "onChange",
-    
   });
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    watch,
+    setValue,
+  } = methods;
 
   const onSubmit = async (values: TestimonialFormValues) => {
     try {
-      if(testimonial){
-        if(testimonial.rating !==values.rating || testimonial.comment !== values.comment){
+      if (testimonial) {
+        if (
+          testimonial.rating !== values.rating ||
+          testimonial.comment !== values.comment
+        ) {
           const formdata = {
             userId: session.data?.user.id,
             rating: values.rating,
@@ -64,12 +80,10 @@ export default function TestimonialForm({testimonial}:{testimonial:TestimonialWi
             body: jsonData,
           });
           const data = await response.json();
-        }else{
-          console.log("updated")
+        } else {
+          console.log("updated");
         }
-      
-      }else{
-
+      } else {
         const formdata = {
           userId: session.data?.user.id,
           rating: values.rating,
@@ -87,13 +101,11 @@ export default function TestimonialForm({testimonial}:{testimonial:TestimonialWi
         const data = await response.json();
       }
 
-
       // revalidateTag("ServiceCollection")
-      
 
-    //   if (data && data.success) {
-    //     form.reset();
-    //   }
+      //   if (data && data.success) {
+      //     reset();
+      //   }
     } catch (err) {
       console.log(err);
     }
@@ -101,10 +113,14 @@ export default function TestimonialForm({testimonial}:{testimonial:TestimonialWi
 
   return (
     <div className="max-w-sm my-3 mx-2">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
+      <Form
+        methods={methods}
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+      >
           <FormField
-            control={form.control}
+            control={control}
             name="rating"
             render={({ field }) => (
               <FormItem>
@@ -120,7 +136,7 @@ export default function TestimonialForm({testimonial}:{testimonial:TestimonialWi
             )}
           />
           <FormField
-            control={form.control}
+            control={control}
             name="comment"
             render={({ field }) => (
               <FormItem>
@@ -150,13 +166,11 @@ export default function TestimonialForm({testimonial}:{testimonial:TestimonialWi
         </FormControl>
         {errors.comment && <FormMessage>{errors.comment.message}</FormMessage>}
       </FormField> */}
-        {testimonial ? 
-        <Button type="submit">Update Review</Button>
-        :
-        <Button type="submit">Add Review</Button>
-        
-      }
-        </form>
+          {testimonial ? (
+            <Button type="submit">Update Review</Button>
+          ) : (
+            <Button type="submit">Add Review</Button>
+          )}
       </Form>
     </div>
   );

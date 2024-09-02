@@ -29,6 +29,11 @@ import { CldUploadWidget } from "next-cloudinary";
 import { Trash2 } from "lucide-react";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
+import { packageFormInput } from "@/utils/types/admin/packageType";
+import { inputType } from "@/utils/types/admin/inputType";
+import RichTextArea from "../../FormElements/RichTextArea";
+import ImageInputSingle from "../../FormElements/ImageInputSingle";
+import TextInput from "../../FormElements/TextInput";
 
 const CreatePackageForm = ({ service }: { service: Service[] }) => {
   const [images, setImages] = useState<File | null>(null);
@@ -45,26 +50,44 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
     });
   };
 
-  const form = useForm({
+  const methods = useForm<z.infer<typeof PackageFormSchema>>({
     resolver: zodResolver(PackageFormSchema),
     defaultValues: {
       title: "",
       slug: "",
-      serviceId: "",
+      // serviceId: "",
       sharedprice: "",
       privateprice: "",
       sharedOfferPrice: "",
       privateOfferPrice: "",
       duration: "",
-      image: "",
+      // thumbnail: null,
       highlights: "",
       description: "",
       itinerary: "",
       costInclusion: "",
       costExclusion: "",
-      gallery: [""],
+      // gallery: [""],
     },
   });
+
+  const updateImages = (img: File | null) => {
+    setImages(img);
+  };
+
+  const updateImgError = (imgError: string) => {
+    setImageError(imgError);
+  };
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    watch,
+    setValue,
+  } = methods;
 
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -75,7 +98,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
   };
 
   const generateSlug = () => {
-    const title = form.watch("title");
+    const title = watch("title");
     console.log("title", title);
     if (title) {
       const slug = title
@@ -84,7 +107,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
         .replace(/[^\w\s-]/g, "") // Remove non-word characters
         .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with a hyphen
         .replace(/^-+|-+$/g, ""); // Remove leading or trailing hyphens
-      form.setValue("slug", slug);
+      setValue("slug", slug);
     }
   };
 
@@ -102,7 +125,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
             SharingOffer: values.sharedOfferPrice,
             PrivateOffer: values.privateOfferPrice,
             Duration: values.duration,
-            serviceId: values.serviceId,
+            // serviceId: values.serviceId,
             highlights: values.highlights,
             description: values.description,
             itinerary: values.itinerary,
@@ -123,12 +146,12 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
           const data = await response.json();
           // revalidateTag("ServiceCollection")
           console.log(response);
-          form.reset();
+          reset();
           setResource([]);
           setImages(null);
 
           if (data && data.success) {
-            form.reset();
+            reset();
             setImages(null);
           }
         } catch (err) {
@@ -145,314 +168,254 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
     // Handle form submission
   };
 
+  const inputs: inputType<packageFormInput>[] = [
+    {
+      name: "title",
+      label: "Package title",
+      type: "text",
+      placeholder: "Enter service title",
+      error: errors.title?.message,
+      element: "input",
+      className: "w-full",
+    },
+    {
+      name: "slug",
+      label: "Slug",
+      type: "text",
+      placeholder: "Slug",
+      error: errors.slug?.message,
+      element: "input-slug",
+      className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
+    },
+    {
+      name: "duration",
+      label: "Duration",
+      type: "text",
+      placeholder: "3D/2N",
+      error: errors.duration?.message,
+      element: "input",
+      className: "w-full lg:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "sharedprice",
+      label: "Shared price",
+      type: "text",
+      placeholder: "$ 200 ",
+      error: errors.sharedprice?.message,
+      element: "input",
+      className: "w-full lg:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "privateprice",
+      label: "Private price",
+      type: "text",
+      placeholder: "$ 200",
+      error: errors.privateprice?.message,
+      element: "input",
+      className: "w-full lg:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "sharedOfferPrice",
+      label: "Shared Offer Price",
+      type: "text",
+      placeholder: "$ 200",
+      error: errors.sharedOfferPrice?.message,
+      element: "input",
+      className: "w-full lg:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "privateOfferPrice",
+      label: "Private Offer Price",
+      type: "text",
+      placeholder: "$ 200",
+      error: errors.privateOfferPrice?.message,
+      element: "input",
+      className: "w-full lg:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "thumbnail",
+      label: "Service thumbnail",
+      type: "file",
+      placeholder: "Select thumbnail",
+      error: errors.thumbnail?.message,
+      element: "image",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "highlights",
+      label: "Highlights",
+      type: "text",
+      placeholder: "Enter highlights",
+      error: errors.highlights?.message,
+      element: "rich-text",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "text",
+      placeholder: "Enter description",
+      error: errors.description?.message,
+      element: "rich-text",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "itinerary",
+      label: "Itinerary",
+      type: "text",
+      placeholder: "Enter itinerary",
+      error: errors.itinerary?.message,
+      element: "rich-text",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "costInclusion",
+      label: "Cost Inclusion",
+      type: "text",
+      placeholder: "Enter cost inclusion",
+      error: errors.costInclusion?.message,
+      element: "rich-text",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "costExclusion",
+      label: "Cost Exclusion",
+      type: "text",
+      placeholder: "Enter cost exclusion",
+      error: errors.costExclusion?.message,
+      element: "rich-text",
+      className: "w-full xl:w-[calc(50%_-_8px)]",
+    },
+  ];
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Service Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="grid grid-cols-12 items-end gap-2">
-          <FormField
-            control={form.control}
-            name="slug"
-            render={({ field }) => (
-              <FormItem className="space-y-0 col-span-8 justify-items-end">
-                <FormLabel>Slug</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="Slug" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button
-            className="col-span-4 "
-            onClick={(e) => {
-              e.preventDefault();
-              generateSlug();
-            }}
-          >
-            Generate
-          </Button>
-        </div>
-        <div className="grid md:grid-cols-2  items-end justify-between gap-2">
-          <FormField
-            control={form.control}
-            name="serviceId"
-            render={({ field }) => (
-              <FormItem className="space-y-0">
-                <FormLabel>Service</FormLabel>
-                <FormControl>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a Service" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {service &&
-                        service.map((item: Service) => (
-                          <SelectItem value={item.id} key={item.id}>
-                            {item.title}
-                          </SelectItem>
-                        ))}
-                    </SelectContent>
-                  </Select>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="duration"
-            render={({ field }) => (
-              <FormItem className="space-y-0 ">
-                <FormLabel>Duration</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="3D/2N" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid md:grid-cols-2 gap-2">
-          <FormField
-            control={form.control}
-            name="sharedprice"
-            render={({ field }) => (
-              <FormItem className="space-y-0 ">
-                <FormLabel>Shared Price</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="$ 200" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="privateprice"
-            render={({ field }) => (
-              <FormItem className="space-y-0 ">
-                <FormLabel>Private Price</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="$ 200" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-        <div className="grid md:grid-cols-2 gap-2">
-          <FormField
-            control={form.control}
-            name="sharedOfferPrice"
-            render={({ field }) => (
-              <FormItem className="space-y-0 ">
-                <FormLabel>Shared Offer</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="$ 200" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="privateOfferPrice"
-            render={({ field }) => (
-              <FormItem className="space-y-0 ">
-                <FormLabel>Private Offer</FormLabel>
-                <FormControl>
-                  <Input type="text" placeholder="$ 200" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <FormItem className="flex flex-col gap-2 mb-3 ">
-          <FormLabel className="">Thumbnail</FormLabel>
-          <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
-            {images ? (
-              <div className="relative col-span-12" key={images.name}>
-                <Image
-                  src={URL.createObjectURL(images)}
-                  alt={images.name}
-                  className="object-fit h-40 w-auto mx-auto"
-                  height={500}
-                  width={500}
-                  quality={100}
+    <Form
+      methods={methods}
+      register={register}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      {inputs.map((input, i) => {
+        const {
+          name,
+          type,
+          placeholder,
+          error,
+          autoFocus,
+          label,
+          element,
+          min,
+          step,
+          className,
+          showField = true,
+          multiple,
+        } = input;
+        return showField ? (
+          element == "input" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              render={({ field }) => (
+                <TextInput
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  min={min}
+                  step={step}
+                  wrapperClass={className}
+                  field={field}
                 />
-              </div>
-            ) : (
-              <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                <p className=" mx-auto place-self-center">Upload the image</p>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-1 justify-between">
-            <Input
-              type="file"
-              accept="image/png, image/jpeg"
-              onChange={handleImageFileSelected}
+              )}
             />
-          </div>
-          {imageerror && <p className="text-red-700">{imageerror}</p>}
-        </FormItem>
-
-        <FormField
-          control={form.control}
-          name="highlights"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Highlights</FormLabel>
-              <FormControl>
-                <RichTextEditor placeholder="Highlights" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <RichTextEditor
-                  {...field}
-                  //   onChange={(value) => field.onChange(value.toString("html"))}
-                  placeholder="Description"
+          ) : element == "input-slug" ? (
+            <div key={i} className={`flex items-end gap-2 w-full ${className}`}>
+              <FormField
+                key={i}
+                control={control}
+                name={name}
+                render={({ field }) => (
+                  <TextInput
+                    name={name}
+                    label={label}
+                    type={type}
+                    placeholder={placeholder}
+                    error={error}
+                    autoFocus={autoFocus}
+                    register={register}
+                    min={min}
+                    step={step}
+                    wrapperClass={className}
+                    field={field}
+                  />
+                )}
+              />
+              <Button
+                className=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  generateSlug();
+                }}
+              >
+                Generate
+              </Button>
+            </div>
+          ) : element == "rich-text" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              render={({ field }) => (
+                <RichTextArea
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="itinerary"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Itinerary</FormLabel>
-              <FormControl>
-                <RichTextEditor placeholder="Itinerary" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="costInclusion"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Cost Inclusion</FormLabel>
-              <FormControl>
-                <RichTextEditor placeholder="Cost Inclusion" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="costExclusion"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Cost Exclusion</FormLabel>
-              <FormControl>
-                <RichTextEditor placeholder="Cost Exclusion" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="grid gap-2">
-          <FormLabel>Gallery Images</FormLabel>
-          <CldUploadWidget
-            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET}
-            onSuccess={(result, { widget }) => {
-              const results = result as any;
-              setResource((prevRes) => [
-                ...prevRes,
-                results?.info?.url as string,
-              ]);
-            }}
-          >
-            {({ open }) => {
-              function handleOnClick() {
-                open();
-              }
-              return (
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleOnClick();
-                  }}
-                >
-                  Upload Image
-                </Button>
-              );
-            }}
-          </CldUploadWidget>
-          <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
-            {resource ? (
-              <>
-                <div className="relative col-span-12 grid sm:grid-cols-2 md:grid-cols-3">
-                  {resource.map((img, index) => (
-                    <div className="relative col-span-1" key={index}>
-                      <Image
-                        src={img}
-                        alt="uploadsimage"
-                        width={500}
-                        height={500}
-                        quality={80}
-                        className="col-span-1 relative"
-                      />
-                      <span
-                        className="absolute top-0.5 right-0.5 cursor-pointer hover:text-red-500"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          removeImage(img);
-                        }}
-                      >
-                        <Trash2 size={14} />
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </>
-            ) : (
-              <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                <p className=" mx-auto place-self-center">Upload the image</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        <Button type="submit">Submit</Button>
-      </form>
+              )}
+            />
+          ) : (
+            <FormField
+              control={control}
+              key={i}
+              name={name}
+              defaultValue=""
+              render={({ field }) => (
+                <ImageInputSingle
+                  key={i}
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                  handleImageFileSelected={handleImageFileSelected}
+                  imageerror={imageerror}
+                  images={images}
+                  containerSizeClass="h-[150px]"
+                  iconSizeClass="text-[60px]"
+                  updateImages={updateImages}
+                  updateImgError={updateImgError}
+                />
+              )}
+            />
+          )
+        ) : (
+          <span className={className} key={i}></span>
+        );
+      })}
     </Form>
   );
 };

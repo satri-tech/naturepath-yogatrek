@@ -1,18 +1,17 @@
 import PageWrapper from "@/layouts/PageWrapper";
 import { petrona } from "../layout";
 import { bookings_data, revenue_data } from "@/utils/data";
-import {
-  UsersRound,
-  Package,
-  PackagePlus,
-  PackageMinus,
-} from "lucide-react";
+import { UsersRound, Package, PackagePlus, PackageMinus } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import TopStatisticCard from "@/components/Card/admin/TopStatisticCard";
 import DashSectionHeading from "@/components/ui/DashSectionHeading";
 import RecentBookingsTable from "@/components/admin/dashboard/RecentBookingsTable";
 import BookingPieChart from "@/components/admin/dashboard/BookingPieChart";
 import RevenueBarGraph from "@/components/admin/dashboard/RevenueBarGraph";
+import TopStatisticCardLoading from "@/components/loading/admin/TopStatisticCardLoading";
+import BookingAnalyticsLoading from "@/components/loading/admin/BookingAnalyticsLoading";
+import RevenueLoading from "@/components/loading/admin/RevenueLoading";
+import RecentBookingLoading from "@/components/loading/admin/RecentBookingLoading";
 
 export default async function Admin() {
   const dashboarddata = await DashboardData();
@@ -28,7 +27,8 @@ export default async function Admin() {
         rate: 20,
         rate_increase: true,
         img: "/admin/chart1.png",
-        className: "text-yoga-green bg-yoga-green/15",
+        className:
+          "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green dark:bg-yoga-green/30",
       },
       {
         id: "4",
@@ -36,7 +36,7 @@ export default async function Admin() {
         title: "Total Packages",
         value: 2000,
         img: "/admin/package.png",
-        className: "text-yoga-pink bg-yoga-pink/15",
+        className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
       },
       {
         id: "5",
@@ -46,7 +46,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: false,
         img: "/admin/chart7.png",
-        className: "text-yoga-purple bg-yoga-purple/15",
+        className: "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
       },
       {
         id: "6",
@@ -56,7 +56,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: true,
         img: "/admin/chart6.png",
-        className: "text-yoga-orange bg-yoga-orange/15",
+        className: "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
       },
     ];
   } else {
@@ -73,15 +73,15 @@ export default async function Admin() {
         ),
         rate_increase: dashboarddata.user.totalUserThisMonth > 0 ? true : false,
         img: "/admin/chart1.png",
-        className: "text-yoga-green bg-yoga-green/15",
+        className: "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green/30",
       },
       {
         id: "4",
         icon: <Package />,
         title: "Total Packages",
         value: dashboarddata.packages.totalPackage,
-        img: "/admin/package.png",
-        className: "text-yoga-pink bg-yoga-pink/15",
+        img: "/admin/package2.png",
+        className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
       },
       {
         id: "5",
@@ -91,7 +91,7 @@ export default async function Admin() {
         rate: 34,
         rate_increase: false,
         img: "/admin/chart7.png",
-        className: "text-yoga-purple bg-yoga-purple/15",
+        className: "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
       },
       {
         id: "6",
@@ -101,17 +101,53 @@ export default async function Admin() {
         rate: 34,
         rate_increase: true,
         img: "/admin/chart6.png",
-        className: "text-yoga-orange bg-yoga-orange/15",
+        className: "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
       },
     ];
   }
+  if (!dashboarddata)
+    return (
+      <PageWrapper className="  flex flex-col gap-5 md:gap-6 xl:gap-8  vertical-padding-dashboard">
+        <div className="">
+          <h2
+            className={`${petrona} font-bold text-2xl md:text-3xl skeleton w-fit`}
+          >
+            <span className=" ">Welcome</span> back! Navin Sirr
+          </h2>
+          <p className="md:text-sm mt-1  text-xs skeleton w-fit">
+            Track your packages, package bookings, revenues and other analytics.
+          </p>
+        </div>
+
+        <main className=" flex flex-wrap gap-4 md:gap-5">
+          {/*top 6 analytics here*/}
+          <div className=" flex flex-wrap gap-3 w-full">
+            {Array(4)
+              .fill("*")
+              .map((_, i) => {
+                return <TopStatisticCardLoading key={i} />;
+              })}
+          </div>
+
+          <BookingAnalyticsLoading />
+
+          <RevenueLoading />
+
+          <RecentBookingLoading />
+
+          {/*average rating pie chart*/}
+
+          {/*recent reviews table*/}
+        </main>
+      </PageWrapper>
+    );
   return (
-    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8">
+    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 dark:text-text-dark bg-bg-white dark:bg-gray-dark vertical-padding-dashboard">
       <div>
-        <h2 className={`${petrona.className} font-bold text-xl md:text-2xl`}>
+        <h2 className={`${petrona} font-bold text-2xl md:text-3xl`}>
           <span className=" text-primary">Welcome</span> back! Navin Sirr
         </h2>
-        <p className=" text-black/75 md:text-sm  text-xs">
+        <p className=" text-black/75 dark:text-text-dark md:text-sm  text-xs">
           Track your packages, package bookings, revenues and other analytics.
         </p>
       </div>
@@ -183,11 +219,12 @@ export async function DashboardData() {
   }
 }
 
+{
+  /*kept for later reference*/
+}
 
-
-{/*kept for later reference*/}
-
-{/* <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+{
+  /* <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
   <Card x-chunk="dashboard-01-chunk-0">
     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
       <CardTitle className="text-sm font-medium">Total Packages</CardTitle>
@@ -196,50 +233,55 @@ export async function DashboardData() {
     <CardContent>
       <div className="text-2xl font-bold">
         {dashboarddata.packages.totalPackage}
-      </div> */}
-      {/* <p className="text-xs text-muted-foreground">
+      </div> */
+}
+{
+  /* <p className="text-xs text-muted-foreground">
                 20.1% from last month
-              </p> */}
-  //   </CardContent>
-  // </Card>
-  // <Card x-chunk="dashboard-01-chunk-1">
-  //   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-  //     <CardTitle className="text-sm font-medium">Users</CardTitle>
-  //     <Users className="h-4 w-4 text-muted-foreground" />
-  //   </CardHeader>
-  //   <CardContent>
-  //     <div className="text-2xl font-bold">{dashboarddata.user.totalUser}</div>
-  //     <p className="text-xs text-muted-foreground">
-  //       +{dashboarddata.user.totalUserThisMonth} from last month
-  //     </p>
-  //   </CardContent>
-  // </Card>
-  // <Card x-chunk="dashboard-01-chunk-2">
-  //   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-  //     <CardTitle className="text-sm font-medium">Bookings</CardTitle>
-  //     <CreditCard className="h-4 w-4 text-muted-foreground" />
-  //   </CardHeader>
-  //   <CardContent>
-  //     <div className="text-2xl font-bold">
-  //       {dashboarddata.booking.totalBooking}
-  //     </div>
-  //     <p className="text-xs text-muted-foreground">
-  //       +{dashboarddata.booking.bookingThisMonth} from last month
-  //     </p>
-  //   </CardContent>
-  // </Card>
-  // <Card x-chunk="dashboard-01-chunk-3">
-  //   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-  //     <CardTitle className="text-sm font-medium">Today Booking</CardTitle>
-  //     <Activity className="h-4 w-4 text-muted-foreground" />
-  //   </CardHeader>
-  //   <CardContent>
-  //     <div className="text-2xl font-bold">
-  //       +{dashboarddata.booking.bookingToday}
-  //     </div>
-      {/* <p className="text-xs text-muted-foreground">
+              </p> */
+}
+//   </CardContent>
+// </Card>
+// <Card x-chunk="dashboard-01-chunk-1">
+//   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+//     <CardTitle className="text-sm font-medium">Users</CardTitle>
+//     <Users className="h-4 w-4 text-muted-foreground" />
+//   </CardHeader>
+//   <CardContent>
+//     <div className="text-2xl font-bold">{dashboarddata.user.totalUser}</div>
+//     <p className="text-xs text-muted-foreground">
+//       +{dashboarddata.user.totalUserThisMonth} from last month
+//     </p>
+//   </CardContent>
+// </Card>
+// <Card x-chunk="dashboard-01-chunk-2">
+//   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+//     <CardTitle className="text-sm font-medium">Bookings</CardTitle>
+//     <CreditCard className="h-4 w-4 text-muted-foreground" />
+//   </CardHeader>
+//   <CardContent>
+//     <div className="text-2xl font-bold">
+//       {dashboarddata.booking.totalBooking}
+//     </div>
+//     <p className="text-xs text-muted-foreground">
+//       +{dashboarddata.booking.bookingThisMonth} from last month
+//     </p>
+//   </CardContent>
+// </Card>
+// <Card x-chunk="dashboard-01-chunk-3">
+//   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+//     <CardTitle className="text-sm font-medium">Today Booking</CardTitle>
+//     <Activity className="h-4 w-4 text-muted-foreground" />
+//   </CardHeader>
+//   <CardContent>
+//     <div className="text-2xl font-bold">
+//       +{dashboarddata.booking.bookingToday}
+//     </div>
+{
+  /* <p className="text-xs text-muted-foreground">
                 +201 since last hour
-              </p> */}
+              </p> */
+}
 //     </CardContent>
 //   </Card>
 // </div>;

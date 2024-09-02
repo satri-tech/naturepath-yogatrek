@@ -1,14 +1,61 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
+@tailwind components;
+@tailwind utilities;
 
-  @layer{
-    .section-padding{
-      @apply py-6 sm:py-8 md:py-10 lg:py-12 xl:py-14
-    }
-
-    .section-padding-b{
-      @apply pb-6 sm:pb-8 md:pb-10 lg:pb-12 xl:pb-14
-    }
+@layer {
+  .section-padding {
+    @apply py-6 sm:py-8 md:py-10 lg:py-12 xl:py-14;
   }
+
+  .section-padding-b {
+    @apply pb-6 sm:pb-8 md:pb-10 lg:pb-12 xl:pb-14;
+  }
+
+  .vertical-padding-dashboard {
+    @apply py-4 sm:py-6 md:py-8 lg:py-10;
+  }
+
+  /*quill editor*/
+  .ql-container {
+    @apply !h-[125px] lg:!h-[150px] !rounded-br-md !rounded-bl-md;
+  }
+
+  .ql-toolbar {
+    @apply !rounded-tr-md !rounded-tl-md;
+  }
+
+  .ql-picker.ql-header {
+    @apply dark:!text-white/80 dark:hover:!text-white/90;
+  }
+
+  .ql-snow {
+    @apply !border-slate-200 !bg-white  dark:!bg-slate-950 dark:!border-slate-600;
+  }
+
+  .ql-formats svg .ql-stroke,
+  .ql-formats svg .ql-thin,
+  .ql-formats svg .ql-fill {
+    @apply dark:!fill-white/80 dark:hover:!fill-white/90 dark:!stroke-white/80 dark:hover:!stroke-white/90;
+  }
+
+  .quill {
+    @apply !rounded-md;
+  }
+
+  /*skeleton animation*/
+  .skeleton {
+      @apply !text-transparent selection:!text-transparent !text-opacity-0 !animate-[skeleton-loading-animation_1s_infinite_ease-in-out_alternate];
+    }
+
+    @keyframes skeleton-loading-animation {
+      from {
+        @apply bg-gray-500/5;
+      }
+
+      to {
+        @apply bg-gray-500/20;
+      }
+    }
+
   
+}

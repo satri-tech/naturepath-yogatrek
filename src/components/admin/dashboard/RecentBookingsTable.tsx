@@ -26,7 +26,7 @@ export default function RecentBookingsTable() {
           </TableCell>
           <TableCell className="">Sale</TableCell>
           <TableCell className="">
-            <Success>Fulfilled</Success>
+            <Success>Booked</Success>
           </TableCell>
           <TableCell className="">
             <span className=" inline-block w-[125px]">2023-06-23</span>
@@ -42,7 +42,7 @@ export default function RecentBookingsTable() {
           </TableCell>
           <TableCell className="">Refund</TableCell>
           <TableCell className="">
-            <Danger>Declined</Danger>
+            <Danger>Cancelled</Danger>
           </TableCell>
           <TableCell className="">2023-06-24</TableCell>
           <TableCell className="text-right">$150.00</TableCell>
@@ -56,7 +56,7 @@ export default function RecentBookingsTable() {
           </TableCell>
           <TableCell className="">Subscription</TableCell>
           <TableCell className="">
-            <Success>Fulfilled</Success>
+            <Success>Booked</Success>
           </TableCell>
           <TableCell className="">2023-06-25</TableCell>
           <TableCell className="text-right">$350.00</TableCell>
@@ -70,7 +70,7 @@ export default function RecentBookingsTable() {
           </TableCell>
           <TableCell className="">Sale</TableCell>
           <TableCell className="">
-            <Success>Fulfilled</Success>
+            <Success>Booked</Success>
           </TableCell>
           <TableCell className="">2023-06-26</TableCell>
           <TableCell className="text-right">$450.00</TableCell>
@@ -84,7 +84,7 @@ export default function RecentBookingsTable() {
           </TableCell>
           <TableCell className="">Sale</TableCell>
           <TableCell className="">
-            <Success>Fulfilled</Success>
+            <Success>Booked</Success>
           </TableCell>
           <TableCell className="">2023-06-23</TableCell>
           <TableCell className="text-right">$250.00</TableCell>

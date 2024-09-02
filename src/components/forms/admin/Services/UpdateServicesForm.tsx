@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z, { string } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,20 +21,56 @@ import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
 import { Service } from "@prisma/client";
 import { revalidateTag } from "next/cache";
+import TextInput from "../../FormElements/TextInput";
+import RichTextArea from "../../FormElements/RichTextArea";
+import ImageInputSingle from "../../FormElements/ImageInputSingle";
+import { inputType } from "@/utils/types/admin/inputType";
+import { serviceFormInput } from "@/utils/types/admin/serviceType";
+import { urlToFile } from "@/lib/urlToFile";
 
 const UpdateServicesForm = ({ services }: { services: Service }) => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
+  const updateImages = (img: File | null) => {
+    setImages(img);
+  };
+
+  const updateImgError = (imgError: string) => {
+    setImageError(imgError);
+  };
+
+  const getImage = async () => {
+    const image = await urlToFile(
+      services.image as string,
+      "service-thumbnail.jpg",
+      "image/jpeg"
+    );
+    setImages(image);
+    setValue("image", image);
+  };
+
+   useEffect(() => {
+     if (services.image) getImage();
+   }, []);
 
   const session = useSession();
 
-  const form = useForm<z.infer<typeof ServiceFormSchema>>({
+  const methods = useForm<z.infer<typeof ServiceFormSchema>>({
     resolver: zodResolver(ServiceFormSchema),
     defaultValues: {
       title: services.title,
-      Description: services.description,
+      description: services.description,
     },
   });
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    setValue,
+  } = methods;
 
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,16 +82,16 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
     }
   };
 
-interface UpdateFormTypes{
-    id:string,
-    title?:string,
-    Description?:string,
-    image?:string
+  interface UpdateFormTypes {
+    id: string;
+    title?: string;
+    description?: string;
+    image?: string;
   }
 
-  async function update(formdatas:UpdateFormTypes) {
+  async function update(formdatas: UpdateFormTypes) {
     try {
-     const jsonData= JSON.stringify(formdatas)
+      const jsonData = JSON.stringify(formdatas);
       const response = await fetch("/api/services/update", {
         method: "PUT",
         headers: {
@@ -66,12 +102,12 @@ interface UpdateFormTypes{
         body: jsonData,
       });
       const data = await response.json();
-      revalidateTag(`Service-${services.id}`)
-      revalidateTag("ServiceCollection")
-      form.reset();
+      revalidateTag(`Service-${services.id}`);
+      revalidateTag("ServiceCollection");
+      reset();
 
       if (data && data.success) {
-        form.reset();
+        reset();
         setImages(null);
       }
     } catch (err) {
@@ -85,15 +121,15 @@ interface UpdateFormTypes{
       if (res.url) {
         if (
           values.title !== services.title ||
-          values.Description !== services.description
+          values.description !== services.description
         ) {
           const formdata = {
             id: services.id,
             title: values.title,
-            description: values.Description,
+            description: values.description,
             image: res.url,
           };
-         
+
           await update(formdata);
         } else {
           const formdata = {
@@ -108,16 +144,15 @@ interface UpdateFormTypes{
       if (res.error) {
         setImageError(res.error);
       }
-
     } else {
       if (
         values.title !== services.title ||
-        values.Description !== services.description
+        values.description !== services.description
       ) {
         const formdata = {
           id: services.id,
           title: values.title,
-          description: values.Description,
+          description: values.description,
         };
         // function call
         await update(formdata);
@@ -125,86 +160,132 @@ interface UpdateFormTypes{
     }
   }
 
+  const inputs: inputType<serviceFormInput>[] = [
+    {
+      name: "title",
+      label: "Service Title",
+      type: "text",
+      placeholder: "Enter service titile",
+      error: errors.title?.message,
+      element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "description",
+      label: "Description",
+      type: "text",
+      placeholder: "Enter description",
+      error: errors.description?.message,
+      element: "rich-text",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "image",
+      label: "Service thumbnail",
+      type: "file",
+      placeholder: "Select thumbnail",
+      error: errors.image?.message,
+      element: "image",
+      className: "w-full",
+    },
+  ];
+
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <input type="hidden" name="id" value={services.id} />
-        <FormField
-          control={form.control}
-          name="title"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormLabel>Title</FormLabel>
-              <FormControl>
-                <Input type="text" placeholder="Service Title" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormItem className="flex flex-col gap-2 mb-3 ">
-          <FormLabel className="">Thumbnail</FormLabel>
-          <div className="grid grid-cols-12 gap-2 my-2 border border-black rounded-md ">
-            {images ? (
-              <div className="relative col-span-12" key={images.name}>
-                <Image
-                  src={URL.createObjectURL(images)}
-                  alt={images.name}
-                  className="object-fit h-40 w-auto mx-auto"
-                  height={500}
-                  width={500}
-                  quality={100}
+    <Form
+      methods={methods}
+      register={register}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+    >
+      {inputs.map((input, i) => {
+        const {
+          name,
+          type,
+          placeholder,
+          error,
+          autoFocus,
+          label,
+          element,
+          min,
+          step,
+          className,
+          showField = true,
+          multiple,
+        } = input;
+        return showField ? (
+          element == "input" ? (
+            <FormField
+              key={i}
+              control={control}
+              name="title"
+              render={({ field }) => (
+                <TextInput
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  min={min}
+                  step={step}
+                  wrapperClass={className}
+                  field={field}
                 />
-              </div>
-            ) : (
-              <>
-                {services.image ? (
-                  <div className="relative col-span-12">
-                    <Image
-                      src={services.image}
-                      alt={services.title}
-                      className="object-fit h-40 w-auto mx-auto"
-                      height={500}
-                      width={500}
-                      quality={100}
-                    />
-                  </div>
-                ) : (
-                  <div className="relative col-span-12 grid h-40 w-auto justify-center">
-                    <p className=" mx-auto place-self-center">
-                      Upload the image
-                    </p>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-          <div className="flex flex-1 justify-between">
-            <Input
-              type="file"
-              accept="image/png, image/jpeg"
-              onChange={handleImageFileSelected}
+              )}
             />
-          </div>
-          {imageerror && <p className="text-red-700">{imageerror}</p>}
-        </FormItem>
-
-        <FormField
-          control={form.control}
-          name="Description"
-          render={({ field }) => (
-            <FormItem className="space-y-0">
-              <FormControl>
-                <RichTextEditor placeholder="Description" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <Button type="submit">Submit</Button>
-      </form>
+          ) : element == "rich-text" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              render={({ field }) => (
+                <RichTextArea
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                />
+              )}
+            />
+          ) : (
+            //later for single image input component
+            <FormField
+              control={control}
+              key={i}
+              name="title"
+              render={({ field }) => (
+                <ImageInputSingle
+                  key={i}
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                  handleImageFileSelected={handleImageFileSelected}
+                  imageerror={imageerror}
+                  images={images}
+                  containerSizeClass="h-[150px]"
+                  iconSizeClass="text-[60px]"
+                  updateImages={updateImages}
+                  updateImgError={updateImgError}
+                />
+              )}
+            />
+          )
+        ) : (
+          <span className={className} key={i}></span>
+        );
+      })}
     </Form>
   );
 };

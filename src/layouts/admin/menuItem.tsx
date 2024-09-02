@@ -15,7 +15,7 @@ const MenuItem = ({list}:{list:MenulistType}) => {
         <Link
             href={list.href}
             key={`${list.name}-${list.id}`}
-            className={`text-sm font-medium text-gray-700 py-2 px-2 ${isActive(list.href) ? 'bg-primary text-white' : 'text-primary'}  hover:bg-primary hover:text-white  rounded-md transition duration-700 ease-in-out flex gap-2 items-center`}
+            className={`text-sm font-medium text-gray-700 py-2 px-2 ${isActive(list.href) ? 'bg-primary text-white' : 'text-primary'}  hover:bg-primary hover:text-white  rounded-md transition duration-300 ease-in-out flex gap-2 items-center`}
         >
             {list.icons}
             <span className="">{list.name}</span>

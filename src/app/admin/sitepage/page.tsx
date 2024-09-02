@@ -20,6 +20,10 @@ import Error from "@/layouts/error/Error";
 import Image from "next/image";
 import { Eye, Trash2 } from "lucide-react";
 import { SitePage } from "@prisma/client";
+import ViewButton from "@/components/ui/viewButton";
+import UpdateButton from "@/components/ui/updateButton";
+import DeletePopover from "@/components/ui/deletePopover";
+import DeleteButton from "@/components/ui/deleteButton";
 
 const PageList = async () => {
   try {
@@ -56,18 +60,16 @@ const PageList = async () => {
                 </div>
               </TableCell>
               <TableCell className="flex gap-2 items-center">
-                <Link href={`/admin/sitepage/update/${Item.id}`}>
-                  <div>
-                    <Eye />
-                  </div>
-                </Link>
+                <ViewButton
+                  url={`/admin/sitepage/update/${Item.id}`}
+                  className=""
+                />
 
-                {/* <form action={DeleteService}> */}
-                {/* <input type="hidden" value={Item.id} name="id"/> */}
-                <Button variant={"link"} type="submit">
-                  <Trash2 />
-                </Button>
-                {/* </form> */}
+                <UpdateButton url={`/admin/sitepage/update/${Item.id}`} />
+
+                <DeletePopover text="service" deleteFn={() => {}}>
+                  <DeleteButton />
+                </DeletePopover>
               </TableCell>
             </TableRow>
           ))}

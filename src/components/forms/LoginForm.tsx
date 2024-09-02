@@ -27,7 +27,6 @@ const LoginForm = (props: Props) => {
         throw new Error(result?.error as string);
       }
       if (result?.ok) {
-
         router.push(props.callbackUrl ? props.callbackUrl : "/admin");
       }
     } catch (error: any) {
@@ -36,8 +35,6 @@ const LoginForm = (props: Props) => {
     } finally {
       setIsloading(false);
     }
-
-    
   };
 
   return (
@@ -87,12 +84,22 @@ const LoginForm = (props: Props) => {
         <button
           type="submit"
           className="w-full py-4 bg-primary rounded-lg text-green-100"
+          style={{
+            backgroundColor: isloading
+              ? "rgba(116, 195, 101, 0.85)"
+              : "#74C365",
+              cursor: isloading?"not-allowed":"pointer"
+          }}
         >
-          <div className="flex flex-row items-center justify-center">
+          <div className="flex gap-2  items-center justify-center">
+            {isloading ? <></> : <div className="font-bold">Sign In</div>}
             <div className="mr-2">
-              {isloading ? <>Loading...</> : <LogIn className="text-white" />}
+              {isloading ? (
+                <>Loading...</>
+              ) : (
+                <LogIn className="text-white" size={20} />
+              )}
             </div>
-            <div className="font-bold">Sign In</div>
           </div>
         </button>
         <div className="flex justify-evenly mt-5">

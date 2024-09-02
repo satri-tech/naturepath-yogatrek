@@ -15,8 +15,6 @@ const AboutPage = async () => {
     );
     const data = await response.json();
     const about_page_details: ExtendedSitePage = data.data;
-    
-
 
     const choose_reasons = [
       {
@@ -57,7 +55,7 @@ const AboutPage = async () => {
           })}
         </section> */}
 
-        <PageWrapper className=" flex flex-col">
+        <PageWrapper className=" flex flex-col gap-3 md:gap-4">
           {about_page_details.sections?.map((sec) => (
             <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
               <article className="prose lg:prose-xl mx-auto">
@@ -70,7 +68,7 @@ const AboutPage = async () => {
 
           <section className=" flex flex-col gap-4 section-padding">
             <h2
-              className={`${petrona.className} uppercase font-extrabold text-xl md:text-2xl text-center text-primary`}
+              className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
             >
               why choose our Yoga and trek company
             </h2>
@@ -107,6 +105,17 @@ const AboutPage = async () => {
                 );
               })}
             </div>
+          </section>
+
+          <section className=" flex flex-col gap-4 section-padding">
+            <h2
+              className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
+            >
+              Meet Our Extraordinary team
+            </h2>
+
+            {/*team members here*/}
+            <div className=" flex flex-wrap gap-3 md:gap-4 justify-center"></div>
           </section>
         </PageWrapper>
       </main>

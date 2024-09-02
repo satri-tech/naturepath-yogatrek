@@ -1,18 +1,28 @@
-import React from 'react'
-import Breadcrumbs from '../breadcrumbs'
-import Menu from './menu'
-import User from './User'
+import React from "react";
+import Breadcrumbs from "../breadcrumbs";
+import Menu from "./menu";
+import User from "./User";
+import PageWrapper from "../PageWrapper";
+import ThemeToggle from "@/components/ui/themeToggle";
 
 const Navbar = () => {
-    return (
-        <nav className='sticky top-0 flex flex-row px-4 md:px-5 py-2 justify-between h-[10%] shadow-sm'>
-            <div className='flex gap-4 flex-1 items-center '>
-                <span className='md:hidden flex'><Menu/></span>
-                <Breadcrumbs />
-            </div>
-           <User/>
-        </nav>
-    )
-}
+  return (
+    <PageWrapper className="dark:!bg-black-dark">
+      <nav className="sticky top-0 flex flex-row py-3 justify-between h-[10%] shadow-sm dark:!bg-black-dark">
+        <div className="flex gap-4 flex-1 items-center ">
+          <span className="md:hidden flex">
+            <Menu />
+          </span>
+          <Breadcrumbs />
+        </div>
 
-export default Navbar
+        <div className=" flex gap-3 items-center">
+          <ThemeToggle />
+          <User />
+        </div>
+      </nav>
+    </PageWrapper>
+  );
+};
+
+export default Navbar;

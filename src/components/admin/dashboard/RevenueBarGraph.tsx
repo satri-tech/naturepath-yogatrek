@@ -37,7 +37,7 @@ const RevenueBarGraph = ({revenue_data}:{revenue_data: RevenueType[]}) => {
         />
         <Tooltip formatter={(value) => `$${value}`} />
         <Legend />
-        <Bar dataKey="Earnings" name="Earnings" fill="#74C365">
+        <Bar dataKey="Earnings" name="Earnings" fill="#74C365" className=" ">
           {revenue_data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={colors[index]} />
           ))}
