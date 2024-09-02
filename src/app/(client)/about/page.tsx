@@ -1,11 +1,11 @@
 import Image from "next/image";
 
 import Error from "@/layouts/error/Error";
-import { SitePageType } from "@/utils/types/SitePageType";
 import PageWrapper from "@/layouts/PageWrapper";
 import { petrona } from "@/app/layout";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { ExtendedSitePage } from "@/components/forms/admin/SitePages/UpdateSitePageForm";
+import TeamMembers from "@/components/about/TeamMembers";
 
 const AboutPage = async () => {
   try {
@@ -58,10 +58,10 @@ const AboutPage = async () => {
         <PageWrapper className=" flex flex-col gap-3 md:gap-4  py-3 lg:py-5">
           {about_page_details.sections?.map((sec) => (
             <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
-              <article className="prose lg:prose-xl mx-auto">
-                <h1 className="dark:text-text-dark">{sec.title}</h1>
+              <article className=" flex flex-col gap-2">
+                <h1 className="dark:text-text-dark font-bold text-lg md:text-xl lg:text-2xl">{sec.title}</h1>
                 <div
-                  className=" dark:text-text-dark"
+                  className=" dark:text-text-dark lg:text-lg"
                   dangerouslySetInnerHTML={{ __html: sec.description }}
                 />
               </article>
@@ -116,8 +116,7 @@ const AboutPage = async () => {
               Meet Our Extraordinary team
             </h2>
 
-            {/*team members here*/}
-            <div className=" flex flex-wrap gap-3 md:gap-4 justify-center"></div>
+            <TeamMembers />
           </section>
         </PageWrapper>
       </main>

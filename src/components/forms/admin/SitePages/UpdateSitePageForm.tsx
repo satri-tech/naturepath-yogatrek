@@ -78,8 +78,6 @@ const UpdatePageForm = ({ meta }: { meta: ExtendedSitePage }) => {
         body: jsonData,
       });
       const data = await response.json();
-        revalidateTag(`Page-${meta.id}`)
-        revalidateTag("PageCollection")
       form.reset();
 
       if (data && data.success) {

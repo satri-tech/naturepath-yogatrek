@@ -57,7 +57,7 @@ const User = ({
               </DropdownMenuItem>
               <DropdownMenuItem className=" flex items-center gap-2 w-full">
                 <Link
-                  href={isInAdmin ? "/admin" : "/"}
+                  href={"/"}
                   className=" flex items-center gap-2 w-full"
                 >
                   <Home className=" w-5 h-5" />

@@ -72,18 +72,11 @@ const ServicesList = () => {
                   className=""
                 />
 
-                {/*update*/}
                 <UpdateButton url={`/admin/services/update/${Item.id}`} />
 
-                {/* <form action={DeleteService}> */}
-                {/* <input type="hidden" value={Item.id} name="id"/> */}
-
-                {/*later put delete api request here in the function*/}
                 <DeletePopover text="service" deleteFn={() => {}}>
                   <DeleteButton />
                 </DeletePopover>
-
-                {/* </form> */}
               </TableCell>
             </TableRow>
           ))}

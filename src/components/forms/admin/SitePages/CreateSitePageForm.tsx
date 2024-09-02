@@ -65,7 +65,6 @@ const CreatePageForm = () => {
               body: jsonData,
             });
             const data = await response.json();
-            // revalidateTag("ServiceCollection")
             form.reset();
 
             if(data && data.success){

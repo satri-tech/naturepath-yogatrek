@@ -20,9 +20,9 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
 const parseResult =async (request:NextRequest , response:NextResponse)=>{
   try {
-    const extractServiceData = await request.json();
+    const extractTeamMemberData = await request.json();
     const newlyCreatedService = await prisma.team.create({
-      data: extractServiceData,
+      data: extractTeamMemberData,
     });
 
 

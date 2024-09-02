@@ -7,13 +7,13 @@ import React from "react";
 
 const AddPage = () => {
   return (
-    <>
+    <main className="dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
       <Pageheading title={"Add New Member"} />
 
-      <div className="max-w-lg">
+      <div className="">
         <AddTeamForm />
       </div>
-    </>
+    </main>
   );
 };
 

@@ -1,26 +1,17 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
-  FormDescription,
   FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ServiceFormSchema } from "@/utils/validation/admin/ServicesFormValidation";
-import RichTextEditor from "../../FormElements/RichTextEditor";
 import Image from "next/image";
 import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
 import { revalidateTag } from "next/cache";
-import UploadImageField from "@/components/ui/uploadImageField";
 import { inputType } from "@/utils/types/admin/inputType";
 import { serviceFormInput } from "@/utils/types/admin/serviceType";
 import TextInput from "../../FormElements/TextInput";
@@ -84,7 +75,6 @@ const CreateServicesForm = () => {
             body: jsonData,
           });
           const data = await response.json();
-          revalidateTag("ServiceCollection");
           reset();
 
           if (data && data.success) {
