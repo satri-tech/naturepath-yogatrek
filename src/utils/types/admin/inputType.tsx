@@ -59,7 +59,7 @@ export interface inputType<T extends FieldValues>
   showField?: boolean;
   multiple?: boolean;
   wrapperClass?: string;
-  options?: selectOptionType[]
+  options?: selectOptionType[];
 }
 
 export interface TextInputProps<T extends FieldValues> extends InputProps<T> {
@@ -71,7 +71,7 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   handleImageFileSelected: (e: React.ChangeEvent<HTMLInputElement>) => void;
   images: File | null;
   imageerror: string;
-  updateImages: (img:File|null) => void;
+  updateImages: (img: File | null) => void;
   updateImgError: (imgError: string) => void;
 }
 
@@ -87,8 +87,7 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   containerSizeClass: string;
 }
 
-export interface SelectInputProps<T extends FieldValues>
-  extends InputProps<T> {
+export interface SelectInputProps<T extends FieldValues> extends InputProps<T> {
   field: ControllerRenderProps<T>;
   setValue: UseFormSetValue<T>;
   options: selectOptionType[];

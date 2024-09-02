@@ -102,8 +102,6 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
         body: jsonData,
       });
       const data = await response.json();
-      revalidateTag(`Service-${services.id}`);
-      revalidateTag("ServiceCollection");
       reset();
 
       if (data && data.success) {

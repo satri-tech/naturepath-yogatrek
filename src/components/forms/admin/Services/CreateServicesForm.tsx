@@ -75,7 +75,6 @@ const CreateServicesForm = () => {
             body: jsonData,
           });
           const data = await response.json();
-          revalidateTag("ServiceCollection");
           reset();
 
           if (data && data.success) {

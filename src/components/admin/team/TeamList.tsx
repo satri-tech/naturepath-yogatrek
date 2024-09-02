@@ -1,9 +1,10 @@
 "use client";
+
 import ServiceListLoading from "@/components/loading/admin/ServiceListLoading";
 import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import {
-  Table,
+    Table,
   TableBody,
   TableCell,
   TableHead,
@@ -13,21 +14,22 @@ import {
 import UpdateButton from "@/components/ui/updateButton";
 import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
-import { Service } from "@prisma/client";
+import { Team } from "@prisma/client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
-const ServicesList = () => {
-  const [services, setServices] = useState([]);
+const TeamList = () => {
+  const [teamMembers, setTeamMembers] = useState([]);
 
-  const fetchServices = async () => {
+  const fetchTeamMembers = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,
-        { next: { tags: [`ServicesCollection`], revalidate: 100 } }
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/getMember`,
+        { next: { tags: [`TeamCollection`], revalidate: 100 } }
       );
       const data = await response.json();
-      setServices(data.data);
+
+      setTeamMembers(data.data);
     } catch (error) {
       console.log(error);
       return <Error status={404} message="Bad request" />;
@@ -35,46 +37,50 @@ const ServicesList = () => {
   };
 
   useEffect(() => {
-    fetchServices();
+    fetchTeamMembers();
   }, []);
 
-  if (services && services.length > 0) {
+  if (teamMembers && teamMembers.length > 0) {
     return (
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="">Service</TableHead>
-            <TableHead>Thumbnail</TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead className="">Profile picture</TableHead>
+            <TableHead>Position</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
-          {services.map((Item: Service) => (
+          {teamMembers.map((Item: Team) => (
             <TableRow className="bg-accent" key={Item.id}>
               <TableCell>
-                <div className="font-medium">{Item.title}</div>
-                {/* <div className="hidden text-sm text-muted-foreground md:inline">
-                      {Item.id}
-                    </div> */}
+                <div className="font-medium whitespace-nowrap">{Item.name}</div>
               </TableCell>
+
+              <TableCell>
+                <div className="hidden text-sm text-muted-foreground md:inline whitespace-nowrap">
+                  {Item.position}
+                </div>
+              </TableCell>
+
               <TableCell className="">
                 <Image
-                  alt={Item.title}
+                  alt={Item.name}
                   className="aspect-square rounded-md object-cover"
-                  height="48"
+                  height="64"
                   src={Item.image}
-                  width="48"
+                  width="64"
                 />
               </TableCell>
+
               <TableCell className="flex gap-2 items-center">
-                <ViewButton
-                  url={`/admin/services/view/${Item.id}`}
-                  className=""
-                />
+                <ViewButton url={`/admin/team/view/${Item.id}`} className="" />
 
-                <UpdateButton url={`/admin/services/update/${Item.id}`} />
+                <UpdateButton url={`/admin/team/update/${Item.id}`} />
 
-                <DeletePopover text="service" deleteFn={() => {}}>
+                <DeletePopover text="team member" deleteFn={() => {}}>
                   <DeleteButton />
                 </DeletePopover>
               </TableCell>
@@ -88,4 +94,4 @@ const ServicesList = () => {
   }
 };
 
-export default ServicesList;
+export default TeamList;

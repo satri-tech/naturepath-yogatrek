@@ -144,7 +144,6 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
             body: jsonData,
           });
           const data = await response.json();
-          // revalidateTag("ServiceCollection")
           console.log(response);
           reset();
           setResource([]);

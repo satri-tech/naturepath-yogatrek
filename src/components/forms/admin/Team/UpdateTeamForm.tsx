@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Form, FormField } from "@/components/ui/form";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,13 +14,21 @@ import TextInput from "../../FormElements/TextInput";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { revalidateTag } from "next/cache";
 import { useSession } from "next-auth/react";
+import { urlToFile } from "@/lib/urlToFile";
+import { TeamInterface } from "@/utils/types/admin/teamInterface";
 
-const AddTeamForm = () => {
+const UpdateTeamForm = ({ teamMember }: { teamMember: TeamInterface }) => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
- 
+
   const methods = useForm<z.infer<typeof AddTeamFormSchema>>({
     resolver: zodResolver(AddTeamFormSchema),
+    defaultValues: {
+      name: teamMember.name,
+      position: teamMember.position,
+      profile_pic: images as File | undefined,
+      bio: teamMember.bio,
+    },
   });
 
   const session = useSession();
@@ -34,6 +42,20 @@ const AddTeamForm = () => {
     watch,
     setValue,
   } = methods;
+
+  const getImage = async () => {
+    const image = await urlToFile(
+      teamMember.image as string,
+      "service-thumbnail.jpg",
+      "image/jpeg"
+    );
+    setImages(image);
+    setValue("profile_pic", image);
+  };
+
+  useEffect(() => {
+    if (teamMember.image) getImage();
+  }, []);
 
   // imagess
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +85,7 @@ const AddTeamForm = () => {
             name: values.name,
             position: values.position,
             image: res.url,
-            bio: values.bio
+            bio: values.bio,
           };
           const jsonData = JSON.stringify(formdata);
 
@@ -233,4 +255,4 @@ const AddTeamForm = () => {
   );
 };
 
-export default AddTeamForm;
+export default UpdateTeamForm;

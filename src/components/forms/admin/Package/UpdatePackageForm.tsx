@@ -166,8 +166,6 @@ const UpdatePackageForm = ({
         body: jsonData,
       });
       const data = await response.json();
-      revalidateTag(`Package-${packages[0].id}`);
-      revalidateTag("PackageCollection");
       reset();
 
       if (data && data.success) {
