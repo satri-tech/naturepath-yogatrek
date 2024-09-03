@@ -5,36 +5,39 @@ import TeamMemberCard from "../Card/TeamMemberCard";
 import { Team } from "@prisma/client";
 import { petrona } from "@/app/layout";
 
-export default function TeamMembers() {
-  const [teamMembers, setTeamMembers] = useState<Team[]>([]);
+export default function OtherTeamMembers({ id }: { id: string }) {
+  const [otherTeamMembers, setOtherTeamMembers] = useState<Team[]>([]);
 
-  const fetchTeamMembers = async () => {
+  const fetchOtherTeamMembers = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/getMember`,
         { next: { tags: [`TeamCollection`], revalidate: 100 } }
       );
       const data = await response.json();
-      setTeamMembers(data.data);
+      setOtherTeamMembers(
+        data.data.filter((teamMember: Team) => teamMember.id != id)
+      );
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    fetchTeamMembers();
+    fetchOtherTeamMembers();
   }, []);
 
-  if (teamMembers && teamMembers.length > 0) {
+  if (otherTeamMembers && otherTeamMembers.length > 0) {
     return (
-      <section className=" flex flex-col gap-4 section-padding">
+      <section className="flex flex-col gap-4 section-padding clear-left">
         <h2
           className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
         >
-          Meet Our Extraordinary team
+          Other team members
         </h2>
+
         <div className=" w-full flex flex-wrap gap-3 md:gap-4 justify-center">
-          {teamMembers.map((teamMember: Team) => {
+          {otherTeamMembers.map((teamMember: Team) => {
             return (
               <TeamMemberCard teamMember={teamMember} key={teamMember.id} />
             );
@@ -43,6 +46,6 @@ export default function TeamMembers() {
       </section>
     );
   } else {
-    return <p>Loading team members</p>;
+    return <p>Loading other team members</p>;
   }
 }

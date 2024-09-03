@@ -4,7 +4,7 @@ import Breadcrumbs from "./breadcrumbs";
 import Headings from "@/components/ui/Headings";
 import { Badge } from "@/components/ui/badge";
 
-const Topbanner = ({ title }: { title: string }) => {
+const Topbanner = ({ title, img_url }: { title: string, img_url: string }) => {
   return (
     <div className="px-0 relative w-full h-[55vh] -translate-y-20">
       <div className="grid items-center h-full w-full text-white dark:text-text-dark">
@@ -16,7 +16,7 @@ const Topbanner = ({ title }: { title: string }) => {
         </div>
       </div>
       <Image
-        src="https://cdn.pixabay.com/photo/2017/04/08/22/26/buddhism-2214532_1280.jpg"
+        src={img_url}
         alt="hero image"
         width={2048}
         height={2048}
