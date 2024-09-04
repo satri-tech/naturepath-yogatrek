@@ -25,7 +25,7 @@ async function BlogList() {
 const Page = () => {
   return (
     <>
-      <Topbanner title="Journeys & Perspectives" />
+      <Topbanner title="Trekking tips and tricks" />
       <div className="relative container mx-auto ">
         {/* <div className="flex flex-col md:flex-row gap-5 lg:mx-10 lg:px-10 items-center lg:justify-evenly mb-10">
                  </div> */}
