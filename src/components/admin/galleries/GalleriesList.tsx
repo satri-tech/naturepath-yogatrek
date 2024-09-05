@@ -81,7 +81,7 @@ const GalleriesList = () => {
           {galleries.map((Item: Gallery) => (
             <TableRow className="bg-accent" key={Item.id}>
               <TableCell>
-                <div className="font-medium">{Item.title}</div>
+                <div className="font-medium whitespace-nowrap">{Item.title}</div>
                 {/* <div className="hidden text-sm text-muted-foreground md:inline">
                       {Item.id}
                     </div> */}
@@ -96,7 +96,7 @@ const GalleriesList = () => {
                 />
               </TableCell>
               <TableCell className=" ">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0 w-[200px]">
                   {Item.galleryPhotos.slice(0, 3).map((galleryPhoto, i) => {
                     return (
                       <Image

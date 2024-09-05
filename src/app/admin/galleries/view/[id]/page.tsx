@@ -1,33 +1,54 @@
 import Error from "@/layouts/error/Error";
-import { Service } from "@prisma/client";
+import { Gallery, Service } from "@prisma/client";
 import { Suspense } from "react";
 import Image from "next/image";
 
-async function GetService({ id }: { id: string }) {
+async function GetGallery({ id }: { id: string }) {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,
-      { next: { tags: [`ServicesCollection`], revalidate: 100 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries/getGallery`,
+      { next: { tags: [`GalleriessCollection`], revalidate: 100 } }
     );
-    const { data }: { data: Service[] } = await response.json();
+    const { data }: { data: Gallery[] } = await response.json();
 
-    const service = data.find((service) => service.id == id);
-    const { title, description, image } = service as Service;
+    const gallery = data.find((gallery) => gallery.id == id);
+    const { title, thumbnail, galleryPhotos } = gallery as Gallery;
 
     return (
       <main className=" dark:bg-black-dark dark:text-text-dark bg-white p-4 md:p-5 rounded-md shadow-md">
         <h1 className="text-xl lg:text-2xl font-bold mb-3 lg:mb-5">{title}</h1>
-        <Image
-          width={400}
-          height={400}
-          src={image}
-          alt={`service img`}
-          className="w-full h-[200px] md:h-[215px] xl:h-[230px]  object-cover rounded-md"
-        />
-        <p
-          className=" dark:text-text-dark mt-3 lg:mt-5"
-          dangerouslySetInnerHTML={{ __html: description as string }}
-        />
+        <div className=" flex flex-col gap-4">
+          <Image
+            width={400}
+            height={400}
+            src={thumbnail}
+            alt={`service img`}
+            className="w-full h-[200px] md:h-[215px] xl:h-[230px]  object-cover rounded-md"
+          />
+
+          <div className=" flex flex-col gap-3">
+            <h3 className=" text-lg font-medium">Gallery collection</h3>
+            <div className=" flex  flex-wrap gap-3 md:gap-4">
+              {galleryPhotos.map((photo: string, i: number) => {
+                return (
+                  <div
+                    className=" overflow-hidden  w-full sm:w-[calc(50%_-_6px)] md:w-[calc(50%_-_8px)] lg:w-[calc((100%_/_3)_-_(32px_/_3))] xl:w-[calc(25%_-_(48px_/_4))] relative rounded-md group"
+                    key={i}
+                  >
+                    <Image
+                      src={photo}
+                      alt={`gallery-pic-${i}`}
+                      className="w-full h-[200px] md:h-[225px] lg:h-[250px] xl:h-[2750x] object-cover  group-hover:scale-105  transition-all duration-500"
+                      width={250}
+                      height={800}
+                      quality={100}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
       </main>
     );
   } catch (error) {
@@ -39,7 +60,7 @@ async function GetService({ id }: { id: string }) {
 const ServiceViewPage = async ({ params }: { params: { id: string } }) => {
   return (
     <Suspense fallback="Loading...">
-      <GetService id={params.id} />
+      <GetGallery id={params.id} />
     </Suspense>
   );
 };
