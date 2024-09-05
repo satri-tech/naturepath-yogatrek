@@ -9,7 +9,7 @@ import {
   Slack,
   Users,
 } from "lucide-react";
-import React, { ReactElement } from "react";
+import React from "react";
 import MenuItem from "./menuItem";
 import {
   Sheet,
@@ -18,6 +18,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { MenulistType } from "@/utils/types/MenuListTypes";
+import { TfiGallery } from "react-icons/tfi";
 
 export const MenuList: MenulistType[] = [
   {
@@ -55,6 +56,12 @@ export const MenuList: MenulistType[] = [
     href: "/admin/trekking-tips",
     name: "Trekking Tips",
     icons: <LibraryBig />,
+  },
+  {
+    id: 8,
+    href: "/admin/galleries",
+    name: "Galleries",
+    icons: <TfiGallery className=" text-lg" />,
   },
   {
     id: 6,

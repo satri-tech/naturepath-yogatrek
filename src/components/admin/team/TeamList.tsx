@@ -4,7 +4,7 @@ import ServiceListLoading from "@/components/loading/admin/ServiceListLoading";
 import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import {
-    Table,
+  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -60,7 +60,7 @@ const TeamList = () => {
               </TableCell>
 
               <TableCell>
-                <div className="hidden text-sm text-muted-foreground md:inline whitespace-nowrap">
+                <div className=" text-sm md:inline whitespace-nowrap">
                   {Item.position}
                 </div>
               </TableCell>
