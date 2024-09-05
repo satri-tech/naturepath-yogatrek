@@ -19,9 +19,11 @@ import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import PackageListLoading from "@/components/loading/admin/PackageListLoading";
 import { Blog } from "@/utils/types/BlogType";
+import { useSession } from "next-auth/react";
 
 const TrekkingTipsList = () => {
   const [trekkingTips, setTrekkingTips] = useState<Blog[]>([]);
+  const session = useSession();
 
   const fetchtrekkingTips = async () => {
     try {
@@ -45,6 +47,7 @@ const TrekkingTipsList = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
           },
           body: JSON.stringify({ id: trekkingTipId }), // Send the Package id
         }

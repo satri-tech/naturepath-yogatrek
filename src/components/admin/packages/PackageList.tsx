@@ -18,9 +18,11 @@ import UpdateButton from "@/components/ui/updateButton";
 import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import PackageListLoading from "@/components/loading/admin/PackageListLoading";
+import { useSession } from "next-auth/react";
 
 const PackageList = () => {
   const [packages, setPackages] = useState([]);
+  const session = useSession();
 
   const fetchPackages = async () => {
     try {
@@ -44,6 +46,7 @@ const PackageList = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
           },
           body: JSON.stringify({ id: packageId }), // Send the Package id
         }

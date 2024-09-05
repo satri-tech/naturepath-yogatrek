@@ -15,11 +15,13 @@ import UpdateButton from "@/components/ui/updateButton";
 import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
 import { Team } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const TeamList = () => {
   const [teamMembers, setTeamMembers] = useState([]);
+  const session = useSession();
 
   const fetchTeamMembers = async () => {
     try {
@@ -44,6 +46,7 @@ const TeamList = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
           },
           body: JSON.stringify({ id: teamMemberId }), // Send the Package id
         }

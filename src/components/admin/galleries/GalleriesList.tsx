@@ -14,11 +14,13 @@ import UpdateButton from "@/components/ui/updateButton";
 import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
 import { Gallery } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const GalleriesList = () => {
   const [galleries, setGalleries] = useState([]);
+  const session = useSession();
 
   const fetchgalleries = async () => {
     try {
@@ -42,6 +44,7 @@ const GalleriesList = () => {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
           },
           body: JSON.stringify({ id: galleryId }), // Send the gallery id
         }

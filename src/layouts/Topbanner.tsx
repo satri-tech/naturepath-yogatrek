@@ -12,7 +12,7 @@ const Topbanner = ({
   img_url?: string;
 }) => {
   return (
-    <div className="px-0 relative w-full h-[55vh] -translate-y-20">
+    <div className="px-0 relative w-full h-[200px] sm:h-[225px] md:h-[250px] lg:h-[275px] xl:h-[300px]">
       <div className="grid items-center h-full w-full text-white dark:text-text-dark">
         <div className="flex flex-col items-center gap-3">
           <Badge className=" " variant={"default"}>
