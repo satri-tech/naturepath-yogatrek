@@ -36,6 +36,31 @@ const PackageList = () => {
     }
   };
 
+  async function deletePackage(packageId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: packageId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Package deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete package:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting package:", error);
+    }
+  }
+
   useEffect(() => {
     fetchPackages();
   }, []);
@@ -133,7 +158,12 @@ const PackageList = () => {
                 {/* <input type="hidden" value={Item.id} name="id"/> */}
 
                 {/*later put delete api request here in the function*/}
-                <DeletePopover text="service" deleteFn={() => {}}>
+                <DeletePopover
+                  text="service"
+                  deleteFn={() => {
+                    deletePackage(pac.id);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
                 {/* </form> */}

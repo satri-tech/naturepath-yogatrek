@@ -37,6 +37,31 @@ const TrekkingTipsList = () => {
     }
   };
 
+  async function deleteTrekkingTip(trekkingTipId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/trekking-tips/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: trekkingTipId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Trekking tip deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete trekking tip:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting trekking tip:", error);
+    }
+  }
+
   useEffect(() => {
     fetchtrekkingTips();
   }, []);
@@ -90,7 +115,12 @@ const TrekkingTipsList = () => {
                   url={`/admin/trekking-tips/update/${trekking_tip.id}`}
                 />
                 {/*delete*/}
-                <DeletePopover text="service" deleteFn={() => {}}>
+                <DeletePopover
+                  text="service"
+                  deleteFn={() => {
+                    deleteTrekkingTip(trekking_tip.id as string);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
               </TableCell>

@@ -34,6 +34,31 @@ const GalleriesList = () => {
     }
   };
 
+  async function deleteGallery(galleryId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: galleryId }), // Send the gallery id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Gallery deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete gallery:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting gallery:", error);
+    }
+  }
+
   useEffect(() => {
     fetchgalleries();
   }, []);
@@ -92,7 +117,12 @@ const GalleriesList = () => {
 
                   <UpdateButton url={`/admin/galleries/update/${Item.id}`} />
 
-                  <DeletePopover text="gallery" deleteFn={() => {}}>
+                  <DeletePopover
+                    text="gallery"
+                    deleteFn={() => {
+                      deleteGallery(Item.id);
+                    }}
+                  >
                     <DeleteButton />
                   </DeletePopover>
                 </div>

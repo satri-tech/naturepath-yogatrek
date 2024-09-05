@@ -36,6 +36,31 @@ const TeamList = () => {
     }
   };
 
+  async function deleteTeamMember(teamMemberId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: teamMemberId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Team member deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete team member:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting team member:", error);
+    }
+  }
+
   useEffect(() => {
     fetchTeamMembers();
   }, []);
@@ -80,7 +105,12 @@ const TeamList = () => {
 
                 <UpdateButton url={`/admin/team/update/${Item.id}`} />
 
-                <DeletePopover text="team member" deleteFn={() => {}}>
+                <DeletePopover
+                  text="team member"
+                  deleteFn={() => {
+                    deleteTeamMember(Item.id);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
               </TableCell>

@@ -19,6 +19,13 @@ import ImageInputMultiple from "../../FormElements/ImageInputMultiple";
 import { Gallery } from "@prisma/client";
 import { urlToFile } from "@/lib/urlToFile";
 
+interface UpdateFormTypes {
+  id: string;
+  title?: string;
+  thumbnail?: string | undefined;
+  galleryPhotos?: (string | undefined)[];
+}
+
 const UpdateGalleryForm = ({ gallery }: { gallery: Gallery }) => {
   const [images, setImages] = useState<File | null>(null);
   const [galleryPhotos, setGalleryPhotos] = useState<File[] | null>(null);
@@ -103,6 +110,31 @@ const UpdateGalleryForm = ({ gallery }: { gallery: Gallery }) => {
     }
   };
 
+  async function update(formdatas: UpdateFormTypes) {
+    try {
+      const jsonData = JSON.stringify(formdatas);
+      const response = await fetch("/api/galleries/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.accessToken}`,
+        },
+
+        body: jsonData,
+      });
+      const data = await response.json();
+      reset();
+
+      if (data && data.success) {
+        reset();
+        setImages(null);
+        setGalleryPhotos(null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function onSubmit(values: z.infer<typeof GalleryFormSchema>) {
     if (images) {
       const res = await UploadCloudinary(images);
@@ -117,28 +149,13 @@ const UpdateGalleryForm = ({ gallery }: { gallery: Gallery }) => {
       if (res.url && galleryPhotosUrl.length > 0) {
         try {
           const formdata = {
+            id: gallery.id,
             title: values.title,
             thumbnail: res.url,
             galleryPhotos: galleryPhotosUrl,
           };
-          const jsonData = JSON.stringify(formdata);
 
-          const response = await fetch("/api/galleries/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${session.data?.user.accessToken}`,
-            },
-            body: jsonData,
-          });
-          const data = await response.json();
-          reset();
-
-          if (data && data.success) {
-            reset();
-            setImages(null);
-            setGalleryPhotos(null);
-          }
+          await update(formdata);
         } catch (err) {
           console.log(err);
         }
