@@ -6,6 +6,7 @@ import { petrona } from "@/app/layout";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { ExtendedSitePage } from "@/components/forms/admin/SitePages/UpdateSitePageForm";
 import TeamMembers from "@/components/about/TeamMembers";
+import Topbanner from "@/layouts/Topbanner";
 
 const AboutPage = async () => {
   try {
@@ -40,13 +41,9 @@ const AboutPage = async () => {
 
     return (
       <main className=" dark:text-text-dark">
-        <Image
-          src={about_page_details.image}
-          alt={about_page_details.title}
-          className="w-full h-[215px] sm:h-[250px] md:h-[300px] object-cover group-hover/parent:scale-105 transition-all duration-500 dark:brightness-75"
-          width={500}
-          height={500}
-          quality={100}
+        <Topbanner
+          img_url={about_page_details.image}
+          title={about_page_details.title}
         />
 
         {/* <section>
@@ -59,7 +56,9 @@ const AboutPage = async () => {
           {about_page_details.sections?.map((sec) => (
             <section key={sec.id} className="flex flex-col gap-3 md:gap-4">
               <article className=" flex flex-col gap-2">
-                <h1 className="dark:text-text-dark font-bold text-lg md:text-xl lg:text-2xl">{sec.title}</h1>
+                <h1 className="dark:text-text-dark font-bold text-lg md:text-xl lg:text-2xl">
+                  {sec.title}
+                </h1>
                 <div
                   className=" dark:text-text-dark lg:text-lg"
                   dangerouslySetInnerHTML={{ __html: sec.description }}
@@ -109,15 +108,7 @@ const AboutPage = async () => {
             </div>
           </section>
 
-          <section className=" flex flex-col gap-4 section-padding">
-            <h2
-              className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
-            >
-              Meet Our Extraordinary team
-            </h2>
-
-            <TeamMembers />
-          </section>
+          <TeamMembers />
         </PageWrapper>
       </main>
     );

@@ -30,7 +30,12 @@ const TextInput = <T extends {}>({
     <FormItem className={`${wrapperClass}`}>
       <FormLabel>{label}</FormLabel>
       <FormControl className=" flex">
-        <Input type="text" placeholder={placeholder} className="flex-1" {...field} />
+        <Input
+          type="text"
+          placeholder={placeholder}
+          className="flex-1"
+          {...field}
+        />
       </FormControl>
       <FormMessage />
     </FormItem>

@@ -61,12 +61,12 @@ const ImageInputSingle = <T extends {}>({
 
   return (
     <FormItem className={`flex flex-col ${wrapperClass}`}>
-      <FormLabel className="">Thumbnail</FormLabel>
+      <FormLabel className="">{label}</FormLabel>
       <FormControl>
         <UploadImageField
           ref={inputRef}
           images={images}
-          imageerror={imageerror}
+          imageerror={error}
           handleChangeFunc={handleImageFileSelected}
           handleRemoveImage={() => {
             handleRemoveImage();

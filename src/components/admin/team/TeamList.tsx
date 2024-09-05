@@ -4,7 +4,7 @@ import ServiceListLoading from "@/components/loading/admin/ServiceListLoading";
 import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import {
-    Table,
+  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -15,11 +15,13 @@ import UpdateButton from "@/components/ui/updateButton";
 import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
 import { Team } from "@prisma/client";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const TeamList = () => {
   const [teamMembers, setTeamMembers] = useState([]);
+  const session = useSession();
 
   const fetchTeamMembers = async () => {
     try {
@@ -35,6 +37,32 @@ const TeamList = () => {
       return <Error status={404} message="Bad request" />;
     }
   };
+
+  async function deleteTeamMember(teamMemberId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
+          },
+          body: JSON.stringify({ id: teamMemberId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Team member deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete team member:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting team member:", error);
+    }
+  }
 
   useEffect(() => {
     fetchTeamMembers();
@@ -60,7 +88,7 @@ const TeamList = () => {
               </TableCell>
 
               <TableCell>
-                <div className="hidden text-sm text-muted-foreground md:inline whitespace-nowrap">
+                <div className=" text-sm md:inline whitespace-nowrap">
                   {Item.position}
                 </div>
               </TableCell>
@@ -80,7 +108,12 @@ const TeamList = () => {
 
                 <UpdateButton url={`/admin/team/update/${Item.id}`} />
 
-                <DeletePopover text="team member" deleteFn={() => {}}>
+                <DeletePopover
+                  text="team member"
+                  deleteFn={() => {
+                    deleteTeamMember(Item.id);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
               </TableCell>

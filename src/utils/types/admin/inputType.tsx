@@ -75,6 +75,14 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   updateImgError: (imgError: string) => void;
 }
 
+export interface ImageInputMultipleProps<T extends FieldValues> extends InputProps<T> {
+  field: ControllerRenderProps<T>;
+  images: File[] | null;
+  imageerror: string;
+  updateImages: (img: File[] | null) => void;
+  updateImgError: (imgError: string) => void;
+}
+
 export interface RichTextEditorInputProps<T extends FieldValues>
   extends InputProps<T> {
   field: ControllerRenderProps<T>;
@@ -82,9 +90,7 @@ export interface RichTextEditorInputProps<T extends FieldValues>
 }
 
 export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
-  field: ControllerRenderProps<T>;
-  iconSizeClass: string;
-  containerSizeClass: string;
+  
 }
 
 export interface SelectInputProps<T extends FieldValues> extends InputProps<T> {

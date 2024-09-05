@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import TeamMemberCard from "../Card/TeamMemberCard";
 import { Team } from "@prisma/client";
+import { petrona } from "@/app/layout";
 
 export default function TeamMembers() {
   const [teamMembers, setTeamMembers] = useState<Team[]>([]);
@@ -14,8 +15,6 @@ export default function TeamMembers() {
         { next: { tags: [`TeamCollection`], revalidate: 100 } }
       );
       const data = await response.json();
-      console.log("members: ", data.data);
-
       setTeamMembers(data.data);
     } catch (error) {
       console.log(error);
@@ -28,10 +27,19 @@ export default function TeamMembers() {
 
   if (teamMembers && teamMembers.length > 0) {
     return (
-      <section className=" w-full flex flex-wrap gap-3 md:gap-4 justify-center">
-        {teamMembers.map((teamMember) => {
-          return <TeamMemberCard teamMember={teamMember} key={teamMember.id} />;
-        })}
+      <section className=" flex flex-col gap-4 section-padding">
+        <h2
+          className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
+        >
+          Meet Our Extraordinary team
+        </h2>
+        <div className=" w-full flex flex-wrap gap-3 md:gap-4 justify-center">
+          {teamMembers.map((teamMember: Team) => {
+            return (
+              <TeamMemberCard teamMember={teamMember} key={teamMember.id} />
+            );
+          })}
+        </div>
       </section>
     );
   } else {

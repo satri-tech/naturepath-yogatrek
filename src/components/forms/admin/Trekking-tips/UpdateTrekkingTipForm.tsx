@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PackageFormSchema } from "@/utils/validation/admin/PackageFormValidation";
+import { TrekkingTipFormSchema } from "@/utils/validation/admin/PackageFormValidation";
 import {
   Form,
   FormControl,
@@ -36,77 +36,46 @@ import TextInput from "../../FormElements/TextInput";
 import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { urlToFile } from "@/lib/urlToFile";
+import { Blog } from "@/utils/types/BlogType";
+import { TrekkingTipFormSchema } from "@/utils/validation/admin/TrekkingTipFormValidation";
 
-
-interface UpdateFormTypes{
-  id:string,
-  title?:string,
-  slug?:string,
-  serviceId?:string,
-  sharedprice?:string,
-  privateprice?:string,
-  sharedOfferPrice?:string,
-  privateOfferPrice?:string,
-  duration?:string,
-  highlights?:string ,
-  description?:string,
-  itinerary?:string,
-  costInclusion?:string ,
-  costExclusion?:string ,
-  gallery?:string[],
+interface UpdateFormTypes {
+  id: string;
+  title?: string;
+  slug?: string;
+  authors?: string;
+  publishedAt?: string;
+  body?: any;
+  img_url?: string;
+  category?: string[];
 }
 
-const UpdateTrekkingTipForm = ({
-  packages,
-  service,
-}: {
-  packages: Package[];
-  service: Service[];
-}) => {
+const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
 
-  const [resource, setResource] = useState<string[]>(packages[0].gallery);
-
   const session = useSession();
 
-  const removeImage = (url: string) => {
-    setResource((prevRes) => {
-      const newResources = prevRes.filter((resourceUrl) => resourceUrl !== url);
-      return newResources;
-    });
-  };
-
-  const methods = useForm<z.infer<typeof PackageFormSchema>>({
-    resolver: zodResolver(PackageFormSchema),
+  const methods = useForm<z.infer<typeof TrekkingTipFormSchema>>({
+    resolver: zodResolver(TrekkingTipFormSchema),
     defaultValues: {
-      title: packages[0].title,
-      slug: packages[0].slug,
-      sharedprice: packages[0].SharingPrice,
-      privateprice: packages[0].PrivatePrice,
-      sharedOfferPrice: packages[0].SharingOffer ?? "",
-      privateOfferPrice: packages[0].PrivateOffer ?? "",
-      duration: packages[0].Duration,
-      // thumbnail: packages[0].,
-      highlights: packages[0].highlights ?? "",
-      description: packages[0].description,
-      itinerary: packages[0].description,
-      costInclusion: packages[0].costInclusion ?? "",
-      costExclusion: packages[0].costExclusion ?? "",
+      title: trekkingTip.title,
+      slug: trekkingTip.slug,
+      authors: trekkingTip.authors,
+      body: trekkingTip.body,
+      category: trekkingTip.category,
     },
   });
 
-  console.log("packages: ", packages)
-
-   const {
-     register,
-     control,
-     formState: { errors },
-     reset,
-     handleSubmit,
-     watch,
-     setValue,
-   } = methods;
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    watch,
+    setValue,
+  } = methods;
 
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -126,18 +95,17 @@ const UpdateTrekkingTipForm = ({
 
   const getImage = async () => {
     const image = await urlToFile(
-      packages[0].image as string,
-      "service-thumbnail.jpg",
+      trekkingTip.img_url as string,
+      "trekking-tip-thumbnail.jpg",
       "image/jpeg"
     );
     setImages(image);
-    setValue("thumbnail", image);
+    setValue("img_url", image);
   };
 
   useEffect(() => {
-    if (packages[0].image) getImage();
+    if (trekkingTip.img_url) getImage();
   }, []);
-
 
   const generateSlug = () => {
     const title = watch("title");
@@ -156,7 +124,7 @@ const UpdateTrekkingTipForm = ({
   async function update(formdatas: UpdateFormTypes) {
     try {
       const jsonData = JSON.stringify(formdatas);
-      const response = await fetch("/api/package/update", {
+      const response = await fetch("/api/trekking-tips/update", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -166,8 +134,6 @@ const UpdateTrekkingTipForm = ({
         body: jsonData,
       });
       const data = await response.json();
-      revalidateTag(`Package-${packages[0].id}`);
-      revalidateTag("PackageCollection");
       reset();
 
       if (data && data.success) {
@@ -179,52 +145,28 @@ const UpdateTrekkingTipForm = ({
     }
   }
 
-  async function onSubmit(values: z.infer<typeof PackageFormSchema>) {
+  async function onSubmit(values: z.infer<typeof TrekkingTipFormSchema>) {
     if (images) {
       const res = await UploadCloudinary(images);
       if (res.url) {
         if (
-          values.title !== packages[0].title ||
-          values.slug !== packages[0].slug ||
-          values.duration !== packages[0].Duration ||
-          // values.serviceId !== packages[0].serviceId ||
-          values.sharedprice !== packages[0].SharingPrice ||
-          values.sharedOfferPrice !== packages[0].SharingOffer ||
-          values.privateprice !== packages[0].PrivatePrice ||
-          values.privateOfferPrice !== packages[0].PrivateOffer ||
-          values.highlights !== packages[0].highlights ||
-          values.description !== packages[0].description ||
-          values.itinerary !== packages[0].itinerary ||
-          values.costInclusion !== packages[0].costInclusion ||
-          values.costExclusion !== packages[0].costExclusion ||
-          resource !== packages[0].gallery
+          values.title !== trekkingTip.title ||
+          values.slug !== trekkingTip.slug ||
+          values.authors !== trekkingTip.authors ||
+          // values.serviceId !== trekkingTip.serviceId ||
+          values.body !== trekkingTip.body ||
+          values.category !== trekkingTip.category
         ) {
           const formdata = {
-            id: packages[0].id,
+            id: trekkingTip.id as string,
             title: values.title,
             slug: values.slug,
-            image: res.url,
-            SharingPrice: values.sharedprice,
-            PrivatePrice: values.privateprice,
-            SharingOffer: values.sharedOfferPrice,
-            PrivateOffer: values.privateOfferPrice,
-            Duration: values.duration,
-            // serviceId: values.serviceId,
-            highlights: values.highlights,
-            description: values.description,
-            itinerary: values.itinerary,
-            costInclusion: values.costInclusion,
-            costExclusion: values.costExclusion,
-            gallery: resource,
+            img_url: res.url,
+            authors: values.authors,
+            body: values.body,
+            category: values.category,
           };
 
-          await update(formdata);
-        } else {
-          const formdata = {
-            id: packages[0].id,
-            image: res.url,
-          };
-          const jsonData = JSON.stringify(formdata);
           await update(formdata);
         }
       }
@@ -232,44 +174,7 @@ const UpdateTrekkingTipForm = ({
       if (res.error) {
         setImageError(res.error);
       }
-    } else {
-      if (
-        values.title !== packages[0].title ||
-        values.slug !== packages[0].slug ||
-        values.duration !== packages[0].Duration ||
-        // values.serviceId !== packages[0].serviceId ||
-        values.sharedprice !== packages[0].SharingPrice ||
-        values.sharedOfferPrice !== packages[0].SharingOffer ||
-        values.privateprice !== packages[0].PrivatePrice ||
-        values.privateOfferPrice !== packages[0].PrivateOffer ||
-        values.highlights !== packages[0].highlights ||
-        values.description !== packages[0].description ||
-        values.itinerary !== packages[0].itinerary ||
-        values.costInclusion !== packages[0].costInclusion ||
-        values.costExclusion !== packages[0].costExclusion ||
-        resource !== packages[0].gallery
-      ) {
-        const formdata = {
-          id: packages[0].id,
-          title: values.title,
-          slug: values.slug,
-          SharingPrice: values.sharedprice,
-          PrivatePrice: values.privateprice,
-          SharingOffer: values.sharedOfferPrice,
-          PrivateOffer: values.privateOfferPrice,
-          Duration: values.duration,
-          // serviceId: values.serviceId,
-          highlights: values.highlights,
-          description: values.description,
-          itinerary: values.itinerary,
-          costInclusion: values.costInclusion,
-          costExclusion: values.costExclusion,
-          gallery: resource,
-        };
-        // function call
-        await update(formdata);
-      }
-    }
+    } 
   }
 
   const inputs: inputType<packageFormInput>[] = [
@@ -391,7 +296,6 @@ const UpdateTrekkingTipForm = ({
       className: "w-full xl:w-[calc(50%_-_8px)]",
     },
   ];
-
 
   return (
     <Form

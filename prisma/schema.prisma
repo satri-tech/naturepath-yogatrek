@@ -1,23 +1,12 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-
-
-  provider = "postgresql"
-  url = env("POSTGRES_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
- 
-
-
 
 model Account {
   id                String  @id @default(cuid())
@@ -32,8 +21,7 @@ model Account {
   scope             String?
   idToken           String?
   sessionState      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -46,27 +34,22 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-enum Role {
-  ADMIN
-  USER
-}
-
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   firstName     String
   lastName      String
   password      String
-  email         String    @unique
-  emailVerified DateTime?  
-  role          Role    @default(USER)
+  email         String        @unique
   image         String?
+  role          Role          @default(USER)
+  emailVerified DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
   accounts      Account[]
-  sessions      Session[]
   bookings      Booking[]
-  testimonial   Testimonial[]
   reviews       Review[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  sessions      Session[]
+  testimonial   Testimonial[]
 }
 
 model VerificationToken {
@@ -79,24 +62,22 @@ model VerificationToken {
 }
 
 model Service {
-  id          String      @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   description String
   image       String
+  createdAt   DateTime  @default(now())
+  slug        String
+  updatedAt   DateTime  @default(now()) @updatedAt
   packages    Package[]
-  slug     String   
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
 }
 
- 
-
 model Team {
-  id   String @id @default(cuid())
-  name String
-  bio String
-  position String
-  image String
+  id        String   @id @default(cuid())
+  name      String
+  bio       String
+  position  String
+  image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 }
@@ -105,10 +86,10 @@ model SitePage {
   id        String    @id @default(cuid())
   title     String
   slug      String    @unique
-  sections  Section[]
   image     String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  sections  Section[]
 }
 
 model Section {
@@ -116,59 +97,88 @@ model Section {
   title       String
   description String
   pageId      String
-  page        SitePage @relation(fields: [pageId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  page        SitePage @relation(fields: [pageId], references: [id])
 }
 
-
 model Package {
-  id            String      @id @default(cuid())
+  id            String    @id @default(cuid())
   title         String
-  slug          String      @unique
+  slug          String    @unique
   serviceId     String
-  service       Service     @relation(fields: [serviceId], references: [id])
   image         String
-  SharingPrice  String
-  PrivatePrice  String
-  SharingOffer  String?
-  PrivateOffer  String?
-  Duration      String
   highlights    String?
   description   String
   itinerary     String?
   costInclusion String?
   costExclusion String?
   gallery       String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  Duration      String
+  PrivateOffer  String?
+  PrivatePrice  String
+  SharingOffer  String?
+  SharingPrice  String
   bookings      Booking[]
+  service       Service   @relation(fields: [serviceId], references: [id])
   reviews       Review[]
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
 }
 
-
 model Review {
-  id          String      @id @default(cuid())
-  packageId   String
-  package     Package     @relation(fields: [packageId], references: [id])
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  rating      Int
-  comment     String?
-  images      String[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id        String   @id @default(cuid())
+  packageId String
+  userId    String
+  rating    Int
+  comment   String?
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  package   Package  @relation(fields: [packageId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Testimonial {
-  id          String      @id @default(cuid())
-  userId      String
-  user        User        @relation(fields: [userId], references: [id])
-  rating      Int
-  comment     String
-  images      String[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id        String   @id @default(cuid())
+  userId    String
+  rating    Int
+  comment   String
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  packageId       String
+  userId          String?
+  fullname        String?
+  email           String?
+  phone           String
+  country         String
+  roomPreferences RoomType      @default(PRIVATE)
+  noofPerson      Int
+  message         String?
+  bookingDate     DateTime
+  status          BookingStatus @default(PENDING)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  package         Package       @relation(fields: [packageId], references: [id])
+  userBooking     User?         @relation(fields: [userId], references: [id])
+}
+
+model Gallery {
+  id            String   @id @default(cuid())
+  title         String
+  galleryPhotos String[]
+  thumbnail     String
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 enum RoomType {
@@ -181,30 +191,3 @@ enum BookingStatus {
   CONFIRMED
   CANCELLED
 }
-
-model Booking {
-  id              String      @id @default(cuid())
-  packageId       String
-  package         Package     @relation(fields: [packageId], references: [id])
-  userId          String?
-  fullname        String?
-  email           String?
-  phone           String
-  country         String
-  roomPreferences RoomType    @default(PRIVATE)
-  noofPerson      Int
-  message         String?
-  bookingDate     DateTime
-  status          BookingStatus @default(PENDING)
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-
-  userBooking  User?      @relation(fields: [userId], references: [id])
-}
-
-
-
-
-
-
-

@@ -18,9 +18,11 @@ import UpdateButton from "@/components/ui/updateButton";
 import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import PackageListLoading from "@/components/loading/admin/PackageListLoading";
+import { useSession } from "next-auth/react";
 
 const PackageList = () => {
   const [packages, setPackages] = useState([]);
+  const session = useSession();
 
   const fetchPackages = async () => {
     try {
@@ -35,6 +37,32 @@ const PackageList = () => {
       return <Error status={404} message="Bad request" />;
     }
   };
+
+  async function deletePackage(packageId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `bearer ${session.data?.user.accessToken}`,
+          },
+          body: JSON.stringify({ id: packageId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Package deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete package:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting package:", error);
+    }
+  }
 
   useEffect(() => {
     fetchPackages();
@@ -133,7 +161,12 @@ const PackageList = () => {
                 {/* <input type="hidden" value={Item.id} name="id"/> */}
 
                 {/*later put delete api request here in the function*/}
-                <DeletePopover text="service" deleteFn={() => {}}>
+                <DeletePopover
+                  text="service"
+                  deleteFn={() => {
+                    deletePackage(pac.id);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
                 {/* </form> */}

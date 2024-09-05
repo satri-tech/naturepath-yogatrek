@@ -507,8 +507,6 @@ const UpdatePackageForm = ({
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

@@ -16,8 +16,17 @@ import { revalidateTag } from "next/cache";
 import { useSession } from "next-auth/react";
 import { urlToFile } from "@/lib/urlToFile";
 import { TeamInterface } from "@/utils/types/admin/teamInterface";
+import { Team } from "@prisma/client";
 
-const UpdateTeamForm = ({ teamMember }: { teamMember: TeamInterface }) => {
+interface UpdateFormTypes {
+  id: string;
+  name?: string;
+  bio?: string;
+  position?: string;
+  image?: string;
+}
+
+const UpdateTeamForm = ({ teamMember }: { teamMember: Team }) => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
 
@@ -76,34 +85,43 @@ const UpdateTeamForm = ({ teamMember }: { teamMember: TeamInterface }) => {
     setImageError(imgError);
   };
 
+  async function update(formdatas: UpdateFormTypes) {
+    try {
+      const jsonData = JSON.stringify(formdatas);
+      const response = await fetch("/api/team/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.accessToken}`,
+        },
+
+        body: jsonData,
+      });
+      const data = await response.json();
+      reset();
+
+      if (data && data.success) {
+        reset();
+        setImages(null);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function onSubmit(values: z.infer<typeof AddTeamFormSchema>) {
     if (images) {
       const res = await UploadCloudinary(images);
       if (res.url) {
         try {
           const formdata = {
+            id: teamMember.id,
             name: values.name,
             position: values.position,
             image: res.url,
             bio: values.bio,
           };
-          const jsonData = JSON.stringify(formdata);
-
-          const response = await fetch("/api/team/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${session.data?.user.accessToken}`,
-            },
-            body: jsonData,
-          });
-          const data = await response.json();
-          reset();
-
-          if (data && data.success) {
-            reset();
-            setImages(null);
-          }
+          await update(formdata);
         } catch (err) {
           console.log(err);
         }
@@ -239,8 +257,6 @@ const UpdateTeamForm = ({ teamMember }: { teamMember: TeamInterface }) => {
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

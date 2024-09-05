@@ -9,11 +9,9 @@ import { X } from "lucide-react";
 export default function ImagePopover({
   children,
   images,
-  handleRemoveImage,
 }: {
   children: ReactNode;
   images: File;
-  handleRemoveImage: () => void;
 }) {
   const imageRef = useRef<HTMLImageElement>(null);
   const [imageWidth, setImageWidth] = useState<number>(0);

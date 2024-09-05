@@ -24,6 +24,7 @@ export const Menus: MenuType[] = [
   { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Booking", url: "/booking" },
   { id: 4, name: "Service", url: "/packages" },
+  { id: 7, name: "Gallery", url: "/gallery" },
   { id: 5, name: "Trekking Tips", url: "/trekking-tips" },
   { id: 6, name: "Contact Us", url: "/contact" },
 ];

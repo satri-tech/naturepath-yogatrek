@@ -34,6 +34,31 @@ const ServicesList = () => {
     }
   };
 
+  async function deleteService(serviceId: string) {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/delete`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: serviceId }), // Send the Package id
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.success) {
+        console.log("Service deleted successfully:", result.message);
+      } else {
+        console.error("Failed to delete service:", result.message);
+      }
+    } catch (error) {
+      console.error("Error deleting service:", error);
+    }
+  }
+
   useEffect(() => {
     fetchServices();
   }, []);
@@ -74,7 +99,12 @@ const ServicesList = () => {
 
                 <UpdateButton url={`/admin/services/update/${Item.id}`} />
 
-                <DeletePopover text="service" deleteFn={() => {}}>
+                <DeletePopover
+                  text="service"
+                  deleteFn={() => {
+                    deleteService(Item.id);
+                  }}
+                >
                   <DeleteButton />
                 </DeletePopover>
               </TableCell>
