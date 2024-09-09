@@ -33,7 +33,7 @@ export interface InputProps<T extends FieldValues>
 export interface IFormProps<T extends FieldValues> {
   defaultValues?: any;
   children?: ReactNode;
-  buttonLabel?: string;
+  buttonLabel?: string | ReactNode;
   onSubmit?: any;
   handleSubmit?: any;
   register?: UseFormRegister<T>;

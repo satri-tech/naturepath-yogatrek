@@ -1,10 +1,19 @@
 "use client";
 import React, { useState } from "react";
-// import { authenticate } from "@/lib/action/login";
-import { LogIn, ShieldAlert } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormField } from "@/components/ui/form";
+import z from "zod";
+
+import { signIn, useSession } from "next-auth/react";
+import { inputType } from "@/utils/types/admin/inputType";
+import { toastError, toastSuccess } from "@/lib/toast";
+import TextInput from "./FormElements/TextInput";
 import Link from "next/link";
+import { LoginFormSchema } from "@/utils/validation/admin/LoginFormSchema";
+import { loginFormInput } from "@/utils/types/admin/loginFormType";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { LoaderCircle, LogIn } from "lucide-react";
 
 interface Props {
   callbackUrl?: string;
@@ -15,13 +24,37 @@ const LoginForm = (props: Props) => {
   const [errorMessage, setErrorMesage] = useState<string>("");
   const [isloading, setIsloading] = useState(false);
 
-  const handleSubmit = async (formData: FormData) => {
-    setIsloading(true);
+  const methods = useForm<z.infer<typeof LoginFormSchema>>({
+    resolver: zodResolver(LoginFormSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    watch,
+    setValue,
+  } = methods;
+
+  const onSubmit = async (values: z.infer<typeof LoginFormSchema>) => {
     try {
+      setIsloading(true);
+
+      const formdata: loginFormInput = {
+        email: values.email,
+        password: values.password,
+      };
+
       const result = await signIn("credentials", {
         redirect: false,
-        username: formData.get("email"),
-        password: formData.get("password"),
+        username: formdata.email,
+        password: formdata.password,
       });
       if (!result?.ok) {
         throw new Error(result?.error as string);
@@ -29,95 +62,116 @@ const LoginForm = (props: Props) => {
       if (result?.ok) {
         router.push(props.callbackUrl ? props.callbackUrl : "/admin");
       }
-    } catch (error: any) {
-      setErrorMesage(error.message);
+      reset();
+      toastSuccess("Login successfully!");
+    } catch (err: any) {
+      toastError(`Login failed. ${err}`);
+      setErrorMesage(err.message);
       return;
     } finally {
       setIsloading(false);
     }
   };
 
+  const inputs: inputType<loginFormInput>[] = [
+    {
+      name: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email address",
+      error: errors.email?.message,
+      element: "input",
+      className: "w-full",
+    },
+    {
+      name: "password",
+      label: "Password",
+      type: "password",
+      placeholder: "Enter your password",
+      error: errors.password?.message,
+      element: "input",
+      className: "w-full",
+    },
+  ];
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit(new FormData(e.currentTarget));
-      }}
-      className="w-full"
-    >
-      <div
-        className="flex h-8 items-end space-x-1 justify-center"
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {errorMessage && (
-          <>
-            <ShieldAlert className="h-5 w-5 text-red-500" />
-            <p className="text-sm text-red-500">{errorMessage}</p>
-          </>
-        )}
-      </div>
-      <div id="input" className="flex flex-col w-full my-5">
-        <label className="text-gray-500 mb-2 text-left">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Please insert your email"
-          className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
-          required
-        />
-      </div>
-      <div id="input" className="flex flex-col w-full my-5">
-        <label className="text-gray-500 mb-2 text-left">Password</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Please insert your password"
-          className="appearance-none border-2 border-gray-100 rounded-lg px-4 py-3 placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600 focus:shadow-lg"
-          required
-          minLength={8}
-        />
-      </div>
-      <div id="button" className="flex flex-col w-full my-5">
-        <button
-          type="submit"
-          className="w-full py-4 bg-primary rounded-lg text-green-100"
-          style={{
-            backgroundColor: isloading
-              ? "rgba(116, 195, 101, 0.85)"
-              : "#74C365",
-              cursor: isloading?"not-allowed":"pointer"
-          }}
-        >
+    <div>
+      <Form
+        buttonLabel={
           <div className="flex gap-2  items-center justify-center">
             {isloading ? <></> : <div className="font-bold">Sign In</div>}
             <div className="mr-2">
               {isloading ? (
-                <>Loading...</>
+                <LoaderCircle className="animate-spin text-white w-6 h-6" />
               ) : (
                 <LogIn className="text-white" size={20} />
               )}
             </div>
           </div>
-        </button>
-        <div className="flex justify-evenly mt-5">
-          <Link
-            href="/auth/forget-password"
-            className="w-full text-center font-medium text-gray-500"
-          >
-            Forget password!
-          </Link>
-          <Link
-            href="/auth/signup"
-            className="w-full text-center font-medium text-gray-500"
-          >
-            Sign up!
-          </Link>
-        </div>
+        }
+        methods={methods}
+        register={register}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+      >
+        {inputs.map((input, i) => {
+          const {
+            name,
+            type,
+            placeholder,
+            error,
+            autoFocus,
+            label,
+            element,
+            min,
+            step,
+            className,
+            showField = true,
+            multiple,
+          } = input;
+          return showField ? (
+            element == "input" && (
+              <FormField
+                key={i}
+                control={control}
+                name={name}
+                render={({ field }) => (
+                  <TextInput
+                    name={name}
+                    label={label}
+                    type={type}
+                    placeholder={placeholder}
+                    error={error}
+                    autoFocus={autoFocus}
+                    register={register}
+                    min={min}
+                    step={step}
+                    wrapperClass={className}
+                    field={field}
+                  />
+                )}
+              />
+            )
+          ) : (
+            <span className={className} key={i}></span>
+          );
+        })}
+      </Form>
+      <div className="flex justify-evenly mt-5">
+        <Link
+          href="/auth/forget-password"
+          className="w-full text-center font-medium text-gray-500"
+        >
+          Forgot password!
+        </Link>
+        <Link
+          href="/auth/signin"
+          className="w-full text-center font-medium text-gray-500"
+        >
+          Sign in!
+        </Link>
       </div>
-    </form>
+    </div>
   );
 };
 

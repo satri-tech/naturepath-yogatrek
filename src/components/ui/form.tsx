@@ -36,7 +36,7 @@ const Form = <T extends FieldValues>({
       >
         <div className="flex flex-wrap gap-4 w-full">{children}</div>
         <div className=" w-full">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className=" w-full">{buttonLabel}</Button>
         </div>
       </form>
     </FormProvider>
