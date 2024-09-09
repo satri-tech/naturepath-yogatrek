@@ -17,12 +17,12 @@ export async function POST(request: NextRequest, response: NextResponse) {
 
 const parseResult =async (request:NextRequest , response:NextResponse)=>{
   try {
-    const extractServiceData = await request.json();
-    const newlyCreatedService = await prisma.package.create({
-      data: extractServiceData,
+    const extractedPackageData = await request.json();
+    const newlyCreatedPackage = await prisma.package.create({
+      data: extractedPackageData,
     });
 
-    if (newlyCreatedService) {
+    if (newlyCreatedPackage) {
       return NextResponse.json({
         success: true,
         message: "New package added successfully",

@@ -1,8 +1,5 @@
 "use client";
-import {
-  Form,
-  FormField,
-} from "@/components/ui/form";
+import { Form, FormField } from "@/components/ui/form";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -17,6 +14,7 @@ import { serviceFormInput } from "@/utils/types/admin/serviceType";
 import TextInput from "../../FormElements/TextInput";
 import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const CreateServicesForm = () => {
   const [images, setImages] = useState<File | null>(null);
@@ -81,8 +79,11 @@ const CreateServicesForm = () => {
             reset();
             setImages(null);
           }
+
+          toastSuccess("Service created successfully!");
         } catch (err) {
           console.log(err);
+          toastError(`Service creation failed, ${err}`);
         }
       }
       if (res.error) {
@@ -232,8 +233,6 @@ const CreateServicesForm = () => {
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

@@ -18,6 +18,7 @@ import { galleriesFormInput } from "@/utils/types/admin/gallleryType";
 import ImageInputMultiple from "../../FormElements/ImageInputMultiple";
 import { Gallery } from "@prisma/client";
 import { urlToFile } from "@/lib/urlToFile";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 interface UpdateFormTypes {
   id: string;
@@ -130,8 +131,10 @@ const UpdateGalleryForm = ({ gallery }: { gallery: Gallery }) => {
         setImages(null);
         setGalleryPhotos(null);
       }
+      toastSuccess("Gallery updated successfully!");
     } catch (err) {
       console.log(err);
+      toastError(`Gallery updation failed, ${err}`);
     }
   }
 

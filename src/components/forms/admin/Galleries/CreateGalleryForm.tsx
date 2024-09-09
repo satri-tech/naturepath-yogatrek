@@ -16,6 +16,7 @@ import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { GalleryFormSchema } from "@/utils/validation/GalleryFormValidation";
 import { galleriesFormInput } from "@/utils/types/admin/gallleryType";
 import ImageInputMultiple from "../../FormElements/ImageInputMultiple";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const CreateGalleryForm = () => {
   const [images, setImages] = useState<File | null>(null);
@@ -106,8 +107,10 @@ const CreateGalleryForm = () => {
             setImages(null);
             setGalleryPhotos(null);
           }
+          toastSuccess("Gallery created successfully!");
         } catch (err) {
           console.log(err);
+          toastError(`Gallery creation failed, ${err}`);
         }
       }
       if (res.error) {

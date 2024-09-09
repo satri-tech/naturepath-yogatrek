@@ -31,6 +31,7 @@ const PackageList = () => {
         { next: { tags: [`PackageCollection`], revalidate: 600 } }
       );
       const data = await response.json();
+
       setPackages(data.data);
     } catch (error) {
       console.log(error);

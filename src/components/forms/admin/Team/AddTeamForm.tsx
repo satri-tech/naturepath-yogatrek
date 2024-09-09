@@ -14,11 +14,12 @@ import TextInput from "../../FormElements/TextInput";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { revalidateTag } from "next/cache";
 import { useSession } from "next-auth/react";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const AddTeamForm = () => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
- 
+
   const methods = useForm<z.infer<typeof AddTeamFormSchema>>({
     resolver: zodResolver(AddTeamFormSchema),
   });
@@ -63,7 +64,7 @@ const AddTeamForm = () => {
             name: values.name,
             position: values.position,
             image: res.url,
-            bio: values.bio
+            bio: values.bio,
           };
           const jsonData = JSON.stringify(formdata);
 
@@ -82,8 +83,10 @@ const AddTeamForm = () => {
             reset();
             setImages(null);
           }
+          toastSuccess("Team member created successfully!");
         } catch (err) {
           console.log(err);
+          toastError(`Team member creation failed, ${err}`);
         }
       }
       if (res.error) {
@@ -217,8 +220,6 @@ const AddTeamForm = () => {
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

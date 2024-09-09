@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { TrekkingTipFormSchema } from "@/utils/validation/admin/PackageFormValidation";
 import {
   Form,
   FormControl,
@@ -37,7 +36,9 @@ import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { urlToFile } from "@/lib/urlToFile";
 import { Blog } from "@/utils/types/BlogType";
+import { toastError, toastSuccess } from "@/lib/toast";
 import { TrekkingTipFormSchema } from "@/utils/validation/admin/TrekkingTipFormValidation";
+import { trekkingTipFormInput } from "@/utils/types/admin/trekkingTipType";
 
 interface UpdateFormTypes {
   id: string;
@@ -63,7 +64,7 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
       slug: trekkingTip.slug,
       authors: trekkingTip.authors,
       body: trekkingTip.body,
-      category: trekkingTip.category,
+      // category: trekkingTip.category,
     },
   });
 
@@ -140,8 +141,10 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
         reset();
         setImages(null);
       }
+      toastSuccess("Trekking tip updated successfully!");
     } catch (err) {
       console.log(err);
+      toastError(`Trekking tip updation failed, ${err}`);
     }
   }
 
@@ -154,8 +157,8 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
           values.slug !== trekkingTip.slug ||
           values.authors !== trekkingTip.authors ||
           // values.serviceId !== trekkingTip.serviceId ||
-          values.body !== trekkingTip.body ||
-          values.category !== trekkingTip.category
+          values.body !== trekkingTip.body
+          // values.category !== trekkingTip.category
         ) {
           const formdata = {
             id: trekkingTip.id as string,
@@ -164,7 +167,7 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
             img_url: res.url,
             authors: values.authors,
             body: values.body,
-            category: values.category,
+            // category: values.category,
           };
 
           await update(formdata);
@@ -174,15 +177,15 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
       if (res.error) {
         setImageError(res.error);
       }
-    } 
+    }
   }
 
-  const inputs: inputType<packageFormInput>[] = [
+  const inputs: inputType<trekkingTipFormInput>[] = [
     {
       name: "title",
-      label: "Package title",
+      label: "Trekking tip title",
       type: "text",
-      placeholder: "Enter service title",
+      placeholder: "Enter trekking tip title",
       error: errors.title?.message,
       element: "input",
       className: "w-full",
@@ -197,101 +200,29 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
       className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
     },
     {
-      name: "duration",
-      label: "Duration",
+      name: "authors",
+      label: "Auhor name",
       type: "text",
-      placeholder: "3D/2N",
-      error: errors.duration?.message,
+      placeholder: "Enter author name",
+      error: errors.authors?.message,
       element: "input",
-      className: "w-full lg:w-[calc(50%_-_8px)]",
+      className: "w-full",
     },
     {
-      name: "sharedprice",
-      label: "Shared price",
-      type: "text",
-      placeholder: "$ 200 ",
-      error: errors.sharedprice?.message,
-      element: "input",
-      className: "w-full lg:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "privateprice",
-      label: "Private price",
-      type: "text",
-      placeholder: "$ 200",
-      error: errors.privateprice?.message,
-      element: "input",
-      className: "w-full lg:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "sharedOfferPrice",
-      label: "Shared Offer Price",
-      type: "text",
-      placeholder: "$ 200",
-      error: errors.sharedOfferPrice?.message,
-      element: "input",
-      className: "w-full lg:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "privateOfferPrice",
-      label: "Private Offer Price",
-      type: "text",
-      placeholder: "$ 200",
-      error: errors.privateOfferPrice?.message,
-      element: "input",
-      className: "w-full lg:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "thumbnail",
-      label: "Service thumbnail",
+      name: "img_url",
+      label: "Trekking tip thumbnail",
       type: "file",
-      placeholder: "Select thumbnail",
-      error: errors.thumbnail?.message,
+      placeholder: "Select trekking tip",
+      error: errors.img_url?.message,
       element: "image",
       className: "w-full xl:w-[calc(50%_-_8px)]",
     },
     {
-      name: "highlights",
-      label: "Highlights",
-      type: "text",
-      placeholder: "Enter highlights",
-      error: errors.highlights?.message,
-      element: "rich-text",
-      className: "w-full xl:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "description",
+      name: "body",
       label: "Description",
       type: "text",
-      placeholder: "Enter description",
-      error: errors.description?.message,
-      element: "rich-text",
-      className: "w-full xl:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "itinerary",
-      label: "Itinerary",
-      type: "text",
-      placeholder: "Enter itinerary",
-      error: errors.itinerary?.message,
-      element: "rich-text",
-      className: "w-full xl:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "costInclusion",
-      label: "Cost Inclusion",
-      type: "text",
-      placeholder: "Enter cost inclusion",
-      error: errors.costInclusion?.message,
-      element: "rich-text",
-      className: "w-full xl:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "costExclusion",
-      label: "Cost Exclusion",
-      type: "text",
-      placeholder: "Enter cost exclusion",
-      error: errors.costExclusion?.message,
+      placeholder: "Enter trekking tip description",
+      error: errors.body?.message,
       element: "rich-text",
       className: "w-full xl:w-[calc(50%_-_8px)]",
     },
@@ -413,8 +344,6 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

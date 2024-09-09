@@ -5,9 +5,9 @@ export async function GET(request: NextRequest) {
   const url = new URL(request.url);
   const page = parseInt(url.searchParams.get("page") ?? "1");
   const limit = parseInt(url.searchParams.get("limit") ?? "25");
-  const postid = url.searchParams.get("id");
+  const userId = url.searchParams.get("id");
 
-  if (!postid) {
+  if (!userId) {
     try {
       const totalCount = await prisma.user.count();
       const totalPages = Math.ceil(totalCount / limit);
@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getTeam = await prisma.user.findMany({
+      const getUser= await prisma.user.findMany({
         skip: (page - 1) * limit,
         take: limit,
         select: {
@@ -35,12 +35,12 @@ export async function GET(request: NextRequest) {
           sessions: true,
         },
       });
-      console.log("count",getTeam)
+      console.log("count",getUser)
 
-      if (getTeam && getTeam.length) {
+      if (getUser&& getUser.length) {
         return NextResponse.json({
           success: true,
-          data: getTeam,
+          data: getUser,
           meta: {
             pagination: {
               page,
@@ -75,11 +75,11 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  if (postid) {
+  if (userId) {
     try {
-      const getTeam = await prisma.user.findUnique({
+      const getUser= await prisma.user.findUnique({
         where: {
-          id: postid,
+          id: userId,
         }, select: {
           id: true,
           firstName: true,
@@ -97,11 +97,11 @@ export async function GET(request: NextRequest) {
         },
       });
 
-      if (getTeam) {
+      if (getUser) {
         return NextResponse.json({
           status: 200,
           success: true,
-          data: getTeam,
+          data: getUser,
         });
       } else {
         return NextResponse.json({

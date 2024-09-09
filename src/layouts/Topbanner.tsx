@@ -14,7 +14,7 @@ const Topbanner = ({
   return (
     <div className="px-0 relative w-full h-[200px] sm:h-[225px] md:h-[250px] lg:h-[275px] xl:h-[300px]">
       <div className="grid items-center h-full w-full text-white dark:text-text-dark">
-        <div className="flex flex-col items-center gap-3">
+        <div className="flex flex-col items-center gap-3 z-10">
           <Badge className=" " variant={"default"}>
             <Breadcrumbs />
           </Badge>
@@ -26,9 +26,9 @@ const Topbanner = ({
         alt="hero image"
         width={2048}
         height={2048}
-        className="absolute top-0 w-full h-full object-cover -z-20 r brightness-[85%] dark:brightness-[35%]"
+        className="absolute top-0 w-full h-full object-cover r brightness-[85%] dark:brightness-[35%]"
       />
-      <div className="bg-primary/50 absolute top-0 bottom-0 left-0 right-0 -z-10"></div>
+      <div className="bg-primary/50 absolute top-0 bottom-0 left-0 right-0 z-[5]"></div>
     </div>
   );
 };

@@ -27,6 +27,7 @@ import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { inputType } from "@/utils/types/admin/inputType";
 import { serviceFormInput } from "@/utils/types/admin/serviceType";
 import { urlToFile } from "@/lib/urlToFile";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const UpdateServicesForm = ({ services }: { services: Service }) => {
   const [images, setImages] = useState<File | null>(null);
@@ -49,9 +50,9 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
     setValue("image", image);
   };
 
-   useEffect(() => {
-     if (services.image) getImage();
-   }, []);
+  useEffect(() => {
+    if (services.image) getImage();
+  }, []);
 
   const session = useSession();
 
@@ -108,8 +109,11 @@ const UpdateServicesForm = ({ services }: { services: Service }) => {
         reset();
         setImages(null);
       }
+
+      toastSuccess("Service updated successfully!");
     } catch (err) {
       console.log(err);
+      toastError(`Service updation failed, ${err}`);
     }
   }
 

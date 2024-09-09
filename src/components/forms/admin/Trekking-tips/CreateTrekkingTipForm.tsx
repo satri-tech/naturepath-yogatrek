@@ -36,6 +36,7 @@ import TextInput from "../../FormElements/TextInput";
 import { TrekkingTipFormSchema } from "@/utils/validation/admin/TrekkingTipFormValidation";
 import { Blog } from "@/utils/types/BlogType";
 import { trekkingTipFormInput } from "@/utils/types/admin/trekkingTipType";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const CreateTrekkingTipForm = () => {
   const [images, setImages] = useState<File | null>(null);
@@ -128,8 +129,10 @@ const CreateTrekkingTipForm = () => {
             reset();
             setImages(null);
           }
+          toastSuccess("Trekking tip created successfully!");
         } catch (err) {
           console.log(err);
+          toastError(`Trekking tip creation failed, ${err}`);
         }
       }
       if (res.error) {
@@ -306,8 +309,6 @@ const CreateTrekkingTipForm = () => {
                   handleImageFileSelected={handleImageFileSelected}
                   imageerror={imageerror}
                   images={images}
-                  containerSizeClass="h-[150px]"
-                  iconSizeClass="text-[60px]"
                   updateImages={updateImages}
                   updateImgError={updateImgError}
                 />

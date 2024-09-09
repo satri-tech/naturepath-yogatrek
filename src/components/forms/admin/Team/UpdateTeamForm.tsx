@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { urlToFile } from "@/lib/urlToFile";
 import { TeamInterface } from "@/utils/types/admin/teamInterface";
 import { Team } from "@prisma/client";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 interface UpdateFormTypes {
   id: string;
@@ -104,8 +105,10 @@ const UpdateTeamForm = ({ teamMember }: { teamMember: Team }) => {
         reset();
         setImages(null);
       }
+      toastSuccess("Team member updated successfully!");
     } catch (err) {
       console.log(err);
+      toastError(`Team member updation failed, ${err}`);
     }
   }
 

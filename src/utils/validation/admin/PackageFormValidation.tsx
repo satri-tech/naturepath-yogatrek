@@ -3,6 +3,12 @@ import * as z from "zod";
 export const PackageFormSchema = z.object({
   title: z.string().nonempty("Title is required"),
   slug: z.string().nonempty("Slug is required"),
+  serviceId: z
+    .string()
+    .nonempty("Service is required")
+    .refine((val) => val.trim().length > 0, {
+      message: "Service is required!",
+    }),
   // serviceId: z.string().nonempty("Service ID is required"),
   duration: z.string().nonempty("Duration is required"),
   sharedprice: z.string().nonempty("Shared Price is required"),

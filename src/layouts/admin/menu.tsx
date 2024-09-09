@@ -61,7 +61,7 @@ export const MenuList: MenulistType[] = [
     id: 8,
     href: "/admin/galleries",
     name: "Galleries",
-    icons: <TfiGallery className=" text-lg" />,
+    icons: <TfiGallery className=" w-[22px] h-[22px]" />,
   },
   {
     id: 6,

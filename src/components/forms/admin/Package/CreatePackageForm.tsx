@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PackageFormSchema } from "@/utils/validation/admin/PackageFormValidation";
@@ -34,14 +34,20 @@ import { inputType } from "@/utils/types/admin/inputType";
 import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import TextInput from "../../FormElements/TextInput";
+import SelectInput from "../../FormElements/SelectInput";
+import { selectOptionType } from "@/utils/types/admin/selectOptionType";
+import { toastError, toastSuccess } from "@/lib/toast";
 
 const CreatePackageForm = ({ service }: { service: Service[] }) => {
   const [images, setImages] = useState<File | null>(null);
   const [imageerror, setImageError] = useState<string>("");
 
   const [resource, setResource] = useState<string[]>([]);
+  const [serviceOptions, setServiceOptions] = useState<selectOptionType[]>([]);
 
   const session = useSession();
+
+  const [services, setServices] = useState<Service[]>([]);
 
   const removeImage = (url: string) => {
     setResource((prevRes) => {
@@ -111,6 +117,19 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
     }
   };
 
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,
+        { next: { tags: [`ServicesCollection`], revalidate: 100 } }
+      );
+      const data = await response.json();
+      setServices(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof PackageFormSchema>) => {
     if (images) {
       const res = await UploadCloudinary(images);
@@ -125,7 +144,7 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
             SharingOffer: values.sharedOfferPrice,
             PrivateOffer: values.privateOfferPrice,
             Duration: values.duration,
-            // serviceId: values.serviceId,
+            serviceId: values.serviceId,
             highlights: values.highlights,
             description: values.description,
             itinerary: values.itinerary,
@@ -133,6 +152,8 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
             costExclusion: values.costExclusion,
             gallery: resource,
           };
+          console.log("package form data: ", formdata);
+
           const jsonData = JSON.stringify(formdata);
 
           const response = await fetch("/api/package/create", {
@@ -144,17 +165,18 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
             body: jsonData,
           });
           const data = await response.json();
-          console.log(response);
           reset();
           setResource([]);
           setImages(null);
-
+          ``;
           if (data && data.success) {
             reset();
             setImages(null);
           }
+          toastSuccess("Package created successfully!");
         } catch (err) {
           console.log(err);
+          toastError(`Package creation failed, ${err}`);
         }
       }
       if (res.error) {
@@ -184,6 +206,15 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
       placeholder: "Slug",
       error: errors.slug?.message,
       element: "input-slug",
+      className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
+    },
+    {
+      name: "serviceId",
+      label: "Service",
+      type: "text",
+      placeholder: "Select service",
+      error: errors.serviceId?.message,
+      element: "select",
       className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
     },
     {
@@ -287,6 +318,24 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
     },
   ];
 
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  useEffect(() => {
+    const serviceOptions = services.map((service) => {
+      return {
+        value: service.id,
+        displayValue: service.title,
+      };
+    });
+    const duplicateServiceOptions = [
+      { value: " ", displayValue: "Select service" },
+      ...serviceOptions,
+    ];
+    setServiceOptions(duplicateServiceOptions);
+  }, [services]);
+
   return (
     <Form
       methods={methods}
@@ -379,6 +428,27 @@ const CreatePackageForm = ({ service }: { service: Service[] }) => {
                   register={register}
                   wrapperClass={className}
                   field={field}
+                />
+              )}
+            />
+          ) : element == "select" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              render={({ field }) => (
+                <SelectInput
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                  setValue={setValue}
+                  options={serviceOptions}
                 />
               )}
             />

@@ -33,48 +33,47 @@ export async function sendmail({
 
   try {
     const sendResult = await transport.sendMail({
-        from:SMPT_EMAIL,
-        to: to,
-        subject:subject,
-        html:body,
+      from: SMPT_EMAIL,
+      to: to,
+      subject: subject,
+      html: body,
     });
+    return sendResult;
   } catch (err) {
     console.log(err);
   }
-
-  
 }
 
-export function compileActivationTemplete(name:string, url:string){
-    const template = Handlebars.compile(activationTemplete)
-    const htmlBody = template({
-        name,
-        url,
-    });
-    return htmlBody;
+export function compileActivationTemplete(name: string, url: string) {
+  const template = Handlebars.compile(activationTemplete);
+  const htmlBody = template({
+    name,
+    url,
+  });
+  return htmlBody;
 }
 
-export function compileResetPassTemplete(name:string, url:string){
-    const template = Handlebars.compile(resetPassword)
-    const htmlBody = template({
-        url,
-    });
-    return htmlBody;
+export function compileResetPassTemplete(name: string, url: string) {
+  const template = Handlebars.compile(resetPassword);
+  const htmlBody = template({
+    url,
+  });
+  return htmlBody;
 }
 
-export function compileAdminTemplate(booking: any, packages:Package) {
-    const template = Handlebars.compile(adminBookingTemplate);
-    const htmlBody = template({
-      name: booking.fullname,
-      email: booking.email,
-      package: packages.title, 
-      startDate: booking.bookingDate,
-      phone: booking.phone,
-      country: booking.country,
-      noofPerson: booking.noofPerson,
-      roomPreferences: booking.roomPreferences,
-      message: booking.message,
-    });
+export function compileAdminTemplate(booking: any, packages: Package) {
+  const template = Handlebars.compile(adminBookingTemplate);
+  const htmlBody = template({
+    name: booking.fullname,
+    email: booking.email,
+    package: packages.title,
+    startDate: booking.bookingDate,
+    phone: booking.phone,
+    country: booking.country,
+    noofPerson: booking.noofPerson,
+    roomPreferences: booking.roomPreferences,
+    message: booking.message,
+  });
   return htmlBody;
 }
 

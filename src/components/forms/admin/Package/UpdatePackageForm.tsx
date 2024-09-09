@@ -36,24 +36,26 @@ import TextInput from "../../FormElements/TextInput";
 import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import { urlToFile } from "@/lib/urlToFile";
+import { selectOptionType } from "@/utils/types/admin/selectOptionType";
+import SelectInput from "../../FormElements/SelectInput";
+import { toastError, toastSuccess } from "@/lib/toast";
 
-
-interface UpdateFormTypes{
-  id:string,
-  title?:string,
-  slug?:string,
-  serviceId?:string,
-  sharedprice?:string,
-  privateprice?:string,
-  sharedOfferPrice?:string,
-  privateOfferPrice?:string,
-  duration?:string,
-  highlights?:string ,
-  description?:string,
-  itinerary?:string,
-  costInclusion?:string ,
-  costExclusion?:string ,
-  gallery?:string[],
+interface UpdateFormTypes {
+  id: string;
+  title?: string;
+  slug?: string;
+  serviceId?: string;
+  sharedprice?: string;
+  privateprice?: string;
+  sharedOfferPrice?: string;
+  privateOfferPrice?: string;
+  duration?: string;
+  highlights?: string;
+  description?: string;
+  itinerary?: string;
+  costInclusion?: string;
+  costExclusion?: string;
+  gallery?: string[];
 }
 
 const UpdatePackageForm = ({
@@ -67,6 +69,8 @@ const UpdatePackageForm = ({
   const [imageerror, setImageError] = useState<string>("");
 
   const [resource, setResource] = useState<string[]>(packages[0].gallery);
+  const [serviceOptions, setServiceOptions] = useState<selectOptionType[]>([]);
+  const [services, setServices] = useState<Service[]>([]);
 
   const session = useSession();
 
@@ -93,20 +97,21 @@ const UpdatePackageForm = ({
       itinerary: packages[0].description,
       costInclusion: packages[0].costInclusion ?? "",
       costExclusion: packages[0].costExclusion ?? "",
+      serviceId: packages[0].serviceId ?? "",
     },
   });
 
-  console.log("packages: ", packages)
+  console.log("packages: ", packages);
 
-   const {
-     register,
-     control,
-     formState: { errors },
-     reset,
-     handleSubmit,
-     watch,
-     setValue,
-   } = methods;
+  const {
+    register,
+    control,
+    formState: { errors },
+    reset,
+    handleSubmit,
+    watch,
+    setValue,
+  } = methods;
 
   const handleImageFileSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -138,7 +143,6 @@ const UpdatePackageForm = ({
     if (packages[0].image) getImage();
   }, []);
 
-
   const generateSlug = () => {
     const title = watch("title");
     console.log("title", title);
@@ -150,6 +154,19 @@ const UpdatePackageForm = ({
         .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with a hyphen
         .replace(/^-+|-+$/g, ""); // Remove leading or trailing hyphens
       setValue("slug", slug);
+    }
+  };
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/services/getService`,
+        { next: { tags: [`ServicesCollection`], revalidate: 100 } }
+      );
+      const data = await response.json();
+      setServices(data.data);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -172,8 +189,10 @@ const UpdatePackageForm = ({
         reset();
         setImages(null);
       }
+      toastSuccess("Package updated successfully!");
     } catch (err) {
       console.log(err);
+      toastError(`Package updation failed, ${err}`);
     }
   }
 
@@ -290,6 +309,15 @@ const UpdatePackageForm = ({
       className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
     },
     {
+      name: "serviceId",
+      label: "Service",
+      type: "text",
+      placeholder: "Select service",
+      error: errors.serviceId?.message,
+      element: "select",
+      className: "w-full lg:w-[calc(50%_-_8px)] flex-1",
+    },
+    {
       name: "duration",
       label: "Duration",
       type: "text",
@@ -390,6 +418,23 @@ const UpdatePackageForm = ({
     },
   ];
 
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  useEffect(() => {
+    const serviceOptions = services.map((service) => {
+      return {
+        value: service.id,
+        displayValue: service.title,
+      };
+    });
+    const duplicateServiceOptions = [
+      { value: " ", displayValue: "Select service" },
+      ...serviceOptions,
+    ];
+    setServiceOptions(duplicateServiceOptions);
+  }, [services]);
 
   return (
     <Form
@@ -483,6 +528,28 @@ const UpdatePackageForm = ({
                   register={register}
                   wrapperClass={className}
                   field={field}
+                />
+              )}
+            />
+          ) : element == "select" ? (
+            <FormField
+              key={i}
+              control={control}
+              name={name}
+              defaultValue={packages[0].id}
+              render={({ field }) => (
+                <SelectInput
+                  name={name}
+                  label={label}
+                  type={type}
+                  placeholder={placeholder}
+                  error={error}
+                  autoFocus={autoFocus}
+                  register={register}
+                  wrapperClass={className}
+                  field={field}
+                  setValue={setValue}
+                  options={serviceOptions}
                 />
               )}
             />

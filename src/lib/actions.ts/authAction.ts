@@ -10,9 +10,11 @@ import {
   sendmail,
 } from "../mail";
 import { signJWt, verifyJwt } from "../jwt";
+import { toastError, toastSuccess } from "../toast";
 
-
-export async function registerUser(user: Omit<User, "id" | "emailVerified" | "role" | "image">) {
+export async function registerUser(
+  user: Omit<User, "id" | "emailVerified" | "role" | "image">
+) {
   const result = await prisma.user.create({
     data: {
       ...user,
@@ -42,7 +44,8 @@ export async function registerNewUser(
     await registerUser(userData);
   } catch (error) {
     if (error instanceof Error) {
-      console.log("register error",error)
+      console.log("register error", error);
+
       switch (error.message) {
         case "CredentialsSignin":
           return "Invalid credentials.";
@@ -61,7 +64,7 @@ export async function authenticate(formData: FormData) {
       username: formData.get("email"),
       password: formData.get("password"),
     });
-    console.log("login",result)
+    console.log("login", result);
     return result;
   } catch (error) {
     console.log(error);
@@ -123,30 +126,31 @@ export const forgetPassword = async (formData: FormData) => {
   return sendResult;
 };
 
-type ResetPasswordFunc = (jwtUserId: string, password:string)=>Promise <"userNotExist" | "success">;
+type ResetPasswordFunc = (
+  jwtUserId: string,
+  password: string
+) => Promise<"userNotExist" | "success">;
 
-export const resetPassword:ResetPasswordFunc = async (jwtUserId,password)=>{
-const payload = verifyJwt(jwtUserId);
-  if(!payload) return "userNotExist";
+export const resetPassword: ResetPasswordFunc = async (jwtUserId, password) => {
+  const payload = verifyJwt(jwtUserId);
+  if (!payload) return "userNotExist";
   const userId = payload.id;
 
   const user = await prisma.user.findUnique({
-    where:{
-      id:userId,
-    }
+    where: {
+      id: userId,
+    },
   });
-  if(!user) return "userNotExist";
+  if (!user) return "userNotExist";
 
   const result = await prisma.user.update({
-    where:{
-      id:userId,
+    where: {
+      id: userId,
     },
     data: {
       password: await bcrypt.hash(password, 15),
     },
   });
-  if(result) return "success";
+  if (result) return "success";
   else throw new Error("something went wrong!");
-
-}
-
+};

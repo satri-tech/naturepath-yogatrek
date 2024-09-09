@@ -5,6 +5,7 @@ import Provider from "@/components/HOC/provider";
 
 import { Noto_Sans_Display } from "next/font/google";
 import { DM_Sans, Petrona } from "next/font/google";
+import ToastProvider from "@/components/ui/ToastProvider";
 
 const dm_sans = DM_Sans({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
@@ -39,7 +40,9 @@ export default function RootLayout({
       <body
         className={` container px-0 mx-auto max-w-[1900px] ${dm_sans.className}`}
       >
-        <Provider>{children}</Provider>
+        <Provider>
+          <ToastProvider>{children}</ToastProvider>
+        </Provider>
       </body>
     </html>
   );
