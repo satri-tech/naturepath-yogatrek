@@ -13,6 +13,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { LayoutDashboard } from "lucide-react";
 import LogoutPopover from "@/components/ui/logoutPopover";
+import { FaRegUserCircle } from "react-icons/fa";
 
 const User = ({
   isInAdmin = false,
@@ -27,49 +28,41 @@ const User = ({
   return (
     <>
       {session && session.user ? (
-        <div className={`lex gap-4 flex-1 items-center ${className}`}>
+        <div className={`flex gap-4 flex-1 items-center ${className}`}>
           <DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
             <DropdownMenuTrigger>
-              <Image
-                src="https://randomuser.me/api/portraits/men/20.jpg"
-                alt=""
-                width={100}
-                height={100}
-                quality={100}
-                className="rounded-full w-10 h-10 object-cover "
-              />
+              <span className=" bg-white dark:bg-black-dark block rounded-full text-primary border-2 border-primary">
+                <FaRegUserCircle className="rounded-full w-7 h-7 " />
+              </span>
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className={` absolute ${isInAdmin ? "-right-5" : " -right-[175px] min-[900px]:left-auto min-[900px]:-right-5"} top-[calc(100%_+_12px)] z-[100]`}
             >
               <DropdownMenuItem className=" flex gap-2 cursor-default w-full items-center">
-                <Image
-                  src="https://randomuser.me/api/portraits/men/20.jpg"
-                  alt=""
-                  width={100}
-                  height={100}
-                  quality={100}
-                  className="rounded-full w-10 h-10 object-cover "
-                />
-                <span className=" whitespace-nowrap shrink-0 inline-block font-semibold text-black/90 dark:text-white/70">
+                <span className=" bg-white dark:bg-black-dark  block rounded-full text-primary border-2 border-primary">
+                  <FaRegUserCircle className="rounded-full w-7 h-7 " />
+                </span>
+                <span className=" whitespace-nowrap shrink-0 inline-block font-semibold text-primary ">
                   {session?.user?.firstName} {session?.user?.lastName}
                 </span>
               </DropdownMenuItem>
               <DropdownMenuItem className=" flex items-center gap-2 w-full">
-                <Link
-                  href={"/"}
-                  className=" flex items-center gap-2 w-full"
-                >
+                <Link href={"/"} className=" flex items-center gap-2 w-full">
                   <Home className=" w-5 h-5" />
                   <span>Home</span>
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="w-full">
-                <Link href={"/admin"} className=" flex items-center gap-2 w-full">
-                  <LayoutDashboard className=" w-5 h-5" />
-                  <span>Dashboard</span>
-                </Link>
-              </DropdownMenuItem>
+              {session.user.role == "ADMIN" && (
+                <DropdownMenuItem className="w-full">
+                  <Link
+                    href={"/admin"}
+                    className=" flex items-center gap-2 w-full"
+                  >
+                    <LayoutDashboard className=" w-5 h-5" />
+                    <span>Dashboard</span>
+                  </Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem className=" flex items-center gap-2 w-full">
                 <Link
                   href={"/profile"}

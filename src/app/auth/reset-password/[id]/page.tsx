@@ -30,7 +30,7 @@ if(!payload)
         <div className="flex flex-col text-center h-screen justify-evenly ">
           <div className="max-w-md  mx-auto my-10 bg-white p-8 rounded-xl shadow shadow-slate-300">
             <h1 className="text-4xl font-medium">Reset password</h1>
-            <ResetPasswordForm jwtUserId={params.id}/>
+            <ResetPasswordForm jwtToken={params.id}/>
           </div>
         </div>
       </div>

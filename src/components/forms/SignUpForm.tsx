@@ -101,7 +101,7 @@ const SignUpForm = () => {
   ];
 
   return (
-    <div>
+    <div >
       <Form
         buttonLabel="Register"
         methods={methods}

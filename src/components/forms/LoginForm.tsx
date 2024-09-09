@@ -95,10 +95,12 @@ const LoginForm = (props: Props) => {
   ];
 
   return (
-    <div>
+    <div className=" dark:bg-black-dark">
       <Form
         buttonLabel={
-          <div className="flex gap-2  items-center justify-center">
+          <div
+            className={`flex gap-2  items-center justify-center ${isloading ? " cursor-wait" : ""}`}
+          >
             {isloading ? <></> : <div className="font-bold">Sign In</div>}
             <div className="mr-2">
               {isloading ? (
@@ -165,10 +167,10 @@ const LoginForm = (props: Props) => {
           Forgot password!
         </Link>
         <Link
-          href="/auth/signin"
+          href="/auth/signup"
           className="w-full text-center font-medium text-gray-500"
         >
-          Sign in!
+          Sign Up!
         </Link>
       </div>
     </div>

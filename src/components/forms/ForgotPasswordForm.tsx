@@ -8,17 +8,14 @@ import z from "zod";
 import { inputType } from "@/utils/types/admin/inputType";
 import { toastError, toastSuccess } from "@/lib/toast";
 import TextInput from "./FormElements/TextInput";
-import Link from "next/link";
-import { ResetPasswordFormSchema } from "@/utils/validation/admin/ResetPasswordFormSchema";
-import { resetPasswordFormInput } from "@/utils/types/admin/resetPasswordType";
+import { forgetPasswordFormSchema } from "@/utils/validation/admin/ForgetPasswordFormSchema";
+import { forgetPasswordformInput } from "@/utils/types/admin/forgetPasswordType";
 
-const ResetPasswordForm = ({ jwtToken }: { jwtToken: string }) => {
-  const methods = useForm<z.infer<typeof ResetPasswordFormSchema>>({
-    resolver: zodResolver(ResetPasswordFormSchema),
+const ForgotPasswordForm = () => {
+  const methods = useForm<z.infer<typeof forgetPasswordFormSchema>>({
+    resolver: zodResolver(forgetPasswordFormSchema),
     defaultValues: {
       email: "",
-      password: "",
-      confirmPassword: "",
     },
   });
 
@@ -32,24 +29,15 @@ const ResetPasswordForm = ({ jwtToken }: { jwtToken: string }) => {
     setValue,
   } = methods;
 
-  const onSubmit = async (values: z.infer<typeof ResetPasswordFormSchema>) => {
+  const onSubmit = async (values: z.infer<typeof forgetPasswordFormSchema>) => {
     try {
-      const formdata: resetPasswordFormInput = {
+      const formdata: forgetPasswordformInput = {
         email: values.email,
-        password: values.password,
-        confirmPassword: values.confirmPassword,
       };
 
-      const { confirmPassword, ...rest } = formdata;
+      const jsonData = JSON.stringify(formdata);
 
-      const dataToBeSent = {
-        ...rest,
-        jwtToken,
-      };
-
-      const jsonData = JSON.stringify(dataToBeSent);
-
-      const response = await fetch("/api/users/reset-password", {
+      const response = await fetch("/api/users/forget-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -59,14 +47,14 @@ const ResetPasswordForm = ({ jwtToken }: { jwtToken: string }) => {
       const data = await response.json();
       reset();
       ``;
-      toastSuccess("Password reset successfully!");
+      toastSuccess("Password reset link sent successfully!");
     } catch (err) {
       console.log(err);
-      toastError(`Password reset failed ${err}`);
+      toastError(`Password reset link send failed ${err}`);
     }
   };
 
-  const inputs: inputType<resetPasswordFormInput>[] = [
+  const inputs: inputType<forgetPasswordformInput>[] = [
     {
       name: "email",
       label: "Email",
@@ -76,30 +64,31 @@ const ResetPasswordForm = ({ jwtToken }: { jwtToken: string }) => {
       element: "input",
       className: "w-full",
     },
-    {
-      name: "password",
-      label: "Password",
-      type: "password",
-      placeholder: "Enter your password",
-      error: errors.password?.message,
-      element: "input",
-      className: "w-full",
-    },
-    {
-      name: "confirmPassword",
-      label: "Confirm Password",
-      type: "password",
-      placeholder: "Enter your confirm password",
-      error: errors.confirmPassword?.message,
-      element: "input",
-      className: "w-full",
-    },
   ];
 
   return (
     <div>
       <Form
-        buttonLabel="Reset Password"
+        buttonLabel={
+          <div className=" flex items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+              className="w-6 h-6"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 5.25a3 3 0 013 3m3 0a6 6 0 01-7.029 5.912c-.563-.097-1.159.026-1.563.43L10.5 17.25H8.25v2.25H6v2.25H2.25v-2.818c0-.597.237-1.17.659-1.591l6.499-6.499c.404-.404.527-1 .43-1.563A6 6 0 1121.75 8.25z"
+              />
+            </svg>
+
+            <span>Reset password</span>
+          </div>
+        }
         methods={methods}
         register={register}
         handleSubmit={handleSubmit}
@@ -149,21 +138,34 @@ const ResetPasswordForm = ({ jwtToken }: { jwtToken: string }) => {
         })}
       </Form>
       <div className="flex justify-evenly mt-5">
-        <Link
-          href="/auth/forget-password"
-          className="w-full text-center font-medium text-gray-500"
-        >
-          Forgot password!
-        </Link>
-        <Link
-          href="/auth/signin"
-          className="w-full text-center font-medium text-gray-500"
-        >
-          Sign in!
-        </Link>
+        <p className="text-center">
+          Not registered yet?{" "}
+          <a
+            href="/auth/signup"
+            className="text-primary font-medium inline-flex space-x-1 items-center"
+          >
+            <span>sign up </span>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                />
+              </svg>
+            </span>
+          </a>
+        </p>
       </div>
     </div>
   );
 };
 
-export default ResetPasswordForm;
+export default ForgotPasswordForm;

@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import ThemeToggle from "@/components/ui/themeToggle";
 import User from "../admin/User";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const inter = Inter({
   weight: ["600"],
@@ -35,7 +36,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
 
   return (
     <ul
-      className={`${inter.className} hidden min-[900px]:flex items-center gap-8 font-medium  dark:text-white
+      className={`${inter.className} hidden xl:flex items-center gap-4 font-medium  dark:text-white
 `}
     >
       {Menus.map((items) => {
@@ -43,7 +44,7 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
           <React.Fragment key={items.id}>
             {!!items?.subMenu ? (
               <li
-                className="cursor-pointer flex items-center gap-2 relative hover:text-gray font-semibold text-xl"
+                className="cursor-pointer flex items-center gap-2 p-2 px-3 relative hover:text-gray font-semibold text-xl"
                 onMouseEnter={() => setShowCatMenu(true)}
                 onMouseLeave={() => {
                   setShowCatMenu(false);
@@ -74,8 +75,10 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
               </li>
             ) : (
               <li
-                className={`cursor-pointer hover:text-primary ${
-                  items.url === pathname ? "text-primary/95" : ""
+                className={`cursor-pointer hover:text-primary  p-2 px-3 ${
+                  items.url === pathname
+                    ? "text-primary/95 dark:bg-black-dark bg-white  rounded-md"
+                    : ""
                 }`}
               >
                 <Link href={items.url}>{items.name}</Link>
@@ -84,11 +87,20 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
           </React.Fragment>
         );
       })}
-      <div
-        className={` flex items-center ${session?.user.role == "ADMIN" ? "gap-4" : ""}`}
-      >
+      <div className={` flex items-center gap-3`}>
         <ThemeToggle />
-        {session?.user.role == "ADMIN" && <User />}
+        {session?.user ? (
+          <User />
+        ) : (
+          <div className=" flex items-center gap-2 ">
+            <Link href={"/auth/signin"}>
+              <Button variant={"outline"}>Login</Button>
+            </Link>
+            <Link href={"/auth/signup"}>
+              <Button>Sign Up</Button>
+            </Link>
+          </div>
+        )}
       </div>
     </ul>
   );

@@ -30,7 +30,7 @@ const parseResult = async (request: NextRequest, response: NextResponse) => {
     const jwtUserId = signJWt({
       id: user.id,
     });
-    const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/reset-Password/${jwtUserId}`;
+    const resetPassUrl = `${process.env.NEXTAUTH_URL}/auth/reset-password/${jwtUserId}`;
     const body = compileResetPassTemplete(user.firstName, resetPassUrl);
     const sendResult = await sendmail({
       to: user.email,

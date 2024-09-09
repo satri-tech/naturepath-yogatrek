@@ -23,7 +23,7 @@ const MobileMenu = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="inline-block min-[900px]:hidden">
+    <div className="inline-block xl:hidden">
       <Sheet>
         <div className=" flex gap-3 items-center">
           <ThemeToggle />
@@ -35,7 +35,7 @@ const MobileMenu = () => {
         </div>
         <SheetContent>
           <SheetHeader>
-            {session?.user.role == "ADMIN" && <User className=" mb-2" />}
+            {session?.user && <User className=" mb-2" />}
           </SheetHeader>
           <div className="flex flex-col  w-full">
             {Menus.map((item) => (
@@ -49,6 +49,16 @@ const MobileMenu = () => {
               </SheetClose>
             ))}
           </div>
+          {!session?.user && (
+            <div className=" flex flex-col items-start gap-2 mt-3">
+              <Link href={"/auth/signin"}>
+                <Button variant={"outline"}>Login</Button>
+              </Link>
+              <Link href={"/auth/signup"}>
+                <Button>Sign Up</Button>
+              </Link>
+            </div>
+          )}
         </SheetContent>
       </Sheet>
     </div>

@@ -26,9 +26,9 @@ const SignUppage = () => {
           <h1 className="text-5xl text-gray-800 font-bold">Welcome </h1>
           <p className="w-5/12 mx-auto md:mx-0 text-gray-500"></p>
         </div> */}
-          <div className="w-full md:w-[400px] lg:w-[450px] mx-auto md:mx-0">
-            <div className="bg-white max-w-md lg:p-10 p-5 mx-auto md:mx-0 flex flex-col w-full shadow-xl rounded-xl">
-              <h2 className="text-2xl font-bold text-gray-800 text-center md:text-left mb-2">
+          <div className="w-full md:w-[400px] lg:w-[450px] mx-auto md:mx-0 ">
+            <div className="bg-white dark:bg-black-dark dark:text-slate-50 max-w-md lg:p-10 p-5 mx-auto md:mx-0 flex flex-col w-full shadow-xl rounded-xl">
+              <h2 className="text-2xl font-bold text-center md:text-left mb-2">
                 Sign Up
               </h2>
               <SignUpForm />

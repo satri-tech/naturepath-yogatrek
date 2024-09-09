@@ -31,7 +31,7 @@ const TextInput = <T extends {}>({
       <FormLabel>{label}</FormLabel>
       <FormControl className=" flex">
         <Input
-          type="text"
+          type={type}
           placeholder={placeholder}
           className="flex-1"
           {...field}
