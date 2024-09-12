@@ -1,5 +1,5 @@
 "use client";
-import { FormControl, FormItem, FormMessage } from "@/components/ui/form";
+import { FormControl, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { SelectInputProps } from "@/utils/types/admin/inputType";
 import React from "react";
 import {
@@ -30,6 +30,8 @@ const SelectInput = <T extends {}>({
 }: SelectInputProps<T>) => {
   return (
     <FormItem className={`${wrapperClass}`}>
+      <FormLabel>{label}</FormLabel>
+
       <Select onValueChange={field.onChange}>
         <FormControl>
           <SelectTrigger>

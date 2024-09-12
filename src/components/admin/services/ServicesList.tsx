@@ -10,10 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TableController from "@/components/ui/tableController";
 import UpdateButton from "@/components/ui/updateButton";
 import ViewButton from "@/components/ui/viewButton";
 import Error from "@/layouts/error/Error";
 import { Service } from "@prisma/client";
+import { MoveRight } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
@@ -33,6 +35,39 @@ const ServicesList = () => {
       return <Error status={404} message="Bad request" />;
     }
   };
+
+  //for pagination
+  const itemsPerTable = 6;
+  const tablesPresent = Math.ceil(services.length / itemsPerTable);
+
+  const [currentTable, setCurrentTable] = useState<number>(0);
+
+  
+  const updateCurrentTableByNumber = (index: number) => {
+    setCurrentTable(index);
+  };
+
+  const updateCurrentTable = (mode: string) => {
+    switch (mode) {
+      case "prev":
+        setCurrentTable(currentTable == 0 ? currentTable : currentTable - 1);
+        break;
+
+      case "next":
+        setCurrentTable(
+          currentTable == tablesPresent - 1 ? currentTable : currentTable + 1
+        );
+        break;
+
+      default:
+        console.log(
+          "invalid case in prev next handling in table of deals statistics"
+        );
+    }
+  };
+
+  const itemsInLastTable =
+    services.length - (tablesPresent - 1) * itemsPerTable;
 
   async function deleteService(serviceId: string) {
     try {
@@ -65,53 +100,65 @@ const ServicesList = () => {
 
   if (services && services.length > 0) {
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className="">Service</TableHead>
-            <TableHead>Thumbnail</TableHead>
-            <TableHead>Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {services.map((Item: Service) => (
-            <TableRow className="bg-accent" key={Item.id}>
-              <TableCell>
-                <div className="font-medium">{Item.title}</div>
-                {/* <div className="hidden text-sm text-muted-foreground md:inline">
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="">Service</TableHead>
+              <TableHead>Thumbnail</TableHead>
+              <TableHead>Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {services.map((Item: Service) => (
+              <TableRow className="bg-accent" key={Item.id}>
+                <TableCell>
+                  <div className="font-medium">{Item.title}</div>
+                  {/* <div className="hidden text-sm text-muted-foreground md:inline">
                       {Item.id}
                     </div> */}
-              </TableCell>
-              <TableCell className="">
-                <Image
-                  alt={Item.title}
-                  className="aspect-square rounded-md object-cover"
-                  height="48"
-                  src={Item.image}
-                  width="48"
-                />
-              </TableCell>
-              <TableCell className="flex gap-2 items-center">
-                <ViewButton
-                  url={`/admin/services/view/${Item.id}`}
-                  className=""
-                />
+                </TableCell>
+                <TableCell className="">
+                  <Image
+                    alt={Item.title}
+                    className="aspect-square rounded-md object-cover"
+                    height="48"
+                    src={Item.image}
+                    width="48"
+                  />
+                </TableCell>
+                <TableCell className="flex gap-2 items-center">
+                  <ViewButton
+                    url={`/admin/services/view/${Item.id}`}
+                    className=""
+                  />
 
-                <UpdateButton url={`/admin/services/update/${Item.id}`} />
+                  <UpdateButton url={`/admin/services/update/${Item.id}`} />
 
-                <DeletePopover
-                  text="service"
-                  deleteFn={() => {
-                    deleteService(Item.id);
-                  }}
-                >
-                  <DeleteButton />
-                </DeletePopover>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                  <DeletePopover
+                    text="service"
+                    deleteFn={() => {
+                      deleteService(Item.id);
+                    }}
+                  >
+                    <DeleteButton />
+                  </DeletePopover>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        {/*controller*/}
+        <TableController
+          updateCurrentTable={updateCurrentTable}
+          updateCurrentTableByNumber={updateCurrentTableByNumber}
+          currentTable={currentTable}
+          itemsInLastTable={itemsInLastTable}
+          itemsPerTable={itemsPerTable}
+          tablesPresent={tablesPresent}
+        />
+      </div>
     );
   } else {
     return <ServiceListLoading />;

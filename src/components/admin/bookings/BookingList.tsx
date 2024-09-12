@@ -20,7 +20,6 @@ import Success from "@/components/ui/success";
 import Danger from "@/components/ui/danger";
 import Pending from "@/components/ui/pending";
 import moment from "moment";
-import { Button } from "@/components/ui/button";
 import { MoveRight } from "lucide-react";
 import TableController from "@/components/ui/tableController";
 
@@ -28,7 +27,7 @@ interface BookingsWithPackageInterface extends Booking {
   package: Package | null;
 }
 
-const RecentBookingsTable = () => {
+const BookingList = () => {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [bookingsWithPackage, setBookingsWithPackage] = useState<
     BookingsWithPackageInterface[]
@@ -188,7 +187,7 @@ const RecentBookingsTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {bookingsWithPackage.slice(0, 5).map((booking) => (
+            {bookingsWithPackage.map((booking) => (
               <TableRow key={booking.id}>
                 <TableCell className="hidden sm:table-cell">
                   <div className="font-medium">{booking.fullname}</div>
@@ -293,4 +292,4 @@ const RecentBookingsTable = () => {
   }
 };
 
-export default RecentBookingsTable;
+export default BookingList;

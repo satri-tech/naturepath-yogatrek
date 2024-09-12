@@ -62,7 +62,7 @@ export function compileResetPassTemplete(name: string, url: string) {
   return htmlBody;
 }
 
-export function compileAdminTemplate(booking: any, packages: Package) {
+export function compileAdminTemplate(booking: Booking, packages: Package) {
   const template = Handlebars.compile(adminBookingTemplate);
   const htmlBody = template({
     name: booking.fullname,

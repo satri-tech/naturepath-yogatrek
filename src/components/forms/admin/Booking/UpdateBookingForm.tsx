@@ -6,31 +6,32 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookingFormSchema } from "@/utils/validation/BookingFormValidation";
 import { useSession } from "next-auth/react";
-import DatePicker from "../FormElements/DatePicker";
 import { inputType } from "@/utils/types/admin/inputType";
 import { bookingFormInput } from "@/utils/types/admin/bookingFormInput";
-import TextInput from "../FormElements/TextInput";
-import TextAreaInput from "../FormElements/TextAreainput";
-import SelectInput from "../FormElements/SelectInput";
 import { selectOptionType } from "@/utils/types/admin/selectOptionType";
-import { Package, Service } from "@prisma/client";
+import { Booking, Package, RoomType, Service } from "@prisma/client";
 import { toastError, toastSuccess } from "@/lib/toast";
+import TextInput from "../../FormElements/TextInput";
+import DatePicker from "../../FormElements/DatePicker";
+import TextAreaInput from "../../FormElements/TextAreainput";
+import SelectInput from "../../FormElements/SelectInput";
 
-const AllBookingform = () => {
+const UpdateBookingForm = ({ booking }: { booking: Booking }) => {
   const session = useSession();
   const [packageOptions, setPackageOptions] = useState<selectOptionType[]>([]);
 
   const methods = useForm<z.infer<typeof BookingFormSchema>>({
     resolver: zodResolver(BookingFormSchema),
     defaultValues: {
-      packageId: "",
-      fullname: "",
-      email: "",
-      contact: "",
-      country: "",
-      roomPreferences: "",
-      noofPerson: "",
-      message: "",
+      packageId: booking.packageId,
+      fullname: booking.fullname as string,
+      email: booking.email as string,
+      contact: booking.phone as string,
+      country: booking.country,
+      roomPreferences: booking.roomPreferences,
+      noofPerson: booking.noofPerson.toString(),
+      message: booking.message as string,
+      bookingDate: booking.bookingDate,
     },
   });
 
@@ -63,40 +64,61 @@ const AllBookingform = () => {
     }
   };
 
+  async function update(formdatas: Partial<Booking>) {
+    try {
+      const jsonData = JSON.stringify(formdatas);
+      const response = await fetch("/api/booking/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `bearer ${session.data?.user.accessToken}`,
+        },
+
+        body: jsonData,
+      });
+      const data = await response.json();
+      reset();
+
+      if (data && data.success) {
+        reset();
+      }
+      toastSuccess("Booking updated successfully!");
+    } catch (err) {
+      console.log(err);
+      toastError(`Booking updation failed, ${err}`);
+    }
+  }
+
   async function onSubmit(values: z.infer<typeof BookingFormSchema>) {
     try {
       if (session.data) {
         try {
-          const formdata = {
-            packageId: values.packageId,
-            userId: session.data?.user.id,
-            fullname: values.fullname,
-            email: values.email,
-            phone: values.contact,
-            country: values.country,
-            roomPreferences: values.roomPreferences,
-            noofPerson: parseInt(values.noofPerson),
-            message: values.message,
-            bookingDate: values.bookingDate,
-          };
+          if (
+            values.packageId !== booking.packageId ||
+            values.fullname !== booking.fullname ||
+            values.email !== booking.email ||
+            // values.serviceId !== booking.serviceId ||
+            values.contact !== booking.phone ||
+            values.country !== booking.country ||
+            values.roomPreferences !== booking.roomPreferences ||
+            values.noofPerson !== booking.noofPerson.toString() ||
+            values.message !== booking.message ||
+            values.bookingDate !== booking.bookingDate
+          ) {
+            const formdata: Partial<Booking> = {
+              id: booking.id,
+              packageId: values.packageId,
+              fullname: values.fullname,
+              email: values.email,
+              phone: values.contact,
+              country: values.country,
+              roomPreferences: values.roomPreferences as RoomType,
+              noofPerson: parseInt(values.noofPerson),
+              message: values.message,
+              bookingDate: values.bookingDate,
+            };
 
-          const jsonData = JSON.stringify(formdata);
-          const response = await fetch("/api/booking/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${session.data?.user.accessToken}`,
-            },
-            body: jsonData,
-          });
-          const data = await response.json();
-          console.log("data: ", data);
-
-          if (data.success) {
-            reset();
-            toastSuccess("Package booked successfully!");
-          } else {
-            toastError(`Package book failed.`);
+            await update(formdata);
           }
         } catch (error) {
           toastError(`Package book failed. ${error}`);
@@ -331,4 +353,4 @@ const AllBookingform = () => {
   );
 };
 
-export default AllBookingform;
+export default UpdateBookingForm;

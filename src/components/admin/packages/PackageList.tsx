@@ -19,10 +19,45 @@ import DeleteButton from "@/components/ui/deleteButton";
 import DeletePopover from "@/components/ui/deletePopover";
 import PackageListLoading from "@/components/loading/admin/PackageListLoading";
 import { useSession } from "next-auth/react";
+import { MoveRight } from "lucide-react";
+import TableController from "@/components/ui/tableController";
 
 const PackageList = () => {
   const [packages, setPackages] = useState([]);
   const session = useSession();
+
+  //for pagination
+  const itemsPerTable = 6;
+  const tablesPresent = Math.ceil(packages.length / itemsPerTable);
+
+  const [currentTable, setCurrentTable] = useState<number>(0);
+
+  
+  const updateCurrentTableByNumber = (index: number) => {
+    setCurrentTable(index);
+  };
+
+  const updateCurrentTable = (mode: string) => {
+    switch (mode) {
+      case "prev":
+        setCurrentTable(currentTable == 0 ? currentTable : currentTable - 1);
+        break;
+
+      case "next":
+        setCurrentTable(
+          currentTable == tablesPresent - 1 ? currentTable : currentTable + 1
+        );
+        break;
+
+      default:
+        console.log(
+          "invalid case in prev next handling in table of deals statistics"
+        );
+    }
+  };
+
+  const itemsInLastTable =
+    packages.length - (tablesPresent - 1) * itemsPerTable;
 
   const fetchPackages = async () => {
     try {
@@ -71,68 +106,69 @@ const PackageList = () => {
 
   if (packages && packages.length > 0) {
     return (
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead className=" w-[100px] sm:table-cell">
-              <span className="">Image</span>
-            </TableHead>
-            <TableHead className=" w-[175px]">Name</TableHead>
-            <TableHead className=" md:table-cell">Package Duration</TableHead>
-            <TableHead className=" md:table-cell">Pricing</TableHead>
-            {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
-            <TableHead>
-              <span className="">Actions</span>
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {packages.map((pac: Package) => (
-            <TableRow key={pac.id}>
-              <TableCell className="hidden sm:table-cell">
-                <Image
-                  alt={pac.title}
-                  className="aspect-square rounded-md object-cover"
-                  height="64"
-                  src={pac.image}
-                  width="64"
-                />
-              </TableCell>
-              <TableCell className="font-medium">
-                <span className=" w-[175px] inline-block">{pac.title}</span>
-                <br />
-                {/* <span className="text-xs font-light inline-block w-[175px]">{pac.slug}</span> */}
-              </TableCell>
-              <TableCell>
-                <p className=" w-[125px]"></p>
-                <Badge
-                  variant="outline"
-                  className=" bg-primary/10 text-primary"
-                >
-                  {pac.Duration}
-                </Badge>
-              </TableCell>
-              <TableCell className="">
-                <span className=" inline-block w-[175px]">
-                  Shared:{" "}
-                  <span className="  font-medium">{pac.SharingOffer}</span>{" "}
-                  <span className=" line-through  font-medium">
-                    {pac.SharingPrice}
+      <div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className=" w-[100px] sm:table-cell">
+                <span className="">Image</span>
+              </TableHead>
+              <TableHead className=" w-[175px]">Name</TableHead>
+              <TableHead className=" md:table-cell">Package Duration</TableHead>
+              <TableHead className=" md:table-cell">Pricing</TableHead>
+              {/* <TableHead className="hidden md:table-cell">Created at</TableHead> */}
+              <TableHead>
+                <span className="">Actions</span>
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {packages.map((pac: Package) => (
+              <TableRow key={pac.id}>
+                <TableCell className="hidden sm:table-cell">
+                  <Image
+                    alt={pac.title}
+                    className="aspect-square rounded-md object-cover"
+                    height="64"
+                    src={pac.image}
+                    width="64"
+                  />
+                </TableCell>
+                <TableCell className="font-medium">
+                  <span className=" w-[175px] inline-block">{pac.title}</span>
+                  <br />
+                  {/* <span className="text-xs font-light inline-block w-[175px]">{pac.slug}</span> */}
+                </TableCell>
+                <TableCell>
+                  <p className=" w-[125px]"></p>
+                  <Badge
+                    variant="outline"
+                    className=" bg-primary/10 text-primary"
+                  >
+                    {pac.Duration}
+                  </Badge>
+                </TableCell>
+                <TableCell className="">
+                  <span className=" inline-block w-[175px]">
+                    Shared:{" "}
+                    <span className="  font-medium">{pac.SharingOffer}</span>{" "}
+                    <span className=" line-through  font-medium">
+                      {pac.SharingPrice}
+                    </span>
                   </span>
-                </span>
-                <br />
-                <span>
-                  Private:{" "}
-                  <span className="  font-medium">{pac.PrivateOffer}</span>{" "}
-                  <span className=" line-through  font-medium">
-                    {pac.PrivatePrice}
+                  <br />
+                  <span>
+                    Private:{" "}
+                    <span className="  font-medium">{pac.PrivateOffer}</span>{" "}
+                    <span className=" line-through  font-medium">
+                      {pac.PrivatePrice}
+                    </span>
                   </span>
-                </span>
-              </TableCell>
-              {/* <TableCell className="">
+                </TableCell>
+                {/* <TableCell className="">
             {pac.updatedAt as unknown as string}
           </TableCell> */}
-              {/* <TableCell>
+                {/* <TableCell>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -149,33 +185,44 @@ const PackageList = () => {
               </DropdownMenuContent>
             </DropdownMenu>
           </TableCell> */}
-              <TableCell className="flex gap-2 items-center">
-                <ViewButton
-                  url={`/admin/packages/view/${pac.id}`}
-                  className=""
-                />
+                <TableCell className="flex gap-2 items-center">
+                  <ViewButton
+                    url={`/admin/packages/view/${pac.id}`}
+                    className=""
+                  />
 
-                {/*update*/}
-                <UpdateButton url={`/admin/packages/update/${pac.id}`} />
+                  {/*update*/}
+                  <UpdateButton url={`/admin/packages/update/${pac.id}`} />
 
-                {/* <form action={DeleteService}> */}
-                {/* <input type="hidden" value={Item.id} name="id"/> */}
+                  {/* <form action={DeleteService}> */}
+                  {/* <input type="hidden" value={Item.id} name="id"/> */}
 
-                {/*later put delete api request here in the function*/}
-                <DeletePopover
-                  text="service"
-                  deleteFn={() => {
-                    deletePackage(pac.id);
-                  }}
-                >
-                  <DeleteButton />
-                </DeletePopover>
-                {/* </form> */}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                  {/*later put delete api request here in the function*/}
+                  <DeletePopover
+                    text="service"
+                    deleteFn={() => {
+                      deletePackage(pac.id);
+                    }}
+                  >
+                    <DeleteButton />
+                  </DeletePopover>
+                  {/* </form> */}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+
+        {/*controller*/}
+        <TableController
+          updateCurrentTable={updateCurrentTable}
+          updateCurrentTableByNumber={updateCurrentTableByNumber}
+          currentTable={currentTable}
+          itemsInLastTable={itemsInLastTable}
+          itemsPerTable={itemsPerTable}
+          tablesPresent={tablesPresent}
+        />
+      </div>
     );
   } else {
     return <PackageListLoading />;

@@ -40,6 +40,7 @@ export interface IFormProps<T extends FieldValues> {
   className?: string;
   formTitle?: string;
   methods: UseFormReturn<T>;
+  buttonClassName?: string;
 }
 
 export interface inputType<T extends FieldValues>
@@ -75,7 +76,8 @@ export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
   updateImgError: (imgError: string) => void;
 }
 
-export interface ImageInputMultipleProps<T extends FieldValues> extends InputProps<T> {
+export interface ImageInputMultipleProps<T extends FieldValues>
+  extends InputProps<T> {
   field: ControllerRenderProps<T>;
   images: File[] | null;
   imageerror: string;
@@ -89,9 +91,7 @@ export interface RichTextEditorInputProps<T extends FieldValues>
   setValue: UseFormSetValue<T>;
 }
 
-export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {
-  
-}
+export interface ImageInputProps<T extends FieldValues> extends InputProps<T> {}
 
 export interface SelectInputProps<T extends FieldValues> extends InputProps<T> {
   field: ControllerRenderProps<T>;

@@ -10,7 +10,7 @@ const Contact: React.FC = () => {
           img_url="https://cdn.pixabay.com/photo/2017/04/08/22/26/buddhism-2214532_1280.jpg"
           title="Clear your Queries"
         />
-        <div className="container my-10 mx-4 lg:mx-auto lg:px-4 gap-6 -translate-y-48 ">
+        <div className="container my-10 mx-4 lg:mx-auto lg:px-4 gap-6 ">
           <div className=" flex items-center justify-center max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row container px-0 bg-white dark:bg-black-dark dark:text-text-dark shadow-xl rounded-lg overflow-hidden">
               <div className="md:w-1/2 p-8 color">

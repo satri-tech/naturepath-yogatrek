@@ -14,19 +14,22 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
   // const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
-  const [show, setShow] = useState("translate-y-0 bg-transparent text-white");
+  const pathname = usePathname();
+  const [show, setShow] = useState(
+    pathname == "/"
+      ? "translate-y-0 bg-transparent text-white"
+      : "translate-y-0 bg-transparent text-black dark:text-white"
+  );
   const [lastScrollY, setLastScrollY] = useState(0);
   const [categories, setCategories] = useState(null);
 
-  const pathname = usePathname();
   // const { setTheme } = useTheme()
 
   //   const {cartItems}= useSelector((state => state.cart))
 
   const controlNavbar = () => {
     if (!window.scrollY) {
-      if (pathname != "/booking" && pathname != "/about")
-        setShow("translate-y-0 bg-transparent text-white");
+      if (pathname == "/") setShow("translate-y-0 bg-transparent text-white");
       else setShow("translate-y-0 bg-transparent text-black dark:text-white");
     } else if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY) {
@@ -35,7 +38,7 @@ const Navbar = () => {
         setShow("shadow-sm bg-white dark:!bg-gray-dark");
       }
     } else {
-      setShow("translate-y-0 bg-white dark:!bg-gray-dark");
+      setShow("translate-y-0 bg-white text-black dark:text-white dark:!bg-gray-dark");
     }
     setLastScrollY(window.scrollY);
   };
@@ -49,7 +52,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full h-20 md:h-20 bg-transprent flex items-center z-20 sticky top-0  ease-linear transition-all duration-500 ${show}`}
+      className={`w-full h-20 md:h-20 bg-transparent flex items-center z-20 sticky top-0  ease-linear transition-all duration-500 ${show}`}
     >
       <div className=" container h-16 w-full flex justify-between items-center">
         <Link href="/">

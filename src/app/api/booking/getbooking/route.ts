@@ -21,58 +21,118 @@ export async function GET(request: NextRequest) {
         });
       }
 
-      const getTeam = await prisma.booking.findMany({
+      // Fetch bookings with roomPreferences and packages (to get prices)
+      const booking = await prisma.booking.findMany({
         skip: (page - 1) * limit,
         take: limit,
-      });
-
-      if (getTeam && getTeam.length) {
-        return NextResponse.json({
-          success: true,
-          data: getTeam,
-          meta: {
-            pagination: {
-              page,
-              limit,
-              total: totalCount,
-              lastPage: totalPages,
+        select: {
+          id: true,
+          packageId: true,
+          userId: true,
+          fullname: true,
+          email: true,
+          phone: true,
+          country: true,
+          noofPerson: true,
+          message: true,
+          bookingDate: true,
+          status: true,
+          roomPreferences: true,
+          package: {
+            select: {
+              SharingPrice: true,
+              PrivatePrice: true,
+              SharingOffer: true,
+              PrivateOffer: true,
             },
           },
-        },{
-          status: 200,
-        });
+        },
+      });
+
+      if (booking && booking.length) {
+        return NextResponse.json(
+          {
+            success: true,
+            data: booking, // Return the processed data
+            meta: {
+              pagination: {
+                page,
+                limit,
+                total: totalCount,
+                lastPage: totalPages,
+              },
+            },
+          },
+          {
+            status: 200,
+          }
+        );
       } else {
-        return errorResponse(undefined, "Failed to fetch page. Please try again", 500)
+        return errorResponse(
+          undefined,
+          "Failed to fetch page. Please try again",
+          500
+        );
       }
     } catch (e) {
-     
-      return errorResponse(undefined, "Something went wrong ! Please try again", 500)
+      return errorResponse(
+        undefined,
+        "Something went wrong! Please try again",
+        500
+      );
     }
   }
 
   if (postid) {
     try {
-      const getTeam = await prisma.booking.findUnique({
+      // Fetch booking details by id, including roomPreferences and package prices
+      const booking = await prisma.booking.findUnique({
         where: {
           id: postid,
         },
-        // include: {
-        //   sections: true, 
-        // },
+        select: {
+          id: true,
+          packageId: true,
+          userId: true,
+          fullname: true,
+          email: true,
+          phone: true,
+          country: true,
+          noofPerson: true,
+          message: true,
+          bookingDate: true,
+          status: true,
+          roomPreferences: true,
+          package: {
+            select: {
+              SharingPrice: true,
+              PrivatePrice: true,
+              SharingOffer: true,
+              PrivateOffer: true,
+            },
+          },
+        },
       });
 
-      if (getTeam) {
+      if (booking) {
         return NextResponse.json({
           status: 200,
           success: true,
-          data: getTeam,
+          data: booking, // Include the price in the response
         });
       } else {
-        return errorResponse(undefined, "Page not Found ! Please try again", 404)
-        
+        return errorResponse(
+          undefined,
+          "Page not Found! Please try again",
+          404
+        );
       }
     } catch (e) {
-      return errorResponse(undefined, "Something went wrong ! Please try again", 500)
+      return errorResponse(
+        undefined,
+        "Something went wrong! Please try again",
+        500
+      );
     }
   }
 }

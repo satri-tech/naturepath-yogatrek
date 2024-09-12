@@ -6,17 +6,17 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookingFormSchema } from "@/utils/validation/BookingFormValidation";
 import { useSession } from "next-auth/react";
-import DatePicker from "../FormElements/DatePicker";
 import { inputType } from "@/utils/types/admin/inputType";
 import { bookingFormInput } from "@/utils/types/admin/bookingFormInput";
-import TextInput from "../FormElements/TextInput";
-import TextAreaInput from "../FormElements/TextAreainput";
-import SelectInput from "../FormElements/SelectInput";
 import { selectOptionType } from "@/utils/types/admin/selectOptionType";
 import { Package, Service } from "@prisma/client";
 import { toastError, toastSuccess } from "@/lib/toast";
+import TextInput from "../../FormElements/TextInput";
+import DatePicker from "../../FormElements/DatePicker";
+import TextAreaInput from "../../FormElements/TextAreainput";
+import SelectInput from "../../FormElements/SelectInput";
 
-const AllBookingform = () => {
+const CreateBookingForm = () => {
   const session = useSession();
   const [packageOptions, setPackageOptions] = useState<selectOptionType[]>([]);
 
@@ -331,4 +331,4 @@ const AllBookingform = () => {
   );
 };
 
-export default AllBookingform;
+export default CreateBookingForm;

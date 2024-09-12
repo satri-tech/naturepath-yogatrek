@@ -75,9 +75,9 @@ const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
               </li>
             ) : (
               <li
-                className={`cursor-pointer hover:text-primary  p-2 px-3 ${
+                className={`cursor-pointer hover:text-primary hover:bg-white hover:dark:bg-black-dark transition-all duration-300  rounded-md  p-2 px-3 ${
                   items.url === pathname
-                    ? "text-primary/95 dark:bg-black-dark bg-white  rounded-md"
+                    ? "text-primary/95 dark:bg-black-dark bg-white "
                     : ""
                 }`}
               >

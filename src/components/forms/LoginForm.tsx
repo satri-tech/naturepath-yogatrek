@@ -64,6 +64,7 @@ const LoginForm = (props: Props) => {
       }
       reset();
       toastSuccess("Login successfully!");
+      router.push("/");
     } catch (err: any) {
       toastError(`Login failed. ${err}`);
       setErrorMesage(err.message);

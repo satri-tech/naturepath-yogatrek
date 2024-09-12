@@ -24,6 +24,7 @@ const Form = <T extends FieldValues>({
   formTitle,
   register,
   methods,
+  buttonClassName="w-full",
   ...rest
 }: IFormProps<T>) => {
   return (
@@ -36,7 +37,7 @@ const Form = <T extends FieldValues>({
       >
         <div className="flex flex-wrap gap-4 w-full">{children}</div>
         <div className=" w-full">
-          <Button type="submit" className=" w-full">{buttonLabel}</Button>
+          <Button type="submit" className={`${buttonClassName}`}>{buttonLabel}</Button>
         </div>
       </form>
     </FormProvider>
