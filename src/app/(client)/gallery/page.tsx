@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import Error from "@/layouts/error/Error";
 import GalleryCard from "@/components/Card/GalleryCard";
 import { Gallery } from "@prisma/client";
+import GalleriesLoading from "@/components/loading/galleries/GalleriesLoading";
 
 export default function GalleryPage() {
   const [galleries, setGalleries] = useState<Gallery[]>([]);
@@ -44,7 +45,7 @@ export default function GalleryPage() {
             })}
           </div>
         ) : (
-          <p>Loading galleries ....</p>
+          <GalleriesLoading />
         )}
       </PageWrapper>
     </main>

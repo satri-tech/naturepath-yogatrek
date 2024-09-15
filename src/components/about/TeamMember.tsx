@@ -50,6 +50,6 @@ export default function TeamMember({ id }: { id: string }) {
       </PageWrapper>
     );
   } else {
-    return <p>Loading team member ...</p>;
+    return <p className=" hidden">Loading team member ...</p>;
   }
 }

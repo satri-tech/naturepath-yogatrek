@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import TeamMemberCard from "../Card/TeamMemberCard";
 import { Team } from "@prisma/client";
 import { petrona } from "@/app/layout";
+import TeamMembersLoading from "../loading/about/TeamMembersLoading";
 
 export default function TeamMembers() {
   const [teamMembers, setTeamMembers] = useState<Team[]>([]);
@@ -43,6 +44,6 @@ export default function TeamMembers() {
       </section>
     );
   } else {
-    return <p>Loading team members</p>;
+    return <TeamMembersLoading />;
   }
 }
