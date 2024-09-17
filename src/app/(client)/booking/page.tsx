@@ -1,5 +1,4 @@
 import AllBookingform from "@/components/forms/Client/BookingForm2";
-import Bookingform from "@/components/forms/Client/Bookingform";
 import Headings from "@/components/ui/Headings";
 import { Badge } from "@/components/ui/badge";
 import PageWrapper from "@/layouts/PageWrapper";

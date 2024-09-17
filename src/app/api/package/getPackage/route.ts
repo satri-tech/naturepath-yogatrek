@@ -8,11 +8,32 @@ export async function GET(request: NextRequest) {
   const limit = parseInt(url.searchParams.get("limit") ?? "25");
   const slug = url.searchParams.get("slug");
   const category = url.searchParams.get("category");
+  const title = url.searchParams.get("title");
+  const serviceId = url.searchParams.get("serviceId");
 
   if (!slug) {
     if (!category) {
       try {
-        const totalCount = await prisma.package.count();
+        const whereConditions: any = {};
+
+        // Filter by serviceId if provided
+        if (serviceId) {
+          whereConditions.serviceId = serviceId;
+        }
+
+        // Filter by title if provided
+        if (title && title != "") {
+          const titleSubstrings = title.split(" ").map((substring) => ({
+            title: { contains: substring, mode: "insensitive" },
+          }));
+
+          whereConditions.OR = titleSubstrings;
+        }
+
+        const totalCount = await prisma.package.count({
+          where: whereConditions,
+        });
+
         const totalPages = Math.ceil(totalCount / limit);
 
         if (page > totalPages) {
@@ -23,16 +44,17 @@ export async function GET(request: NextRequest) {
           });
         }
 
-        const getTeam = await prisma.package.findMany({
+        const getPackages = await prisma.package.findMany({
           skip: (page - 1) * limit,
           take: limit,
+          where: whereConditions,
         });
 
-        if (getTeam && getTeam.length) {
+        if (getPackages && getPackages.length) {
           return NextResponse.json(
             {
               success: true,
-              data: getTeam,
+              data: getPackages,
               meta: {
                 pagination: {
                   page,
@@ -49,14 +71,14 @@ export async function GET(request: NextRequest) {
         } else {
           return errorResponse(
             undefined,
-            "Failed to fetch page. Please try again",
+            "Failed to fetch packages. Please try again",
             500
           );
         }
       } catch (e) {
         return errorResponse(
           undefined,
-          "Something went wrong ! Please try again",
+          "Something went wrong! Please try again",
           500
         );
       }
@@ -65,21 +87,36 @@ export async function GET(request: NextRequest) {
         const service = await prisma.service.findFirst({
           where: {
             slug: {
-              contains: category, // replace with the actual category
+              contains: category,
             },
           },
         });
-        if(!service) {return errorResponse(
+
+        if (!service) {
+          return errorResponse(
             undefined,
             "Failed to fetch data. Please try again",
             404
           );
         }
+
+        const whereConditions: any = {
+          serviceId: service.id,
+        };
+
+        // Filter by title if provided
+        if (title) {
+          const titleSubstrings = title.split(" ").map((substring) => ({
+            title: { contains: substring, mode: "insensitive" },
+          }));
+
+          whereConditions.OR = titleSubstrings;
+        }
+
         const totalCount = await prisma.package.count({
-          where: {
-            serviceId: service.id,
-          },
+          where: whereConditions,
         });
+
         const totalPages = Math.ceil(totalCount / limit);
 
         if (page > totalPages) {
@@ -90,19 +127,17 @@ export async function GET(request: NextRequest) {
           });
         }
 
-        const getTeam = await prisma.package.findMany({
+        const getPackages = await prisma.package.findMany({
           skip: (page - 1) * limit,
           take: limit,
-          where: {
-            serviceId: service.id,
-          },
+          where: whereConditions,
         });
 
-        if (getTeam && getTeam.length) {
+        if (getPackages && getPackages.length) {
           return NextResponse.json(
             {
               success: true,
-              data: getTeam,
+              data: getPackages,
               meta: {
                 pagination: {
                   page,
@@ -119,14 +154,14 @@ export async function GET(request: NextRequest) {
         } else {
           return errorResponse(
             undefined,
-            "Failed to fetch page. Please try again",
+            "Failed to fetch packages. Please try again",
             500
           );
         }
       } catch (e) {
         return errorResponse(
           undefined,
-          "Something went wrong ! Please try again",
+          "Something went wrong! Please try again",
           500
         );
       }
@@ -135,32 +170,29 @@ export async function GET(request: NextRequest) {
 
   if (slug) {
     try {
-      const getTeam = await prisma.package.findUnique({
+      const getPackage = await prisma.package.findUnique({
         where: {
           slug: slug,
         },
-        // include: {
-        //   sections: true,
-        // },
       });
 
-      if (getTeam) {
+      if (getPackage) {
         return NextResponse.json({
           status: 200,
           success: true,
-          data: getTeam,
+          data: getPackage,
         });
       } else {
         return errorResponse(
           undefined,
-          "Page not Found ! Please try again",
+          "Page not found! Please try again",
           404
         );
       }
     } catch (e) {
       return errorResponse(
         undefined,
-        "Something went wrong ! Please try again",
+        "Something went wrong! Please try again",
         500
       );
     }

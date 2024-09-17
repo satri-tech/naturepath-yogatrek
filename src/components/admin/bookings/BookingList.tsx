@@ -163,10 +163,6 @@ const BookingList = () => {
     getBookingsWithPackage();
   }, [bookings]);
 
-  useEffect(() => {
-    console.log("bookings with package: ", bookingsWithPackage);
-  }, [bookingsWithPackage]);
-
   if (bookingsWithPackage && bookingsWithPackage.length > 0) {
     return (
       <div>

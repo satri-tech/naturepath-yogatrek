@@ -16,6 +16,7 @@ import Itinerary from '@/components/Package/Itinerary';
 import ClientReviews from '@/components/Package/ClientReviews';
 import DetailNavbar from '@/components/Package/DetailNavbar';
 import Error from '@/layouts/error/Error';
+import Image from 'next/image';
 
 const photos = [
   '/trekking.jpg',
@@ -75,8 +76,10 @@ const PackageDetails=async() => {
           <div className="inline-flex space-x-4">
             {photos.map((src, index) => (
               <div key={index} className="flex-shrink-0 w-50 h-60 relative">
-                <img
+                <Image
                   src={src}
+                  width={400}
+                  height={400}
                   alt={`Photo ${index + 1}`}
                   className="w-full h-full object-cover rounded-lg"
                 />
