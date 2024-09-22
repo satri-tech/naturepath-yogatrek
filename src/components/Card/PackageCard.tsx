@@ -46,7 +46,7 @@ const PackageCard = ({ packages }: { packages: Package }) => {
           </div>
 
           <div className=" flex justify-between gap-8">
-            <Link href={`/packages/${packages.slug}`}>
+            <Link href={`/packages/${packages.id}`}>
               <h2 className="text-xl font-semibold group-hover/parent:text-primary transition-all duration-500">
                 {packages.title}
               </h2>
@@ -72,7 +72,7 @@ const PackageCard = ({ packages }: { packages: Package }) => {
             /> */}
 
           <div className=" flex gap-2 mt-4">
-            <Link href={`/packages/${packages.slug}`} className="w-full">
+            <Link href={`/packages/${packages.id}`} className="w-full">
               <Button variant={"default"} className="w-full py-2 px-4 ">
                 Book Now
               </Button>

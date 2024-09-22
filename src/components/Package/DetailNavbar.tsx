@@ -28,26 +28,26 @@ const DetailNavbar: React.FC = () => {
 
   return (
     <nav
-      className={`bg-gray-800 text-white sticky  w-full z-10 transition-transform duration-300 ${
+      className={`bg-primary/90 text-white sticky  w-full z-10 transition-transform duration-300 ${
         isVisible ? 'translate-y-0' : '-translate-y-full'
       }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex justify-between">
           <div className="flex space-x-4">
-            <Link href="#highlight" className="py-5 px-3 hover:bg-gray-700">
+            <Link href="#highlight" className="py-5 px-3 hover:bg-primary">
               Highlights
             </Link>
-            <Link href="#overview" className="py-5 px-3 hover:bg-gray-700">
+            <Link href="#overview" className="py-5 px-3 hover:bg-primary">
               Overview
             </Link>
-            <Link href="#itinerary" className="py-5 px-3 hover:bg-gray-700">
+            <Link href="#itinerary" className="py-5 px-3 hover:bg-primary">
               Itinerary
             </Link>
-            <Link href="#included" className="py-5 px-3 hover:bg-gray-700">
+            <Link href="#included" className="py-5 px-3 hover:bg-primary">
               Included/Excluded
             </Link>
-            <Link href="#reviews" className="py-5 px-3 hover:bg-gray-700">
+            <Link href="#reviews" className="py-5 px-3 hover:bg-primary">
               Reviews
             </Link>
           </div>
