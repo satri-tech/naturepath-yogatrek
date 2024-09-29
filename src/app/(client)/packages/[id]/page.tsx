@@ -10,7 +10,7 @@ import PageWrapper from "@/layouts/PageWrapper";
 const PackageDetailsPage = ({ params }: { params: { id: string } }) => {
   return (
     <div>
-      <Topbanner title="Packages detail page" />
+      <Topbanner title="Packages detail page" excludeId={true} />
       <DetailNavbar />
       <PageWrapper className="flex flex-col lg:flex-row gap-1 section-padding">
         <div className="flex-1 overflow-y-auto">

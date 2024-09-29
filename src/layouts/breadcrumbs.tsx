@@ -1,18 +1,18 @@
-'use client'
-import { Home } from 'lucide-react';
-import Link from 'next/link';
-import Head from 'next/head';
-import { usePathname } from 'next/navigation';
-import { ReactElement } from 'react';
-import { cn } from '@/lib/utils';
+"use client";
+import { Home } from "lucide-react";
+import Link from "next/link";
+import Head from "next/head";
+import { usePathname } from "next/navigation";
+import { ReactElement } from "react";
+import { cn } from "@/lib/utils";
 
 type BreadcrumbItemProps = {
-    label?: string ;
-    href?: string;
-    icon?: ReactElement;
-    className?: string;
-    titleClass?:string;
-  };
+  label?: string;
+  href?: string;
+  icon?: ReactElement;
+  className?: string;
+  titleClass?: string;
+};
 
 const BreadcrumbItem = ({
   label,
@@ -46,9 +46,20 @@ const BreadcrumbItem = ({
   </li>
 );
 
-const Breadcrumbs = ({className, titleClass}:{className?:string, titleClass?:string}) => {
+const Breadcrumbs = ({
+  className,
+  titleClass,
+  excludeId = false,
+}: {
+  className?: string;
+  titleClass?: string;
+  excludeId?: boolean;
+}) => {
   const pathname = usePathname();
-  const pathSegments = pathname.split('/').filter(Boolean);
+  const length = pathname.split("/").length;
+  const pathSegments = !excludeId
+    ? pathname.split("/").filter(Boolean)
+    : pathname.split("/").splice(0, length - 1);
 
   return (
     <>

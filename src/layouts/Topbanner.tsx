@@ -7,16 +7,18 @@ import { Badge } from "@/components/ui/badge";
 const Topbanner = ({
   title,
   img_url = "https://cdn.pixabay.com/photo/2017/04/08/22/26/buddhism-2214532_1280.jpg",
+  excludeId
 }: {
   title: string;
   img_url?: string;
+  excludeId?:boolean;
 }) => {
   return (
     <div className="px-0 relative w-full h-[200px] sm:h-[225px] md:h-[250px] lg:h-[275px] xl:h-[300px]">
       <div className="grid items-center h-full w-full text-white dark:text-text-dark">
         <div className="flex flex-col items-center gap-3 z-10">
           <Badge className=" " variant={"default"}>
-            <Breadcrumbs />
+            <Breadcrumbs excludeId={excludeId} />
           </Badge>
           <Headings className="">{title}</Headings>
         </div>
