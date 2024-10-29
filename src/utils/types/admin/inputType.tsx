@@ -41,6 +41,7 @@ export interface IFormProps<T extends FieldValues> {
   formTitle?: string;
   methods: UseFormReturn<T>;
   buttonClassName?: string;
+  encType?:string;
 }
 
 export interface inputType<T extends FieldValues>

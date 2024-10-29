@@ -1,34 +1,36 @@
 import UpdateGalleryForm from "@/components/forms/admin/Galleries/UpdateGalleryForm";
 import Pageheading from "@/layouts/admin/Pageheading";
-import Error from "@/layouts/error/Error";
-import React, { Suspense } from "react";
+import CustomError from "@/layouts/error/Error";
 
-const UpdateGallery = async ({ id }: { id: string }) => {
+const UpdateGalleryPage = async ({ params }: { params: { id: string } }) => {
+  let galleryData = null;
+
   try {
+    // Fetch gallery data
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries/getGallery?id=${id}`,
-      { next: { tags: [`Gallery-${id}`], revalidate: 100 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/galleries/getGallery?id=${params.id}`,
+      { next: { tags: [`Gallery-${params.id}`], revalidate: 100 } }
     );
-    const data = await response.json();
-    const gallery = data.data;
-    // console.log("gallery: ", gallery);
 
-    return <UpdateGalleryForm gallery={gallery} />;
+    if (!response.ok) {
+      throw new Error("Failed to fetch gallery");
+    }
+
+    const { data } = await response.json();
+    galleryData = data;
   } catch (error) {
-    console.log(error);
-    return <Error status={404} message="Bad request" />;
+    console.error("Error fetching gallery:", error);
+    return <CustomError status={404} message="Gallery not found" />;
   }
-};
 
-const UpdateGalleryPage = ({ params }: { params: { id: string } }) => {
   return (
-    <main className=" dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
-      <Pageheading title={"Update Service"} />
-      <div className="">
-        <Suspense fallback={<div>Loading...</div>}>
-          <UpdateGallery id={params.id} />
-        </Suspense>
-      </div>
+    <main className="dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
+      <Pageheading title="Update Gallery" />
+      {galleryData ? (
+        <UpdateGalleryForm gallery={galleryData} />
+      ) : (
+        <CustomError status={404} message="Gallery not found" />
+      )}
     </main>
   );
 };

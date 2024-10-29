@@ -1,6 +1,6 @@
 "use client";
 
-import { petrona } from "@/app/layout";
+import { petrona } from "@/app/fonts";
 import { Button } from "@/components/ui/button";
 import { Package } from "@prisma/client";
 import Image from "next/image";

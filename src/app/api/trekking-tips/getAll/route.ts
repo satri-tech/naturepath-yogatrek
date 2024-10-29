@@ -1,5 +1,5 @@
 import { errorResponse } from "@/lib/errorResponse";
-import { client } from "@/services/sanityconfig";
+import { client } from "@/sanity/lib/client";
 import { Blog } from "@/utils/types/BlogType";
 import { NextRequest, NextResponse } from "next/server";
 

@@ -2,11 +2,11 @@ import Image from "next/image";
 
 import Error from "@/layouts/error/Error";
 import PageWrapper from "@/layouts/PageWrapper";
-import { petrona } from "@/app/layout";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import { ExtendedSitePage } from "@/components/forms/admin/SitePages/UpdateSitePageForm";
 import TeamMembers from "@/components/about/TeamMembers";
 import Topbanner from "@/layouts/Topbanner";
+import { petrona } from "@/app/fonts";
 
 const AboutPage = async () => {
   try {

@@ -13,7 +13,10 @@ import { signJWt, verifyJwt } from "../jwt";
 import { toastError, toastSuccess } from "../toast";
 
 export async function registerUser(
-  user: Omit<User, "id" | "emailVerified" | "role" | "image">
+  user: Omit<
+    User,
+    "id" | "emailVerified" | "role" | "image" | "createdAt" | "updatedAt"
+  >
 ) {
   const result = await prisma.user.create({
     data: {
@@ -34,7 +37,10 @@ export async function registerNewUser(
   prevState: string | undefined,
   formData: FormData
 ) {
-  const userData: Omit<User, "id" | "emailVerified" | "role" | "image"> = {
+  const userData: Omit<
+    User,
+    "id" | "emailVerified" | "role" | "image" | "createdAt" | "updatedAt"
+  > = {
     firstName: formData.get("firstName") as string,
     lastName: formData.get("lastName") as string,
     password: formData.get("password") as string,

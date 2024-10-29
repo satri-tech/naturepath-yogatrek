@@ -6,9 +6,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { TestimonialWithUser } from "./Testimonials";
 import StarRating from "../ui/Rating";
 import Image from "next/image";
-import { petrona } from "@/app/layout";
 import { FaQuoteRight } from "react-icons/fa";
 import Slider from "react-slick";
+import { petrona } from "@/app/fonts";
 
 function TestimonialsCarousel({
   testimonial = [],

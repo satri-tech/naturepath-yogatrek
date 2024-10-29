@@ -22,7 +22,13 @@ const parseResult = async (request: NextRequest, response: NextResponse) => {
     const { jwtToken, password } = extractedUserData;
 
     const payload = verifyJwt(jwtToken);
-    if (!payload) return "userNotExist";
+    if (!payload) {
+      return NextResponse.json(
+        { success: false, message: "User does not exist" },
+        { status: 404 }
+      );
+    }
+
     const userId = payload.id;
 
     const user = await prisma.user.findUnique({
@@ -30,7 +36,13 @@ const parseResult = async (request: NextRequest, response: NextResponse) => {
         id: userId,
       },
     });
-    if (!user) return "userNotExist";
+
+    if (!user) {
+      return NextResponse.json(
+        { success: false, message: "User does not exist" },
+        { status: 404 }
+      );
+    }
 
     const result = await prisma.user.update({
       where: {

@@ -1,9 +1,9 @@
 import { errorResponse } from "@/lib/errorResponse";
-import { client } from "@/services/sanityconfig";
+import { client } from "@/sanity/lib/client";
 import { Blog } from "@/utils/types/BlogType";
 import { NextRequest, NextResponse } from "next/server";
 
-export default async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   const extractData = await req.json();
 
   if (!extractData.id) {

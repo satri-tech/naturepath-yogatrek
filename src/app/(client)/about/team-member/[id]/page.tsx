@@ -3,9 +3,7 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 import { Team } from "@prisma/client";
-import Error from "@/layouts/error/Error";
 import TeamMemberCard from "@/components/Card/TeamMemberCard";
-import { petrona } from "@/app/layout";
 import PageWrapper from "@/layouts/PageWrapper";
 import Topbanner from "@/layouts/Topbanner";
 import TeamMember from "@/components/about/TeamMember";

@@ -2,39 +2,16 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import RichTextEditor from "../../FormElements/RichTextEditor";
+import { Form, FormField } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import z from "zod";
-import Image from "next/image";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Service } from "@prisma/client";
-import { CldUploadWidget } from "next-cloudinary";
 
-import { Trash2 } from "lucide-react";
-import { UploadCloudinary } from "@/services/actions/uploadtoCloudinary";
 import { useSession } from "next-auth/react";
-import { packageFormInput } from "@/utils/types/admin/packageType";
 import { inputType } from "@/utils/types/admin/inputType";
 import RichTextArea from "../../FormElements/RichTextArea";
 import ImageInputSingle from "../../FormElements/ImageInputSingle";
 import TextInput from "../../FormElements/TextInput";
 import { TrekkingTipFormSchema } from "@/utils/validation/admin/TrekkingTipFormValidation";
-import { Blog } from "@/utils/types/BlogType";
 import { trekkingTipFormInput } from "@/utils/types/admin/trekkingTipType";
 import { toastError, toastSuccess } from "@/lib/toast";
 
@@ -98,49 +75,62 @@ const CreateTrekkingTipForm = () => {
   };
 
   const onSubmit = async (values: z.infer<typeof TrekkingTipFormSchema>) => {
-    if (images) {
-      const res = await UploadCloudinary(images);
-      if (res.url) {
-        try {
-          const formdata = {
-            title: values.title,
-            slug: values.slug,
-            img_url: res.url,
-            authors: values.authors,
-            body: values.body,
-          };
-          const jsonData = JSON.stringify(formdata);
+    console.log("values: ", values);
 
-          const response = await fetch("/api/trekking-tips/create", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `bearer ${session.data?.user.accessToken}`,
-            },
-            body: jsonData,
-          });
-          const data = await response.json();
-          console.log("trekking tip posted: ", response);
-          reset();
-          setResource([]);
-          setImages(null);
+    // const res = await UploadCloudinary(images);
+    try {
+      // Create a new FormData instance
+      const formData = new FormData();
 
-          if (data && data.success) {
-            reset();
-            setImages(null);
-          }
-          toastSuccess("Trekking tip created successfully!");
-        } catch (err) {
-          console.log(err);
-          toastError(`Trekking tip creation failed, ${err}`);
-        }
+      // Append the image file
+      if (images) {
+        formData.append("file", values.img_url);
+      } else {
+        setImageError("Upload the Image");
+        return; // Early return if there are no images
       }
-      if (res.error) {
-        setImageError(res.error);
+
+      // Append other form fields
+      formData.append("title", values.title);
+      formData.append("slug", values.slug);
+      formData.append("authors", values.authors);
+      formData.append("body", values.body);
+      formData.append("category", JSON.stringify([])); // Adjust if category is an array
+
+      console.log("image: ", images);
+
+      // Use fetch with FormData
+      const response = await fetch("/api/trekking-tips/create", {
+        method: "POST",
+        headers: {
+          // No need for Content-Type header; it will be set automatically
+          Authorization: `bearer ${session.data?.user.accessToken}`,
+        },
+        body: formData, // Set body to FormData
+      });
+
+      const data = await response.json();
+      console.log("trekking tip posted: ", response);
+
+      // Reset and clear state after successful submission
+      reset();
+      setResource([]);
+      setImages(null);
+
+      if (data && data.success) {
+        toastSuccess("Trekking tip created successfully!");
+      } else {
+        toastError(
+          `Trekking tip creation failed: ${data.message || "Unknown error"}`
+        );
       }
-    } else {
-      setImageError("Upload the Image");
+    } catch (err) {
+      console.log(err);
+      toastError(`Trekking tip creation failed, ${err}`);
     }
+    // } else {
+    //   setImageError("Upload the Image");
+    // }
 
     // Handle form submission
   };
@@ -178,7 +168,7 @@ const CreateTrekkingTipForm = () => {
       label: "Trekking tip thumbnail",
       type: "file",
       placeholder: "Select trekking tip",
-      error: errors.img_url?.message,
+      error: errors.img_url?.message as string,
       element: "image",
       className: "w-full xl:w-[calc(50%_-_8px)]",
     },
@@ -199,6 +189,7 @@ const CreateTrekkingTipForm = () => {
       register={register}
       handleSubmit={handleSubmit}
       onSubmit={onSubmit}
+      encType="multipart/form-data"
     >
       {inputs.map((input, i) => {
         const {

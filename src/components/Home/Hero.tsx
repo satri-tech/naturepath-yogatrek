@@ -1,9 +1,9 @@
 import React from "react";
 import BookingBox from "@/components/Package/BookingBox";
-import { petrona } from "@/app/layout";
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { petrona } from "@/app/fonts";
 const Hero = () => {
   return (
     <div className="px-0 relative w-full h-[100vh] -translate-y-20 z-10">

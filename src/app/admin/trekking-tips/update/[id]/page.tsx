@@ -1,36 +1,42 @@
 import UpdatePackageForm from "@/components/forms/admin/Package/UpdatePackageForm";
 import Pageheading from "@/layouts/admin/Pageheading";
-import Error from "@/layouts/error/Error";
+import CustomError from "@/layouts/error/Error";
 import { getServiceslist } from "@/lib/actions.ts/service";
-import React, { Suspense } from "react";
 
-const TrekkingTip = async ({ id }: { id: string }) => {
-  const service = await getServiceslist();
+const UpdatePackagePage = async ({ params }: { params: { id: string } }) => {
   try {
+    // Fetch the services list
+    const service = await getServiceslist();
+
+    // Fetch the package data
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/getPackage?id=${id}`,
-      { next: { tags: [`Package-${id}`] } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/package/getPackage?id=${params.id}`,
+      { next: { tags: [`Package-${params.id}`] } }
     );
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error("Failed to fetch package data");
+    }
+
     const data = await response.json();
-    console.log("package", data.data);
-    return <UpdatePackageForm packages={data.data} service={service} />;
+
+    // Check if package data exists
+    if (!data.data) {
+      return <CustomError status={404} message="Package not found" />;
+    }
+
+    // Render the form with fetched package and service data
+    return (
+      <main className="dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
+        <Pageheading title={"Update Package"} />
+        <UpdatePackageForm packages={data.data} service={service} />
+      </main>
+    );
   } catch (error) {
-    console.log(error);
-    return <Error status={404} message="Bad request" />;
+    console.error(error);
+    return <CustomError status={404} message="Bad request" />;
   }
 };
 
-const CreatePage = async ({ params }: { params: { id: string } }) => {
-  return (
-    <main className=" dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
-      <Pageheading title={"Update Package"} />
-      <div className="">
-        <Suspense fallback={<div>Loading...</div>}>
-          <TrekkingTip id={params.id} />
-        </Suspense>
-      </div>
-    </main>
-  );
-};
-
-export default CreatePage;
+export default UpdatePackagePage;

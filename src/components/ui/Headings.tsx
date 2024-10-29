@@ -1,4 +1,4 @@
-import { petrona } from "@/app/layout";
+import { petrona } from "@/app/fonts";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";

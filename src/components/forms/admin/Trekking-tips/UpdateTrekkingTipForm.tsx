@@ -213,7 +213,7 @@ const UpdateTrekkingTipForm = ({ trekkingTip }: { trekkingTip: Blog }) => {
       label: "Trekking tip thumbnail",
       type: "file",
       placeholder: "Select trekking tip",
-      error: errors.img_url?.message,
+      error: errors.img_url?.message as string,
       element: "image",
       className: "w-full xl:w-[calc(50%_-_8px)]",
     },

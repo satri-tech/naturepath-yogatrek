@@ -8,8 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import PackageListLoading from "@/components/loading/admin/PackageListLoading";
-import PackageList from "@/components/admin/packages/PackageList";
 import TrekkingTipsList from "@/components/admin/trekking-tips/TrekkingTipsList";
 
 const TrekkingTipPage = () => {

@@ -2,7 +2,6 @@
 import React, { Suspense, useEffect, useState } from "react";
 import Image from "next/image";
 
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -28,7 +27,7 @@ const TrekkingTipsList = () => {
 
   //for pagination
   const itemsPerTable = 6;
-  const tablesPresent = Math.ceil(trekkingTips.length / itemsPerTable);
+  const tablesPresent = Math.ceil(trekkingTips?.length / itemsPerTable);
 
   const [currentTable, setCurrentTable] = useState<number>(0);
 
@@ -56,13 +55,13 @@ const TrekkingTipsList = () => {
   };
 
   const itemsInLastTable =
-    trekkingTips.length - (tablesPresent - 1) * itemsPerTable;
+    trekkingTips?.length - (tablesPresent - 1) * itemsPerTable;
 
   const fetchtrekkingTips = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/trekking-tips/getAll`,
-        { next: { tags: [`TrekkingTipCollection`], revalidate: 600 } }
+        { headers: { "Cache-Control": "no-cache" } }
       );
       const data = await response.json();
       setTrekkingTips(data.data);
@@ -101,6 +100,10 @@ const TrekkingTipsList = () => {
   useEffect(() => {
     fetchtrekkingTips();
   }, []);
+
+  useEffect(() => {
+    console.log("trekking tips: ", trekkingTips);
+  }, [trekkingTips]);
 
   if (trekkingTips && trekkingTips.length > 0) {
     return (

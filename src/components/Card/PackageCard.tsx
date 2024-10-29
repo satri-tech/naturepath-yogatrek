@@ -4,9 +4,9 @@ import React from "react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { Package } from "@prisma/client";
-import { petrona } from "@/app/layout";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuCalendarDays } from "react-icons/lu";
+import { petrona } from "@/app/fonts";
 
 const PackageCard = ({ packages }: { packages: Package }) => {
   return (

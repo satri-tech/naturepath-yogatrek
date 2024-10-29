@@ -1,37 +1,37 @@
 import UpdateTeamForm from "@/components/forms/admin/Team/UpdateTeamForm";
 import Pageheading from "@/layouts/admin/Pageheading";
-import Error from "@/layouts/error/Error";
+import CustomError from "@/layouts/error/Error";
 import { Service } from "@prisma/client";
-import React, { Suspense } from "react";
 
-const UpdateTeam = async ({ id }: { id: string }) => {
+const UpdateTeamPage = async ({ params }: { params: { id: string } }) => {
   try {
+    // Fetching the team member data
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/getMember?id=${id}`,
-      { next: { tags: [`TeamMember-${id}`], revalidate: 100 } }
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/team/getMember?id=${params.id}`,
+      { next: { tags: [`TeamMember-${params.id}`], revalidate: 100 } }
     );
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error("Failed to fetch team member data");
+    }
+
     const data = await response.json();
     const teamMember = data.data;
-    // console.log("teamMember: ", teamMember);
 
-    return <UpdateTeamForm teamMember={teamMember} />;
+    // Render the page layout with the UpdateTeamForm
+    return (
+      <main className="dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
+        <Pageheading title={"Update Service"} />
+        <div>
+          <UpdateTeamForm teamMember={teamMember} />
+        </div>
+      </main>
+    );
   } catch (error) {
-    console.log(error);
-    return <Error status={404} message="Bad request" />;
+    console.error(error);
+    return <CustomError status={404} message="Bad request" />;
   }
-};
-
-const UpdateTeamPage = ({ params }: { params: { id: string } }) => {
-  return (
-    <main className=" dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
-      <Pageheading title={"Update Service"} />
-      <div className="">
-        <Suspense fallback={<div>Loading...</div>}>
-          <UpdateTeam id={params.id} />
-        </Suspense>
-      </div>
-    </main>
-  );
 };
 
 export default UpdateTeamPage;

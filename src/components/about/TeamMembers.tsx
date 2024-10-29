@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import TeamMemberCard from "../Card/TeamMemberCard";
 import { Team } from "@prisma/client";
-import { petrona } from "@/app/layout";
 import TeamMembersLoading from "../loading/about/TeamMembersLoading";
+import { petrona } from "@/app/fonts";
 
 export default function TeamMembers() {
   const [teamMembers, setTeamMembers] = useState<Team[]>([]);
