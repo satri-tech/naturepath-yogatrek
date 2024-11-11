@@ -8,9 +8,9 @@ import { PortableText } from "@portabletext/react";
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { Blog } from "@/utils/types/BlogType";
-import { client } from "@/services/sanityconfig";
 import RichtextComponents from "@/components/ui/richtextComponents";
 import moment from "moment";
+import { client } from "@/sanity/lib/client";
 
 export const revalidate = 600;
 
