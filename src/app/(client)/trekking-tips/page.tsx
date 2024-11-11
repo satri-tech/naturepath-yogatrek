@@ -1,8 +1,8 @@
 import React from "react";
 import BlogCard from "@/components/Trekking_Tips/TrekkingTipsCard";
-import { client } from "@/services/sanityconfig";
 import { Blog } from "@/utils/types/BlogType";
 import Topbanner from "@/layouts/Topbanner";
+import { client } from "@/sanity/lib/client";
 
 export const revalidate = 100;
 
