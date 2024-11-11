@@ -3,8 +3,8 @@ import { Button } from "../ui/button";
 import BlogCard from "./TrekkingTipsCard";
 
 import Link from "next/link";
-import { client } from "@/services/sanityconfig";
 import { Blog } from "@/utils/types/BlogType";
+import { client } from "@/sanity/lib/client";
 
 async function TrekkingTipList() {
   const result: Blog[] =

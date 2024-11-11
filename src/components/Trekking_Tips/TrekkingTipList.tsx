@@ -1,6 +1,6 @@
 import { Blog } from "@/utils/types/BlogType";
 import BlogCard from "./TrekkingTipsCard";
-import { client } from "@/services/sanityconfig";
+import { client } from "@/sanity/lib/client";
 
 export async function TrekkingTipList() {
   const result: Blog[] =
