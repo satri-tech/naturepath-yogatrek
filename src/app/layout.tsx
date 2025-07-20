@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
-
 import "./globals.css";
 import Provider from "@/components/HOC/provider";
-
-import { Noto_Sans_Display } from "next/font/google";
-import { DM_Sans, Petrona } from "next/font/google";
+import { Poppins } from "next/font/google";
 import ToastProvider from "@/components/ui/ToastProvider";
 
-const dm_sans = DM_Sans({
+const dm_sans = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   subsets: ["latin"],
