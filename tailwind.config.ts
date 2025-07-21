@@ -23,10 +23,12 @@ const config = {
     },
     extend: {
       colors: {
+        bakcgroundLight: "#fcfcfc",
+        backgroundDark: "#121212",
         // primary: "#4338ca",
         // secondary: "#ea580c",
         // primary: "#98FB98",
-        primary: "#74C365",
+        primary: "#15803d",
         secondary: "#FFD280",
         "yoga-blue": "#0d6efd",
         "yoga-red": "#dc3545",

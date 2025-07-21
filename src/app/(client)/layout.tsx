@@ -3,6 +3,7 @@ import Footer from "@/layouts/Footer/Footer";
 import Navbar from "@/layouts/Header/navbar";
 
 import type { Metadata } from "next";
+import { poppins } from "../layout";
 
 export const metadata: Metadata = {
   title: "Yoga Club",
@@ -15,7 +16,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className=" dark:bg-gray-dark">
+    <main className={`dark:bg-gray-dark ${poppins.className}`}>
       <Navbar />
       {children}
       <Footer />

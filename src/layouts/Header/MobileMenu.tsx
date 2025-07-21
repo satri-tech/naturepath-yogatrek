@@ -21,7 +21,6 @@ const MobileMenu = () => {
     <div className="inline-block xl:hidden">
       <Sheet>
         <div className=" flex gap-3 items-center">
-          <ThemeToggle />
           <SheetTrigger asChild>
             <div className=" cursor-pointer p-2 rounded-sm dark:text-white">
               <LucideMenu />

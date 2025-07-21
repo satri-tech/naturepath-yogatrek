@@ -30,10 +30,10 @@ const GetFeaturedcomponets = async () => {
 
 const FeaturedComponents = async () => {
   return (
-    <section className=" section-padding-b dark:text-text-dark">
-      <Headings>Featuring now</Headings>
+    <div className="  flex flex-col gap-4">
+      <Headings>Featuring Now</Headings>
       <GetFeaturedcomponets />
-    </section>
+    </div>
   );
 };
 

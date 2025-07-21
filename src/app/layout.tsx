@@ -4,7 +4,7 @@ import Provider from "@/components/HOC/provider";
 import { Poppins } from "next/font/google";
 import ToastProvider from "@/components/ui/ToastProvider";
 
-const dm_sans = Poppins({
+export const poppins = Poppins({
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   subsets: ["latin"],
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={` container px-0 mx-auto max-w-[1900px] ${dm_sans.className}`}
+        className={` container px-0 mx-auto max-w-[1900px] ${poppins.className}`}
       >
         <Provider>
           <ToastProvider>{children}</ToastProvider>
