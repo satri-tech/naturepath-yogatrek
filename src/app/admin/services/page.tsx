@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -20,7 +21,10 @@ const ServicesPage = () => {
             <CardDescription>List of Service.</CardDescription>
           </div>
           <Link href={"/admin/services/create"}>
-            <Button variant={"default"}>Create New Service</Button>
+            <Button variant={"default"} className="flex gap-2">
+              Create New Service
+              <Plus size={18} />
+            </Button>
           </Link>
         </div>
       </CardHeader>

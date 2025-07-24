@@ -8,7 +8,7 @@ import ActionsButtons from "./ActionsButtons";
 const Navbar = () => {
   return (
     <nav
-      className={`w-full h-20 md:h-20  flex items-center justify-center z-20 sticky  top-0    bg-bakcgroundLight dark:bg-backgroundDark  text-black`}
+      className={`w-full h-20 md:h-20  flex items-center justify-center z-20 sticky  top-0   border-b  bg-bakcgroundLight dark:bg-backgroundDark  text-black`}
     >
       <div className=" w-[95%] h-16 flex justify-between items-center ">
         <Link href="/" className="text-3xl font-semibold ">
@@ -18,7 +18,8 @@ const Navbar = () => {
             width={750}
             height={750}
             quality={100}
-            className="h-10 w-auto "
+            className="h-14 w-auto "
+            unoptimized
           />
 
         </Link>

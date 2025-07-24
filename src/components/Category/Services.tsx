@@ -15,12 +15,12 @@ const Services = async () => {
     return (
       <section className="section-padding dark:text-text-dark flex flex-col gap-8 lg:gap-12">
         <Headings>Our Services</Headings>
-        
+
         {/* Desktop Layout */}
-        <div className="hidden lg:flex h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+        <div className="hidden lg:flex h-[500px]  overflow-hidden shadow-2xl">
           {data.data.map((item: Service, index: number) => (
             <div
-              className="group relative flex-1 cursor-pointer transition-all duration-700 ease-out hover:flex-[2] first:rounded-l-2xl last:rounded-r-2xl overflow-hidden"
+              className="group relative flex-1 cursor-pointer transition-all duration-700 ease-out hover:flex-[2] overflow-hidden"
               key={index}
             >
               {/* Background Image with Overlay */}
@@ -42,11 +42,11 @@ const Services = async () => {
                 <h3 className="text-white text-xl lg:text-2xl font-bold mb-3 transition-transform duration-500 ease-out group-hover:scale-105">
                   {item.title}
                 </h3>
-                
+
                 {/* Description Container - Fixed height to prevent layout shift */}
                 <div className="h-24 relative overflow-hidden">
                   <div className="absolute inset-0 opacity-0 transform translate-y-full transition-all duration-500 ease-out group-hover:opacity-100 group-hover:translate-y-0">
-                    <p 
+                    <p
                       className="text-white/90 text-sm lg:text-base leading-relaxed"
                       dangerouslySetInnerHTML={{ __html: item.description }}
                     />
@@ -88,7 +88,7 @@ const Services = async () => {
                   <h3 className="text-white text-xl font-bold mb-3">
                     {item.title}
                   </h3>
-                  <p 
+                  <p
                     className="text-white/90 text-sm leading-relaxed opacity-90 group-hover:opacity-100 transition-opacity duration-300"
                     dangerouslySetInnerHTML={{ __html: item.description }}
                   />

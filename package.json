@@ -57,6 +57,7 @@
     "sanity": "^3.59.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.13",
+    "swiper": "^11.2.10",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"

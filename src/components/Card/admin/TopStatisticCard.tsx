@@ -4,18 +4,18 @@ import { TrendingDown, TrendingUp } from 'lucide-react';
 import React from 'react'
 import Image from 'next/image';
 
-export default function TopStatisticCard({single_analytic}:{single_analytic:TopAnalyticType }) {
-     const {
-       icon,
-       id,
-       title,
-       value,
-       prefix,
-       rate,
-       rate_increase,
-       img,
-       className,
-     } = single_analytic;
+export default function TopStatisticCard({ single_analytic }: { single_analytic: TopAnalyticType }) {
+  const {
+    icon,
+    id,
+    title,
+    value,
+    prefix,
+    rate,
+    rate_increase,
+    img,
+    className,
+  } = single_analytic;
 
   return (
     <Card
@@ -54,21 +54,21 @@ export default function TopStatisticCard({single_analytic}:{single_analytic:TopA
             )}
             {rate_increase != null && (
               <div>
-                <span>{rate_increase==true ? "+" : "-"}</span>
+                <span>{rate_increase == true ? "+" : "-"}</span>
                 <span>{rate}%</span>
               </div>
             )}
           </div>
         </div>
       </div>
-
+{/* 
       <Image
         src={img}
         alt={title}
         className=" h-[100px] w-auto xl:w-[100px] sm:h-[105px] md:h-[90px] object-cover group-hover/parent:scale-105 transition-all duration-500 rounded-md"
         width={500}
         height={500}
-      />
+      /> */}
     </Card>
   );
 }

@@ -42,12 +42,12 @@ const DatePicker = <T extends {}>({
             <Button
               variant={"outline"}
               className={cn(
-                "w-full pl-3 text-left font-normal"
+                "w-full pl-3 text-left font-normal border-slate-300 border"
                 // !field.value && "text-muted-foreground"
               )}
             >
               {field.value ? (
-                format(field.value, "PPP")
+                format(field.value, "PPP") 
               ) : (
                 <span>Pick a date</span>
               )}

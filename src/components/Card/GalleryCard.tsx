@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function GalleryCard({ gallery }: { gallery: Gallery }) {
-  const {id, title, galleryPhotos, thumbnail } = gallery;
+  const { id, title, galleryPhotos, thumbnail } = gallery;
 
   return (
     <Link
       href={`/gallery/${id}`}
-      className=" overflow-hidden  w-full sm:w-[calc(50%_-_6px)] md:w-[calc(50%_-_8px)] lg:w-[calc((100%_/_3)_-_(32px_/_3))] xl:w-[calc(25%_-_(48px_/_4))] relative rounded-md group"
+      className=" overflow-hidden w-full relative rounded-md group"
     >
       <Image
         src={thumbnail}

@@ -24,7 +24,7 @@ const FeaturedCard = ({ data, numb }: { data: Package; numb: number }) => {
         {/* Featured badge */}
         <div className="absolute -top-2 -right-2 z-20">
           <div className="bg-gradient-to-r from-primary to-primary/80 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg transform rotate-3 group-hover:rotate-6 transition-transform duration-300">
-            Featured #{numb}
+            Featured #{numb + 1}
           </div>
         </div>
 

@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import type { Package } from "@prisma/client"
-import { MapPin, Calendar, Star, Heart, Share2, Eye, Clock, Users } from "lucide-react"
+import { MapPin, Calendar, Star, Heart, Share2, Eye, Clock, Users, ArrowRight } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -107,7 +107,7 @@ const PackageCard = ({ packages }: { packages: Package }) => {
             >
               <span>Book Now</span>
               <div className="ml-2 transform group-hover:translate-x-1 transition-transform duration-300">
-                →
+                <ArrowRight size={16} />
               </div>
             </Button>
           </Link>

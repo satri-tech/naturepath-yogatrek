@@ -14,7 +14,7 @@ const GetFeaturedcomponets = async () => {
     const data = await response.json();
     // const repeatedData = [].concat(data.data, data.data, data.data) as Package[];
     const features = data?.data ?? [];
-    const repeatedData = [].concat(features, features, features) as Package[];
+    const repeatedData = [].concat(features) as Package[];
 
     return (
       <>

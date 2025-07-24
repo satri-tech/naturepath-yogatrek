@@ -6,6 +6,6 @@ export default function ServiceLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <PageWrapper className="vertical-padding-dashboard min-h-screen dark:">{children}</PageWrapper>
+    <PageWrapper className=" min-h-screen   md:px-7 py-6">{children}</PageWrapper>
   );
 }

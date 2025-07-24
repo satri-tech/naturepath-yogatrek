@@ -4,6 +4,7 @@ import { Package } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import PackageCard from "../Card/PackageCard";
 import { PackageFilterInterface } from "@/app/(client)/packages/page";
+import PackageListLoading from "../loading/admin/PackageListLoading";
 
 const PackageList = ({ serviceId, title }: PackageFilterInterface) => {
   const [filteredPackages, setFilteredPackages] = useState<Package[]>([]);
@@ -45,9 +46,7 @@ const PackageList = ({ serviceId, title }: PackageFilterInterface) => {
             <PackageCard key={pckg.id} packages={pckg} />
           ))}
         </div>
-      ) : (
-        <p>There are no packages to show!</p>
-      )}
+      ) : <PackageListLoading />}
     </div>
   );
 };

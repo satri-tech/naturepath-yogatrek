@@ -1,7 +1,7 @@
 import {
   AlignLeft,
   ClipboardList,
-  Layers3,
+  Images,
   LayoutDashboard,
   LibraryBig,
   List,
@@ -25,55 +25,55 @@ export const MenuList: MenulistType[] = [
     id: 1,
     href: "/admin",
     name: "Dashboard",
-    icons: <LayoutDashboard />,
+    icons: <LayoutDashboard size={16} />,
   },
   {
     id: 2,
     href: "/admin/services",
     name: "Services",
-    icons: <List />,
+    icons: <List size={16} />,
   },
   {
     id: 2,
     href: "/admin/packages",
     name: "Packages",
-    icons: <ClipboardList />,
+    icons: <ClipboardList size={16} />,
   },
   {
     id: 3,
     href: "/admin/bookings",
     name: "Bookings",
-    icons: <NotebookPen />,
+    icons: <NotebookPen size={16} />,
   },
   {
     id: 4,
     href: "/admin/sitepage",
     name: "Site Pages",
-    icons: <Slack />,
+    icons: <Slack size={16} />,
   },
-  {
-    id: 5,
-    href: "/admin/trekking-tips",
-    name: "Trekking Tips",
-    icons: <LibraryBig />,
-  },
+  // {
+  //   id: 5,
+  //   href: "/admin/trekking-tips",
+  //   name: "Trekking Tips",
+  //   icons: <LibraryBig size={16} />,
+  // },
   {
     id: 8,
     href: "/admin/galleries",
     name: "Galleries",
-    icons: <TfiGallery className=" w-[22px] h-[22px]" />,
+    icons: <Images size={16} />,
   },
   {
     id: 6,
     href: "/admin/team",
     name: "Team",
-    icons: <Users />,
+    icons: <Users size={16} />,
   },
   {
     id: 7,
     href: "/admin/user",
     name: "Users",
-    icons: <Users />,
+    icons: <Users size={16} />,
   },
 ];
 
@@ -92,11 +92,11 @@ const Menu = async () => {
       </div>
       <Sheet>
         <SheetTrigger asChild>
-          <AlignLeft className="md:hidden cursor-pointer dark:text-text-dark" />
+          <AlignLeft className="md:hidden cursor-pointer dark:text-neutral-50 text-neutral-900" />
         </SheetTrigger>
         <SheetContent side={"left"} className="max-w-60 p-0">
           <div className="h-screen ">
-            <h1 className="font-bold text-sm md:text-xl text-center place-self-center text-primary border-b border-primary h-[10%] md:block px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out pt-4">
+            <h1 className="font-bold text-sm md:text-xl text-center place-self-center dark:text-neutral-50 text-neutral-900 border-b border-primary h-[10%] md:block px-3 w-30 md:w-60 lg:w-60 overflow-x-hidden transition-transform duration-300 ease-in-out pt-4">
               ERS<span className="text-secondary">.</span>
             </h1>
             <div

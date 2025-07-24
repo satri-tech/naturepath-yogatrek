@@ -7,9 +7,9 @@ export const Menus = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Booking", url: "/booking" },
-  { id: 4, name: "Service", url: "/packages" },
+  { id: 4, name: "Packages", url: "/packages" },
   { id: 5, name: "Gallery", url: "/gallery" },
-  { id: 6, name: "Trekking Tips", url: "/trekking-tips" },
+  // { id: 6, name: "Trekking Tips", url: "/trekking-tips" },
   { id: 7, name: "Contact Us", url: "/contact" },
 ];
 

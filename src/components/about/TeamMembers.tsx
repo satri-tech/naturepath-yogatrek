@@ -28,20 +28,22 @@ export default function TeamMembers() {
 
   if (teamMembers && teamMembers.length > 0) {
     return (
-      <section className=" flex flex-col gap-4 section-padding">
-        <h2
-          className={`${petrona.className} uppercase font-extrabold text-2xl md:text-3xl text-center text-primary`}
-        >
-          Meet Our Extraordinary team
+      <div className="text-center mb-8">
+        <h2 className={`uppercase font-extrabold text-2xl md:text-3xl lg:text-4xl bg-primary bg-clip-text text-transparent mb-4`}>
+          Why Choose Our Yoga & Trek Company
         </h2>
-        <div className=" w-full flex flex-wrap gap-3 md:gap-4 justify-center">
+        <p className="text-gray-600 dark:text-gray-400 text-base max-w-2xl mx-auto pb-10">
+          Discover the perfect blend of adventure, mindfulness, and natural beauty
+        </p>
+
+        <div className=" w-full grid grid-cols-3 justify-start ">
           {teamMembers.map((teamMember: Team) => {
             return (
               <TeamMemberCard teamMember={teamMember} key={teamMember.id} />
             );
           })}
         </div>
-      </section>
+      </div >
     );
   } else {
     return <TeamMembersLoading />;

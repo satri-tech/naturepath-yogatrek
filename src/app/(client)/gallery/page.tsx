@@ -34,12 +34,13 @@ export default function GalleryPage() {
   return (
     <main className="dark:text-text-dark">
       <section>
-        <Topbanner title="Glimpse of past events" />
+        <Topbanner title="Glimpse of past events" description="Discover our journey, values, and mission behind blending the serenity of yoga 
+        with the thrill of trekking through nature’s untouched beauty."/>
       </section>
 
       <PageWrapper className="section-padding">
         {galleries && galleries.length > 0 ? (
-          <div className=" flex  flex-wrap gap-3 md:gap-4">
+          <div className="  grid grid-cols-3 space-x-5">
             {galleries.map((gallery) => {
               return <GalleryCard gallery={gallery} key={gallery.id} />;
             })}

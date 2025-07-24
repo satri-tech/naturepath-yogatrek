@@ -111,7 +111,7 @@ const TeamList = () => {
               <TableHead>Name</TableHead>
               <TableHead className="">Profile picture</TableHead>
               <TableHead>Position</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead className="text-end">Actions</TableHead>
             </TableRow>
           </TableHeader>
 
@@ -140,7 +140,7 @@ const TeamList = () => {
                   />
                 </TableCell>
 
-                <TableCell className="flex gap-2 items-center">
+                <TableCell className="flex gap-2 justify-end">
                   <ViewButton
                     url={`/admin/team/view/${Item.id}`}
                     className=""

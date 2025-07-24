@@ -38,7 +38,7 @@ const UserPage = async () => {
             <TableHeader>
               <TableRow>
                 <TableHead>Users</TableHead>
-                <TableHead className="hidden sm:table-cell">Role</TableHead>
+                <TableHead className="hidden sm:table-cell text-right">Role</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -70,7 +70,7 @@ const UserPage = async () => {
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden sm:table-cell text-right">
                     <Badge className="text-xs" variant="secondary">
                       {Item.role}
                     </Badge>

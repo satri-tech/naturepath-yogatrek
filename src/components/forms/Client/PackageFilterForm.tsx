@@ -60,22 +60,22 @@ const PackageFilterForm = ({
   }, []);
 
   return (
-    <div className="max-w-xl">
-      <div className="flex flex-1 items-center space-x-2">
+    <div className="max-w-full">
+      <div className="flex flex-1 items-center space-x-4">
         <input
           type="text"
           className={cn(
-            "flex h-10 w-full rounded-md border dark:border border-slate-200 bg-white  dark:bg-slate-950  px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:text-text-dark/75 dark:focus-visible:ring-slate-300"
+            "flex h-10 w-full rounded-md border dark:border border-slate-300 bg-white  dark:bg-slate-950  px-3 py-2 text-sm ring-offset-white file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-slate-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-600 dark:ring-offset-slate-950 dark:placeholder:text-slate-400 dark:text-text-dark/75 dark:focus-visible:ring-slate-300"
           )}
           value={filterTitle}
           onChange={handleTitleChange}
-          placeholder="Enter text"
+          placeholder="search packages..."
         />
 
         <div className="w-[250px]">
           {services && services.length > 0 && (
             <Select onValueChange={handleServiceChange}>
-              <SelectTrigger className="h-8 py-2">
+              <SelectTrigger className="h-10 py-2">
                 <SelectValue placeholder="Select service" />
               </SelectTrigger>
               <SelectContent>
@@ -92,12 +92,11 @@ const PackageFilterForm = ({
         </div>
 
         <Button
-          variant="ghost"
-          className="h-8 px-2 lg:px-3"
+          variant="destructive"
+          className="h-10 px-2 lg:px-6"
           onClick={resetFilters}
         >
           Reset
-          <X className="ml-2 h-4 w-4" />
         </Button>
       </div>
     </div>

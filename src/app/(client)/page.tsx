@@ -9,7 +9,7 @@ export default function Home() {
     <div className="flex flex-col gap-14">
       <Hero />
       <FeaturedComponents/>
-      <PopularPackage />
+      {/* <PopularPackage /> */}
       <Services />
       <Testimonials />
     </div>
