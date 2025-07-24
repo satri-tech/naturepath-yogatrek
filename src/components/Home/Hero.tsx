@@ -1,9 +1,7 @@
 import Image from "next/image"
 import { Button } from "../ui/button"
 import Link from "next/link"
-import { petrona } from "@/app/fonts"
 import HeroImage from "../../../public/Hero/hero1.jpg"
-import { poppins } from "@/app/layout"
 import { ChevronRight } from "lucide-react"
 
 const Hero = () => {
