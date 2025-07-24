@@ -13,7 +13,7 @@ import TextInput from "../FormElements/TextInput";
 import TextAreaInput from "../FormElements/TextAreainput";
 import SelectInput from "../FormElements/SelectInput";
 import { selectOptionType } from "@/utils/types/admin/selectOptionType";
-import { Package, Service } from "@prisma/client";
+import { Package } from "@prisma/client";
 import { toastError, toastSuccess } from "@/lib/toast";
 
 const AllBookingform = () => {
@@ -110,7 +110,8 @@ const AllBookingform = () => {
     }
   }
 
-  const inputs: inputType<bookingFormInput>[] = [
+  // Organized inputs by sections
+  const personalInfoInputs: inputType<bookingFormInput>[] = [
     {
       name: "fullname",
       label: "Full Name",
@@ -118,6 +119,46 @@ const AllBookingform = () => {
       placeholder: "Enter your full name",
       error: errors.fullname?.message,
       element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email address",
+      error: errors.email?.message,
+      element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "contact",
+      label: "Contact Number",
+      type: "text",
+      placeholder: "Enter your contact no. with country code.",
+      error: errors.contact?.message,
+      element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+    {
+      name: "country",
+      label: "Country",
+      type: "text",
+      placeholder: "Enter your country",
+      error: errors.country?.message,
+      element: "input",
+      className: "w-full md:w-[calc(50%_-_8px)]",
+    },
+  ];
+
+  const bookingDetailsInputs: inputType<bookingFormInput>[] = [
+    {
+      name: "packageId",
+      label: "Package",
+      type: "text",
+      placeholder: "Select a package",
+      error: errors.packageId?.message,
+      element: "select",
+      options: packageOptions,
       className: "w-full md:w-[calc(50%_-_8px)]",
     },
     {
@@ -142,43 +183,6 @@ const AllBookingform = () => {
       className: "w-full md:w-[calc(50%_-_8px)]",
     },
     {
-      name: "email",
-      label: "Email",
-      type: "email",
-      placeholder: "Enter your email address",
-      error: errors.email?.message,
-      element: "input",
-      className: "w-full md:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "country",
-      label: "Country",
-      type: "text",
-      placeholder: "Enter your country",
-      error: errors.country?.message,
-      element: "input",
-      className: "w-full md:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "contact",
-      label: "Contact Number",
-      type: "text",
-      placeholder: "Enter your contact no. with country code.",
-      error: errors.contact?.message,
-      element: "input",
-      className: "w-full md:w-[calc(50%_-_8px)]",
-    },
-    {
-      name: "packageId",
-      label: "Package",
-      type: "text",
-      placeholder: "Select a package",
-      error: errors.packageId?.message,
-      element: "select",
-      options: packageOptions,
-      className: "w-full md:w-[calc(50%_-_8px)]",
-    },
-    {
       name: "roomPreferences",
       label: "Room Preference",
       type: "text",
@@ -191,6 +195,9 @@ const AllBookingform = () => {
       ],
       className: "w-full md:w-[calc(50%_-_8px)]",
     },
+  ];
+
+  const additionalInfoInputs: inputType<bookingFormInput>[] = [
     {
       name: "message",
       label: "Message",
@@ -202,40 +209,29 @@ const AllBookingform = () => {
     },
   ];
 
-  useEffect(() => {
-    fetchPackageOptions();
-  }, []);
+  const renderFormFields = (inputs: inputType<bookingFormInput>[]) => {
+    return inputs.map((input, i) => {
+      const {
+        name,
+        type,
+        placeholder,
+        error,
+        autoFocus,
+        label,
+        element,
+        min,
+        step,
+        pattern,
+        className,
+        showField = true,
+        multiple,
+        options,
+      } = input;
 
-  return (
-    <Form
-      methods={methods}
-      register={register}
-      handleSubmit={handleSubmit}
-      onSubmit={onSubmit}
-      buttonClassName="w-fit"
-      buttonLabel="Book Package"
-    >
-      {inputs.map((input, i) => {
-        const {
-          name,
-          type,
-          placeholder,
-          error,
-          autoFocus,
-          label,
-          element,
-          min,
-          step,
-          pattern,
-          className,
-          showField = true,
-          multiple,
-          options,
-        } = input;
-        return showField ? (
-          element == "input" ? (
+      return showField ? (
+        <div key={i} className={className}>
+          {element == "input" ? (
             <FormField
-              key={i}
               control={control}
               name={name}
               render={({ field }) => (
@@ -250,14 +246,13 @@ const AllBookingform = () => {
                   min={min}
                   step={step}
                   pattern={pattern}
-                  wrapperClass={className}
+                  wrapperClass="w-full"
                   field={field}
                 />
               )}
             />
           ) : element == "date-picker" ? (
             <FormField
-              key={i}
               control={control}
               name={name}
               render={({ field }) => (
@@ -269,14 +264,13 @@ const AllBookingform = () => {
                   error={error}
                   autoFocus={autoFocus}
                   register={register}
-                  wrapperClass={className}
+                  wrapperClass="w-full"
                   field={field}
                 />
               )}
             />
           ) : element == "textarea" ? (
             <FormField
-              key={i}
               control={control}
               name={name}
               render={({ field }) => (
@@ -291,7 +285,7 @@ const AllBookingform = () => {
                   min={min}
                   step={step}
                   pattern={pattern}
-                  wrapperClass={className}
+                  wrapperClass="w-full"
                   field={field}
                 />
               )}
@@ -299,7 +293,6 @@ const AllBookingform = () => {
           ) : (
             element == "select" && (
               <FormField
-                key={i}
                 control={control}
                 name={name}
                 render={({ field }) => (
@@ -314,7 +307,7 @@ const AllBookingform = () => {
                     min={min}
                     step={step}
                     pattern={pattern}
-                    wrapperClass={className}
+                    wrapperClass="w-full"
                     field={field}
                     options={options as selectOptionType[]}
                     setValue={setValue}
@@ -322,12 +315,82 @@ const AllBookingform = () => {
                 )}
               />
             )
-          )
-        ) : (
-          <span className={className} key={i}></span>
-        );
-      })}
-    </Form>
+          )}
+        </div>
+      ) : (
+        <span className={className} key={i}></span>
+      );
+    });
+  };
+
+  useEffect(() => {
+    fetchPackageOptions();
+  }, []);
+
+  return (
+    <div className=" w-full px-4 py-8">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-300 overflow-hidden">
+        <div className="p-6">
+          <Form
+            methods={methods}
+            register={register}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            buttonClassName="w-full bg-primary/95 hover:bg-primary text-white font-medium py-3 px-6 rounded-md transition-colors duration-200"
+            buttonLabel="Book Package"
+          >
+            <div className="flex flex-col  w-full">
+
+
+              {/* Personal Information Section */}
+              <div className="mb-8">
+                <div className="flex items-center mb-4">
+                  <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full mr-3">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800">Personal Information</h3>
+                </div>
+                <div className="flex flex-wrap gap-4 pl-11">
+                  {renderFormFields(personalInfoInputs)}
+                </div>
+              </div>
+              {/* Booking Details Section */}
+              <div className="mb-8">
+                <div className="flex items-center mb-4">
+                  <div className="flex items-center justify-center w-8 h-8 bg-green-100 rounded-full mr-3">
+                    <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800">Trip Details</h3>
+                </div>
+                <div className="flex flex-wrap gap-4 pl-11">
+                  {renderFormFields(bookingDetailsInputs)}
+                </div>
+              </div>
+
+              {/* Additional Information Section */}
+              <div className="mb-8">
+                <div className="flex items-center mb-4">
+                  <div className="flex items-center justify-center w-8 h-8 bg-purple-100 rounded-full mr-3">
+                    <svg className="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-800">Additional Information</h3>
+                </div>
+                <div className="flex flex-wrap gap-4 pl-11">
+                  {renderFormFields(additionalInfoInputs)}
+                </div>
+              </div>
+
+            </div>
+          </Form>
+        </div>
+      </div>
+    </div>
   );
 };
 

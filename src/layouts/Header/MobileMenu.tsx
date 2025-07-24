@@ -3,21 +3,16 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-
 import { LucideMenu } from "lucide-react";
-// import { NavigationMenu, NavigationMenuLink, NavigationMenuList } from '../ui/navigation-menu'
 import Link from "next/link";
-import { Menus } from "./Menu";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/ui/themeToggle";
 import User from "../admin/User";
 import { useSession } from "next-auth/react";
+import { Menus } from "./Menu";
 
 const MobileMenu = () => {
   const { data: session } = useSession();
@@ -26,7 +21,6 @@ const MobileMenu = () => {
     <div className="inline-block xl:hidden">
       <Sheet>
         <div className=" flex gap-3 items-center">
-          <ThemeToggle />
           <SheetTrigger asChild>
             <div className=" cursor-pointer p-2 rounded-sm dark:text-white">
               <LucideMenu />

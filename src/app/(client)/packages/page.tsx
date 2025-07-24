@@ -85,14 +85,15 @@ const PackagePage = () => {
 
   useEffect(() => {
     updatePackageFilterOptions();
-    console.log("filter service id:", filterServiceId);
-    console.log("filter title: ", filterTitle);
   }, [filterServiceId, filterTitle]);
 
   return (
     <div>
-      <Topbanner title="Explore Suitable Package" />
-      <PageWrapper className=" lg:px-4 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 section-padding">
+      <Topbanner
+        title="Explore Suitable Package"
+        description="Discover transformative trekking and yoga packages that blend mindful movement with breathtaking nature."
+      />
+      <PageWrapper className=" lg:px-4  px-2 gap-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 section-padding">
         <div className="sm:col-span-2 lg:col-span-3">
           <PackageFilterForm
             updateFilterServiceId={updateFilterServiceId}

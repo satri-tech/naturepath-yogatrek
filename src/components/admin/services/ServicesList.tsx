@@ -42,7 +42,7 @@ const ServicesList = () => {
 
   const [currentTable, setCurrentTable] = useState<number>(0);
 
-  
+
   const updateCurrentTableByNumber = (index: number) => {
     setCurrentTable(index);
   };
@@ -105,8 +105,8 @@ const ServicesList = () => {
           <TableHeader>
             <TableRow>
               <TableHead className="">Service</TableHead>
-              <TableHead>Thumbnail</TableHead>
-              <TableHead>Actions</TableHead>
+              <TableHead className="text-center align-middle">Thumbnail</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -118,16 +118,16 @@ const ServicesList = () => {
                       {Item.id}
                     </div> */}
                 </TableCell>
-                <TableCell className="">
+                <TableCell className="text-center">
                   <Image
                     alt={Item.title}
-                    className="aspect-square rounded-md object-cover"
-                    height="48"
+                    className="aspect-square rounded-md object-cover mx-auto"
+                    height="60"
                     src={Item.image}
-                    width="48"
+                    width="40"
                   />
                 </TableCell>
-                <TableCell className="flex gap-2 items-center">
+                <TableCell className="flex gap-2 items-center justify-end">
                   <ViewButton
                     url={`/admin/services/view/${Item.id}`}
                     className=""

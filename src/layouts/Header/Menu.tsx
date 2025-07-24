@@ -2,106 +2,36 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Inter } from "next/font/google";
-import ThemeToggle from "@/components/ui/themeToggle";
-import User from "../admin/User";
-import { useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 
-const inter = Inter({
-  weight: ["600"],
-  style: ["normal"],
-  subsets: ["latin"],
-});
-interface MenuType {
-  id: number;
-  name: string;
-  url: string;
-  subMenu?: any[];
-}
-
-export const Menus: MenuType[] = [
+export const Menus = [
   { id: 1, name: "Home", url: "/" },
   { id: 2, name: "About", url: "/about" },
   { id: 3, name: "Booking", url: "/booking" },
-  { id: 4, name: "Service", url: "/packages" },
-  { id: 7, name: "Gallery", url: "/gallery" },
-  { id: 5, name: "Trekking Tips", url: "/trekking-tips" },
-  { id: 6, name: "Contact Us", url: "/contact" },
+  { id: 4, name: "Packages", url: "/packages" },
+  { id: 5, name: "Gallery", url: "/gallery" },
+  // { id: 6, name: "Trekking Tips", url: "/trekking-tips" },
+  { id: 7, name: "Contact Us", url: "/contact" },
 ];
 
-const Menu = ({ showCatMenu, setShowCatMenu, categories }: any) => {
+const Menu = () => {
   const pathname = usePathname();
-  const { data: session } = useSession();
-
   return (
-    <ul
-      className={`${inter.className} hidden xl:flex items-center gap-4 font-medium  dark:text-white
-`}
-    >
-      {Menus.map((items) => {
-        return (
-          <React.Fragment key={items.id}>
-            {!!items?.subMenu ? (
-              <li
-                className="cursor-pointer flex items-center gap-2 p-2 px-3 relative hover:text-gray font-semibold text-xl"
-                onMouseEnter={() => setShowCatMenu(true)}
-                onMouseLeave={() => {
-                  setShowCatMenu(false);
-                }}
-              >
-                {items.name}
-                {/* <Icon icon="ic:baseline-keyboard-arrow-down" className="w-8" /> */}
-                {showCatMenu && (
-                  <ul className="bg-white absolute top-6 left-0 min-w-[250px] p-1 text-black shadow-lg ">
-                    {categories?.map(({ attributes: c, id }: any) => {
-                      return (
-                        <Link
-                          key={id}
-                          href={`/category/${c.slug}`}
-                          onClick={() => {
-                            setShowCatMenu(false);
-                          }}
-                        >
-                          <li className="h-12 font-semibold flex justify-between items-center px-3 hover:bg-smokeWhite rounded-md text-xl">
-                            {c.name}
-                            <span className="opacity-50 text-sm">{`(${c.products.data.length})`}</span>
-                          </li>
-                        </Link>
-                      );
-                    })}
-                  </ul>
-                )}
-              </li>
-            ) : (
-              <li
-                className={`cursor-pointer hover:text-primary hover:bg-white hover:dark:bg-black-dark transition-all duration-300  rounded-md  p-2 px-3 ${
-                  items.url === pathname
-                    ? "text-primary/95 dark:bg-black-dark bg-white "
-                    : ""
-                }`}
-              >
-                <Link href={items.url}>{items.name}</Link>
-              </li>
-            )}
-          </React.Fragment>
-        );
-      })}
-      <div className={` flex items-center gap-3`}>
-        <ThemeToggle />
-        {session?.user ? (
-          <User />
-        ) : (
-          <div className=" flex items-center gap-2 ">
-            <Link href={"/auth/signin"}>
-              <Button variant={"outline"}>Login</Button>
-            </Link>
-            <Link href={"/auth/signup"}>
-              <Button>Sign Up</Button>
-            </Link>
-          </div>
-        )}
-      </div>
+    <ul className="hidden xl:flex items-center gap-5 font-medium dark:text-white">
+      {Menus.map((item) => (
+        <li key={item.id}>
+          <Link
+            href={item.url}
+            className={`px-3 py-2 rounded-md  text-sm ${pathname === item.url
+              ? "text-primary  "
+              : "hover:text-primary"
+              }`}
+          >
+            {item.name}
+          </Link>
+        </li>
+      ))}
+
+
     </ul>
   );
 };

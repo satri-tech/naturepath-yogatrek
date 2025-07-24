@@ -11,7 +11,7 @@ import Image from "next/image";
 
 export default function PackageListLoading() {
   return (
-    <div className="!overflow-hidden w-full">
+    <div className="!overflow-hidden w-full rounded-">
       <table className=" skeleton !overflow-hidden w-full">
         <TableHeader className=" hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">
           <TableRow className=" hover:!bg-transparent border-transparent bg-transparent text-transparent dark:text-transparent">

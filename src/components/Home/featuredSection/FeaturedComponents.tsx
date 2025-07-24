@@ -14,7 +14,7 @@ const GetFeaturedcomponets = async () => {
     const data = await response.json();
     // const repeatedData = [].concat(data.data, data.data, data.data) as Package[];
     const features = data?.data ?? [];
-    const repeatedData = [].concat(features, features, features) as Package[];
+    const repeatedData = [].concat(features) as Package[];
 
     return (
       <>
@@ -30,10 +30,10 @@ const GetFeaturedcomponets = async () => {
 
 const FeaturedComponents = async () => {
   return (
-    <section className=" section-padding-b dark:text-text-dark">
-      <Headings>Featuring now</Headings>
+    <div className="  flex flex-col gap-4">
+      <Headings>Featuring Now</Headings>
       <GetFeaturedcomponets />
-    </section>
+    </div>
   );
 };
 

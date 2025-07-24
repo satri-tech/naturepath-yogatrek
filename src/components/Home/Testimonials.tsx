@@ -20,7 +20,7 @@ const Gettestimonial = async () => {
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/testimonial/gettestimonial`,
-      { next: { tags: [`testimonialCollection`], revalidate: 100 } }
+      { next: { tags: [`testimonialCollection`], revalidate: 5 } }
     );
     const data = await response.json();
 
@@ -39,7 +39,6 @@ const Gettestimonial = async () => {
 const Testimonials = () => {
   return (
     <section className=" section-padding dark:text-text-dark">
-      <Headings>Happy Travellers</Headings>
       <Gettestimonial />
     </section>
   );

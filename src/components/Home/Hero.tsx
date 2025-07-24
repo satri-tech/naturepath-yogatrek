@@ -1,61 +1,58 @@
-import React from "react";
-import BookingBox from "@/components/Package/BookingBox";
-import Image from "next/image";
-import { Button } from "../ui/button";
-import Link from "next/link";
-import { petrona } from "@/app/fonts";
+import Image from "next/image"
+import { Button } from "../ui/button"
+import Link from "next/link"
+import HeroImage from "../../../public/Hero/hero1.jpg"
+import { ChevronRight } from "lucide-react"
+
 const Hero = () => {
   return (
-    <div className="px-0 relative w-full h-[100vh] -translate-y-20 z-10">
-      <div className="grid items-center h-full w-full text-white dark:text-text-dark">
-        <div className="flex flex-col lg:flex-row lg:justify-between container max-w-7xl mt-28 lg:mt-10">
-          <div className="flex flex-col gap-6 md:gap-8 xl:gap-10">
-            <div className=" flex flex-col gap-1">
-              <span className=" text-sm lg:text-base font-medium">
-                Explore the Art of Yoga with Us
-              </span>
-              <h1
-                className={`text-3xl md:text-4xl xl:text-5xl font-extrabold sm:max-w-[500px] md:max-w-[550px] lg:max-w-[650px] ${petrona.className}`}
-              >
-                Fuel Your Mind, Body, and Soul with{" "}
-                <span className=" text-secondary">Love</span>
-              </h1>
-            </div>
-            <Link href={"/booking"} className=" w-fit">
-              <Button className=" uppercase cursor-pointer w-fit">Book Now</Button>
-            </Link>
-          </div>
-        </div>
+    <div className="relative w-full h-[100vh] flex justify-center items-center">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-[-2]">
+        <Image
+          src={HeroImage}
+          alt="Hero Background"
+          fill
+          style={{ objectFit: "cover", objectPosition: "center" }}
+          priority
+        />
       </div>
 
-      <Image
-        src={"/Hero/hero4.jpg"}
-        alt="hero-img"
-        width={1024}
-        height={1024}
-        className="absolute top-0 w-full h-full object-cover brightness-[85%] dark:brightness-[35%] -z-20"
-      />
+      {/* Optional dark overlay for contrast */}
+      <div className="absolute inset-0 bg-black/40 z-[-1]" />
 
-      {/*leafs*/}
-      <Image
-        src={"/Hero/leaf.png"}
-        alt="hero-img"
-        width={1024}
-        height={1024}
-        className="absolute bottom-12 right-8 w-28 h-28  md:right-10 md:w-32 md:h-32 xl:bottom-14 xl:right-12 xl:w-40 xl:h-40 object-cover z-20 object-center"
-      />
+      {/* Hero Content with Blur Glass Effect */}
+      <div className="w-full flex justify-center items-center h-full  ">
+        <div className="backdrop-blur-sm bg-white/5 w-full h-full rounded-xl shadow-lg flex  justify-center">
+          <div className="flex flex-col mt-40 gap-4 w-[90%]  text-start">
+            {/* Tagline / Slogan */}
+            <div className="text-4xl md:text-6xl lg:text-5xl font-bold text-white  w-6/12  ">
+              A Journey to the Peaks of Inner Peace.            </div>
 
-      <Image
-        src={"/Hero/leaf.png"}
-        alt="hero-img"
-        width={1024}
-        height={1024}
-        className="absolute bottom-10 right-32 w-16 h-16 md:bottom-8  md:right-36 md:w-20 md:h-20 xl:bottom-8  xl:right-44 xl:w-24 xl:h-24 object-cover z-20 object-center"
-      />
+            {/* Description */}
+            <p className="text-white/80 text-lg md:text-base leading-relaxed w-6/12">
+              Join us for transformative treks infused with the healing essence of yoga, breathwork, and
+              mindful connection to the natural world.
+            </p>
 
-      <div className="absolute top-0 bottom-0 left-0 right-0 -z-10 bg-primary/30" />
+            {/* CTA Button */}
+            <div className="mt-4">
+              <Link href="/booking">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="bg-primary rounded-3xl text-white font-semibold hover:scale-105 transition-all duration-300"
+                >
+                  BOOK NOW <ChevronRight className="ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

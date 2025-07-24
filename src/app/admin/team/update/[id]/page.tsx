@@ -22,7 +22,7 @@ const UpdateTeamPage = async ({ params }: { params: { id: string } }) => {
     // Render the page layout with the UpdateTeamForm
     return (
       <main className="dark:bg-black-dark bg-white p-4 md:p-5 rounded-md shadow-md">
-        <Pageheading title={"Update Service"} />
+        <Pageheading title={"Update Member's Information"} />
         <div>
           <UpdateTeamForm teamMember={teamMember} />
         </div>

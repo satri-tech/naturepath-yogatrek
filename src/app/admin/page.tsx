@@ -34,57 +34,57 @@ export default async function Admin() {
 
   const totalAnalytics = dashboardData
     ? [
-        {
-          id: "3",
-          icon: <UsersRound />,
-          title: "Total Users",
-          value: dashboardData.user.totalUser,
-          rate: dashboardData.user.percentageChange,
-          rate_increase: dashboardData.user.rate_increase,
-          img: "/admin/chart1.png",
-          className:
-            "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green dark:bg-yoga-green/30",
-        },
-        {
-          id: "4",
-          icon: <Package />,
-          title: "Total Packages",
-          value: dashboardData.packages.totalPackage,
-          img: "/admin/package2.png",
-          className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
-        },
-        {
-          id: "5",
-          icon: <PackagePlus />,
-          title: "Packages Booked",
-          value: dashboardData.booking.totalBooking,
-          rate: dashboardData.booking.percentageChange,
-          rate_increase: dashboardData.booking.rate_increase,
-          img: "/admin/chart7.png",
-          className:
-            "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
-        },
-        {
-          id: "6",
-          icon: <PackageMinus />,
-          title: "Packages Cancelled",
-          value: dashboardData.booking.bookingCancelled,
-          rate: dashboardData.bookingCancelled.percentageChange,
-          rate_increase: dashboardData.bookingCancelled.rate_increase,
-          img: "/admin/chart6.png",
-          className:
-            "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
-        },
-      ]
+      {
+        id: "3",
+        icon: <UsersRound />,
+        title: "Total Users",
+        value: dashboardData.user.totalUser,
+        rate: dashboardData.user.percentageChange,
+        rate_increase: dashboardData.user.rate_increase,
+        img: "/admin/chart1.png",
+        className:
+          "text-yoga-green bg-yoga-green/15 dark:bg-yoga-green dark:bg-yoga-green/30",
+      },
+      {
+        id: "4",
+        icon: <Package />,
+        title: "Total Packages",
+        value: dashboardData.packages.totalPackage,
+        img: "/admin/package2.png",
+        className: "text-yoga-pink bg-yoga-pink/15 dark:bg-yoga-pink/30",
+      },
+      {
+        id: "5",
+        icon: <PackagePlus />,
+        title: "Packages Booked",
+        value: dashboardData.booking.totalBooking,
+        rate: dashboardData.booking.percentageChange,
+        rate_increase: dashboardData.booking.rate_increase,
+        img: "/admin/chart7.png",
+        className:
+          "text-yoga-purple bg-yoga-purple/15 dark:bg-yoga-purple/25",
+      },
+      {
+        id: "6",
+        icon: <PackageMinus />,
+        title: "Packages Cancelled",
+        value: dashboardData.booking.bookingCancelled,
+        rate: dashboardData.bookingCancelled.percentageChange,
+        rate_increase: dashboardData.bookingCancelled.rate_increase,
+        img: "/admin/chart6.png",
+        className:
+          "text-yoga-orange bg-yoga-orange/15 dark:bg-yoga-orange/25",
+      },
+    ]
     : [
-        // Default analytics if data is not available
-      ];
+      // Default analytics if data is not available
+    ];
 
   return (
-    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 dark:text-text-dark bg-bg-white dark:bg-gray-dark vertical-padding-dashboard">
+    <PageWrapper className=" text-black/85 flex flex-col gap-5 md:gap-6 xl:gap-8 dark:text-text-dark bg-bg-white dark:bg-gray-dark  py-6">
       <div className="">
-        <h2 className={`${petrona} font-bold text-2xl md:text-3xl`}>
-          <span>Welcome</span> back! Navin Sirr
+        <h2 className={` font-bold text-2xl md:text-3xl dark:text-white text-neutral-900`}>
+          <span>Welcome back!</span>
         </h2>
         <p className="md:text-sm mt-1 text-xs">
           Track your packages, package bookings, revenues and other analytics.

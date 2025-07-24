@@ -25,7 +25,7 @@ const PackageList = async () => {
 
 const PopularPackage = () => {
   return (
-    <section className=" section-padding  dark:text-text-dark">
+    <section className=" section-padding  dark:text-text-dark flex flex-col gap-8">
       <Headings>Popular Packages</Headings>
       <div className="conatiner max-w-6xl mx-4 lg:mx-auto gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
         <PackageList />
